@@ -1,0 +1,89 @@
+{
+  "language_tag": "kk-Arab",
+  "language": "Kazakh",
+  "script": "Arab",
+  "encoding": "UTF-8",
+  "lexicon": {
+    "entries": 58632,
+    "weight_range": [
+      37,
+      254
+    ],
+    "fst_type": "compact_tiny_acceptor_l8w8s24_unweighted_arc",
+    "arc_type": "standard",
+    "states": 113969,
+    "arcs": 113968,
+    "final_states": 58632,
+    "symbols": {
+      "0": "⓪",
+      "1": "①",
+      "2": "②",
+      "3": "③",
+      "4": "④",
+      "5": "⑤",
+      "6": "⑥",
+      "7": "⑦",
+      "8": "⑧",
+      "9": "⑨",
+      "10": " ",
+      "11": "!",
+      "12": "؟",
+      "13": "ء",
+      "14": "ا",
+      "15": "ب",
+      "16": "ت",
+      "17": "ج",
+      "18": "ح",
+      "19": "د",
+      "20": "ر",
+      "21": "ز",
+      "22": "س",
+      "23": "ش",
+      "24": "ع",
+      "25": "ـ",
+      "26": "ف",
+      "27": "ق",
+      "28": "ك",
+      "29": "ل",
+      "30": "م",
+      "31": "ن",
+      "32": "و",
+      "33": "ى",
+      "34": "ي",
+      "35": "پ",
+      "36": "چ",
+      "37": "ڭ",
+      "38": "گ",
+      "39": "ھ",
+      "40": "ۆ",
+      "41": "ۇ",
+      "42": "ۋ",
+      "43": "ە"
+    }
+  },
+  "ngrams": {
+    "magic_hex": "0d8a0389",
+    "source_words_with_bigram_data": 8473,
+    "bigrams": 60000,
+    "trigram_continuations": 61160,
+    "bigram_weight_range": [
+      0,
+      145
+    ],
+    "trigram_weight_range": [
+      1,
+      116
+    ]
+  },
+  "emoji": {
+    "magic_hex": "0d8a0389",
+    "format_mode": 0,
+    "emoji_inventory": 17,
+    "mapping_records": 25,
+    "unique_words": 25,
+    "unique_word_emoji_pairs": 25,
+    "distinct_emojis_used": 17,
+    "special_or_nonmapping_records": 0
+  },
+  "weight_note": "Weights are raw source ranking/cost values, not verified corpus frequencies or probabilities."
+}

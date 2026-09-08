@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>Kazakh Arabic input preview</title>
+<style>
+:root{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color-scheme:light dark;--bg:#f2f2f7;--panel:#fff;--key:#fff;--key2:#d1d5db;--text:#111;--border:rgba(0,0,0,.12);--muted:#6b7280}
+@media(prefers-color-scheme:dark){:root{--bg:#111214;--panel:#1c1c1e;--key:#3a3a3c;--key2:#636366;--text:#f7f7f7;--border:rgba(255,255,255,.12);--muted:#aaa}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text)}.app{max-width:900px;margin:auto;padding:20px}h1{font-size:22px;margin:0 0 4px}.sub{color:var(--muted);font-size:13px;margin-bottom:16px}.panel{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:14px;margin-bottom:14px}
+textarea{width:100%;min-height:110px;resize:vertical;border:0;outline:0;background:transparent;color:var(--text);font-size:27px;line-height:1.55;padding:4px;direction:rtl;text-align:right}
+.suggestions{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;min-height:56px}.suggestion{border:0;border-radius:11px;background:var(--key);color:var(--text);box-shadow:0 1px 2px var(--border);padding:7px 8px;cursor:pointer;min-width:0}.suggestion .word{font-size:20px;direction:rtl;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.suggestion .meta{font-size:10px;color:var(--muted);margin-top:2px}.empty{display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:13px;grid-column:1/-1}
+.keyboard{user-select:none;-webkit-user-select:none;touch-action:manipulation}.row{display:flex;gap:6px;justify-content:center;margin:6px 0}.key{position:relative;flex:1 1 0;max-width:76px;min-width:34px;height:50px;border:0;border-radius:7px;background:var(--key);color:var(--text);box-shadow:0 1px 2px rgba(0,0,0,.25);font-size:23px;cursor:pointer}.key.special{background:var(--key2);font-size:17px}.key.spacer{visibility:hidden;pointer-events:none;max-width:22px}.key:active,.key.active{transform:translateY(1px);filter:brightness(.94)}
+.bottom{display:flex;gap:7px;margin-top:7px}.bottom button{height:46px;border:0;border-radius:8px;background:var(--key2);color:var(--text);font-size:16px}.bottom .wide{flex:1}.bottom .space{flex:3;background:var(--key)}
+.lp{position:fixed;z-index:20;display:none;background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:6px;box-shadow:0 8px 28px rgba(0,0,0,.28);gap:5px}.lp.show{display:flex}.lp button{min-width:44px;height:44px;border:0;border-radius:7px;background:var(--key);font-size:22px;color:var(--text)}
+.status{display:flex;gap:10px;flex-wrap:wrap;font-size:12px;color:var(--muted)}.badge{padding:4px 7px;border-radius:999px;background:var(--bg)}.controls{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.controls button{border:1px solid var(--border);background:var(--panel);color:var(--text);border-radius:8px;padding:7px 10px;cursor:pointer}
+@media(max-width:560px){.app{padding:10px}.panel{padding:10px}.row{gap:4px}.key{height:46px;min-width:27px;font-size:20px}.suggestion .word{font-size:17px}}
+</style>
+</head>
+<body>
+<div class="app">
+<h1>Kazakh Arabic input preview</h1>
+<div class="sub">Töte jazu / төте жазу · keyboard + lexicon + bigrams + trigrams + emoji</div>
+<div class="panel"><textarea id="editor" dir="rtl" spellcheck="false" placeholder="…"></textarea><div class="controls"><button id="clear">Clear</button><button id="addSpace">Space</button><button id="backspaceTop">⌫</button></div></div>
+<div class="panel"><div id="suggestions" class="suggestions"></div><div id="status" class="status" style="margin-top:10px"></div></div>
+<div class="panel keyboard" id="keyboard"></div>
+</div>
+<div class="lp" id="lp"></div>
+<script>
+const LAYOUT = __LAYOUT__;
+const DATA = __DATA__;
+const editor=document.getElementById('editor'),kb=document.getElementById('keyboard'),suggestionsEl=document.getElementById('suggestions'),statusEl=document.getElementById('status'),lp=document.getElementById('lp');
+let layer='default',longPressTimer=null,longPressed=false;
+const bigramIndex=new Map();for(const[a,b,w]of DATA.bigrams){if(!bigramIndex.has(a))bigramIndex.set(a,[]);bigramIndex.get(a).push([b,w])}for(const a of bigramIndex.values())a.sort((x,y)=>x[1]-y[1]);
+const trigramIndex=new Map();for(const[a,b,c,w]of DATA.trigrams){const k=a+'\t'+b;if(!trigramIndex.has(k))trigramIndex.set(k,[]);trigramIndex.get(k).push([c,w])}for(const a of trigramIndex.values())a.sort((x,y)=>x[1]-y[1]);
+function cps(s){return Array.from(s)}
+function state(t){const sp=/\s$/u.test(t),r=t.trim().split(/\s+/u).filter(Boolean);if(sp)return{prev:r,partial:''};const partial=r.length?r.pop():'';return{prev:r,partial}}
+function prefix(p,n=3){if(!p)return DATA.lexicon.slice(0,n).map(([w,c])=>[w,c,'unigram']);const o=[];for(const[w,c]of DATA.lexicon){if(w.startsWith(p)&&w!==p){o.push([w,c,'prefix']);if(o.length>=n)break}}return o}
+function context(prev,partial,n=3){let src=null,a=null;if(prev.length>=2){const k=prev.at(-2)+'\t'+prev.at(-1);if(trigramIndex.has(k)){a=trigramIndex.get(k);src='trigram'}}if(!a&&prev.length&&bigramIndex.has(prev.at(-1))){a=bigramIndex.get(prev.at(-1));src='bigram'}if(!a)return[];const o=[],seen=new Set();for(const[w,c]of a){if((!partial||w.startsWith(partial))&&!seen.has(w)){seen.add(w);o.push([w,c,src]);if(o.length>=n)break}}return o}
+function esc(s){return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function refresh(){const{prev,partial}=state(editor.value);let items=context(prev,partial,3);if(items.length<3){const seen=new Set(items.map(x=>x[0]));for(const x of prefix(partial,8)){if(!seen.has(x[0])){items.push(x);seen.add(x[0])}if(items.length===3)break}}suggestionsEl.innerHTML='';if(!items.length)suggestionsEl.innerHTML='<div class="empty">No candidates</div>';for(const[word,w,src]of items){const b=document.createElement('button');b.className='suggestion';b.innerHTML=`<div class="word">${esc(word)}</div><div class="meta">${src} · weight ${w}</div>`;b.onclick=()=>suggest(word);suggestionsEl.appendChild(b)}const cur=partial||(prev.length?prev.at(-1):''),em=DATA.emoji[cur]||[];statusEl.innerHTML=`<span class="badge">lexicon ${DATA.lexicon.length.toLocaleString()}</span><span class="badge">bigrams ${DATA.bigrams.length.toLocaleString()}</span><span class="badge">trigrams ${DATA.trigrams.length.toLocaleString()}</span>`+(em.length?`<span class="badge">emoji ${em.join(' ')}</span>`:'')}
+function suggest(w){const t=editor.value;if(/\s$/u.test(t)||!t.trim())editor.value=t+w+' ';else{const m=t.match(/^(.*?)([^\s]*)$/us);editor.value=(m?m[1]:'')+w+' '}editor.focus();refresh()}
+function insert(s){const a=editor.selectionStart??editor.value.length,b=editor.selectionEnd??a;editor.setRangeText(s,a,b,'end');editor.focus();refresh()}
+function backspace(){const a=editor.selectionStart??editor.value.length,b=editor.selectionEnd??a;if(a!==b)editor.setRangeText('',a,b,'end');else if(a>0){const before=editor.value.slice(0,a),x=cps(before);x.pop();const nb=x.join('');editor.value=nb+editor.value.slice(a);editor.selectionStart=editor.selectionEnd=nb.length}editor.focus();refresh()}
+function special(t){if(t.includes('shiftSymbols'))return layer==='symbols-1'?'#+=':'123';if(t.includes('shift'))return'⇧';if(t.includes('backspace'))return'⌫';return''}
+function token(t){if(t.startsWith('\\s{')){if(t.includes('shiftSymbols')){layer=layer==='symbols-1'?'symbols-2':'symbols-1';render();return}if(t.includes('shift')){layer=layer==='shift'?'default':'shift';render();return}if(t.includes('backspace')){backspace();return}return}insert(t);if(layer==='shift'){layer='default';render()}}
+function showLP(el,t){const opts=LAYOUT.longpress[t];if(!opts?.length)return false;lp.innerHTML='';for(const o of opts){const b=document.createElement('button');b.textContent=o;b.onclick=e=>{e.stopPropagation();hideLP();insert(o)};lp.appendChild(b)}const r=el.getBoundingClientRect();lp.style.left=Math.max(6,Math.min(innerWidth-160,r.left))+'px';lp.style.top=Math.max(6,r.top-58)+'px';lp.classList.add('show');return true}
+function hideLP(){lp.classList.remove('show')}
+function key(t){const b=document.createElement('button');b.className='key';if(t.startsWith('\\s{spacer')){b.classList.add('spacer');return b}if(t.startsWith('\\s{'))b.classList.add('special');b.textContent=t.startsWith('\\s{')?special(t):t;b.addEventListener('pointerdown',()=>{longPressed=false;longPressTimer=setTimeout(()=>{if(showLP(b,t)){longPressed=true;navigator.vibrate?.(10)}},450)});b.addEventListener('pointerup',()=>{clearTimeout(longPressTimer);if(!longPressed)token(t);longPressed=false});b.addEventListener('pointercancel',()=>clearTimeout(longPressTimer));b.addEventListener('contextmenu',e=>{if(LAYOUT.longpress[t]){e.preventDefault();showLP(b,t)}});return b}
+function render(){kb.innerHTML='';for(const row of(LAYOUT.layers[layer]||LAYOUT.layers.default)){const r=document.createElement('div');r.className='row';for(const t of row)r.appendChild(key(t));kb.appendChild(r)}const b=document.createElement('div');b.className='bottom';const mode=document.createElement('button');mode.className='wide';if(layer.startsWith('symbols')){mode.textContent=LAYOUT.abc||'ABC';mode.onclick=()=>{layer='default';render()}}else{mode.textContent='123';mode.onclick=()=>{layer='symbols-1';render()}}const sp=document.createElement('button');sp.className='space';sp.textContent='space';sp.onclick=()=>insert(' ');const ret=document.createElement('button');ret.className='wide';ret.textContent='↵';ret.onclick=()=>insert('\n');b.append(mode,sp,ret);kb.appendChild(b)}
+editor.addEventListener('input',refresh);editor.addEventListener('click',hideLP);document.addEventListener('pointerdown',e=>{if(!lp.contains(e.target)&&!e.target.classList.contains('key'))hideLP()});document.getElementById('clear').onclick=()=>{editor.value='';refresh();editor.focus()};document.getElementById('addSpace').onclick=()=>insert(' ');document.getElementById('backspaceTop').onclick=backspace;render();refresh();
+</script>
+</body>
+</html>

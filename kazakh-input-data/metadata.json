@@ -1,0 +1,30 @@
+{
+  "language": "Kazakh",
+  "language_code": "kk",
+  "scripts": [
+    "kk-Arab",
+    "kk-Cyrl",
+    "kk-Latn"
+  ],
+  "encoding": "UTF-8",
+  "scripts_summary": {
+    "kk-Arab": {
+      "lexicon_entries": 58632,
+      "bigrams": 60000,
+      "trigram_continuations": 61160,
+      "word_to_emoji_records": 25
+    },
+    "kk-Cyrl": {
+      "lexicon_entries": 90052,
+      "bigrams": 40002,
+      "trigram_continuations": 4861,
+      "word_to_emoji_records": 244
+    },
+    "kk-Latn": {
+      "lexicon_entries": 45073,
+      "bigrams": 7384,
+      "trigram_continuations": 982,
+      "word_to_emoji_records": 244
+    }
+  }
+}

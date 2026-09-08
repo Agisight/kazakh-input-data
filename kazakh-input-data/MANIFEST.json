@@ -1,0 +1,202 @@
+[
+  {
+    "path": ".gitignore",
+    "bytes": 68,
+    "sha256": "b94bdf08c7ee05b2b5605664bb3c96c6745ca8cf764be4ad5ab1fb78a4f7983d"
+  },
+  {
+    "path": "README.kk.md",
+    "bytes": 1928,
+    "sha256": "32f8feeb4ca94b8eaf0b02be5b555368fe39138fc42daebb9e8dd7b379c62a37"
+  },
+  {
+    "path": "README.md",
+    "bytes": 2048,
+    "sha256": "b1a372684c1df88c8712d4da14ee01ced9700a57c87b866b6794f13dc0b8642a"
+  },
+  {
+    "path": "README.ru.md",
+    "bytes": 1956,
+    "sha256": "087441c531ee5647f40fde21ed04a3da9b563ce1bddc1f6ab82925564f3747fb"
+  },
+  {
+    "path": "data/kk-Arab/emoji/emoji_inventory.tsv",
+    "bytes": 261,
+    "sha256": "cbe2cf6d14982951f5c4ea196d7fa3a2ab40e5608e9eaa5e30424331a36d5838"
+  },
+  {
+    "path": "data/kk-Arab/emoji/word_to_emoji.tsv",
+    "bytes": 678,
+    "sha256": "c10ed9029717b5e182ed205a7809da56daccfbc1eb2abc035426b348b9095881"
+  },
+  {
+    "path": "data/kk-Arab/hunspell/README.md",
+    "bytes": 208,
+    "sha256": "268840a57dc5ebbe3facb1fa082cdb281b469006f4646988884e850ae5151b5c"
+  },
+  {
+    "path": "data/kk-Arab/hunspell/kk_Arab.dic",
+    "bytes": 888142,
+    "sha256": "0658ad00a2c8e4d60ac262de44bfb2d3a1c8a82b84688073d6e29107a0e15c86"
+  },
+  {
+    "path": "data/kk-Arab/lexicon/lexicon.jsonl",
+    "bytes": 3642837,
+    "sha256": "d3d9753fd04335382eab85ff528db5fd6d86848145f927d6a90020a53c3b5ec0"
+  },
+  {
+    "path": "data/kk-Arab/lexicon/lexicon.tsv",
+    "bytes": 1473475,
+    "sha256": "f182630c35f000368931d8ee37fd4feac5641760b4d9b9977358a4385208774f"
+  },
+  {
+    "path": "data/kk-Arab/lexicon/lexicon.txt",
+    "bytes": 888136,
+    "sha256": "2b043e8054b6046174f8fd9d665215ca9254fdfb17d4920221de821a74857ba7"
+  },
+  {
+    "path": "data/kk-Arab/metadata/metadata.json",
+    "bytes": 1789,
+    "sha256": "d146dc9cf76830a10074ad076df902e087aa8497269ab702d2e87f14d263dd72"
+  },
+  {
+    "path": "data/kk-Arab/ngrams/bigrams.tsv",
+    "bytes": 1523952,
+    "sha256": "3a981fb13737469ac7694cf25ba660a3263bef8d6b99540cad44fac195d589b8"
+  },
+  {
+    "path": "data/kk-Arab/ngrams/trigrams.tsv",
+    "bytes": 2152976,
+    "sha256": "4785d6b967c8a0a8d8193b142039345151ae57b2a44600aa20015a5c2825a47b"
+  },
+  {
+    "path": "data/kk-Cyrl/emoji/emoji_inventory.tsv",
+    "bytes": 4037,
+    "sha256": "e60ac3e5aeedfee47ccf1c0ce87e9093125feb6b2d00bd3ae4297178bd3af806"
+  },
+  {
+    "path": "data/kk-Cyrl/emoji/word_to_emoji.tsv",
+    "bytes": 7407,
+    "sha256": "24ae2c91c7a932f1c01f9212e9ff3fbfc13958c5f454d00b62e1998630ed43d7"
+  },
+  {
+    "path": "data/kk-Cyrl/hunspell/README.md",
+    "bytes": 208,
+    "sha256": "9e78c85372853bdaa36f52be12cd34deb4a6d492f156d783e0e9be22f08b4c4e"
+  },
+  {
+    "path": "data/kk-Cyrl/hunspell/kk_Cyrl.dic",
+    "bytes": 1514360,
+    "sha256": "68001a3749b7edc06c414284ccbeb0e4c153d60a73b2afa17659639d0637939b"
+  },
+  {
+    "path": "data/kk-Cyrl/lexicon/lexicon.jsonl",
+    "bytes": 5782698,
+    "sha256": "d13028e3be25a4a229ff1eced3e5ea75bf2b55d622caebbe5fcf64f28a7ea5ea"
+  },
+  {
+    "path": "data/kk-Cyrl/lexicon/lexicon.tsv",
+    "bytes": 2450796,
+    "sha256": "534fb2c24b3e747aceaad35d61205089a963833363043fc574eebe47bd2be331"
+  },
+  {
+    "path": "data/kk-Cyrl/lexicon/lexicon.txt",
+    "bytes": 1514354,
+    "sha256": "078bf9d8abf4d8ff3172caba2c9e18ec4170098608727bf73b9b36fe4f46a4ec"
+  },
+  {
+    "path": "data/kk-Cyrl/metadata/metadata.json",
+    "bytes": 2958,
+    "sha256": "4d8606a52eb2c9d28363e7dde9ecd23266fd63f5a4f7584d888278589a663753"
+  },
+  {
+    "path": "data/kk-Cyrl/ngrams/bigrams.tsv",
+    "bytes": 993959,
+    "sha256": "92f8750939a424e86df2089e8049b849557e67b796fdb84a0cc15ab69abf416c"
+  },
+  {
+    "path": "data/kk-Cyrl/ngrams/trigrams.tsv",
+    "bytes": 173772,
+    "sha256": "76bfda0002b671f7ac38118c417e6060479b58e7fceddbab31e25ec6fb067e7d"
+  },
+  {
+    "path": "data/kk-Latn/emoji/emoji_inventory.tsv",
+    "bytes": 4037,
+    "sha256": "e60ac3e5aeedfee47ccf1c0ce87e9093125feb6b2d00bd3ae4297178bd3af806"
+  },
+  {
+    "path": "data/kk-Latn/emoji/word_to_emoji.tsv",
+    "bytes": 6222,
+    "sha256": "4c9400e3fdba8dafe461faf2a782bcf9cf8088b2f904be0c6a0022fffbf68295"
+  },
+  {
+    "path": "data/kk-Latn/hunspell/README.md",
+    "bytes": 208,
+    "sha256": "8cfc3b1da3ddf67a81bf882c5f1c6271bc5adbc15391c613529e3e7bd1361b27"
+  },
+  {
+    "path": "data/kk-Latn/hunspell/kk_Latn.dic",
+    "bytes": 429156,
+    "sha256": "c62b9d4402b4f89090a21ed96c80123dee3672c54fbbafa3ec20e9d42ac86bec"
+  },
+  {
+    "path": "data/kk-Latn/lexicon/lexicon.jsonl",
+    "bytes": 2541692,
+    "sha256": "1e5c0326d6685aa7445bdc18db641cdb75c4dd1bc0d72af51091e95778112890"
+  },
+  {
+    "path": "data/kk-Latn/lexicon/lexicon.tsv",
+    "bytes": 874013,
+    "sha256": "7a5deb666873abf4a9eb6f6be55e1fae744b802797433f93be7e796acb9e6b06"
+  },
+  {
+    "path": "data/kk-Latn/lexicon/lexicon.txt",
+    "bytes": 429150,
+    "sha256": "9a2107f8cf80ffac581939ac82709294c429ec90861a5c7ef14e858f5c4476ca"
+  },
+  {
+    "path": "data/kk-Latn/metadata/metadata.json",
+    "bytes": 2570,
+    "sha256": "f1db0925f4f7728a1490eb60fa1fa0a7c7fbc59865d775d8d82c18bad05f0535"
+  },
+  {
+    "path": "data/kk-Latn/ngrams/bigrams.tsv",
+    "bytes": 125760,
+    "sha256": "5628c4c98a21a9cf6190f6f31b02c68fee4f0bcad4a0f93ec0bfdffc6883d6a0"
+  },
+  {
+    "path": "data/kk-Latn/ngrams/trigrams.tsv",
+    "bytes": 24759,
+    "sha256": "cb13d86c3ef4a16a796820057e74ef942443f64aae9791c1b2ae7321a7374b09"
+  },
+  {
+    "path": "metadata.json",
+    "bytes": 620,
+    "sha256": "21494641da89a8e0cd7ea3f6e0be09eb8d3a65bf4f46d5808c45bfe76e8cfc76"
+  },
+  {
+    "path": "preview/README.md",
+    "bytes": 343,
+    "sha256": "e0785bccd1270a5604ff303442ce83fb94e5c924380b54fcf544b059fa5ce89c"
+  },
+  {
+    "path": "preview/kk-Arab/build_preview.py",
+    "bytes": 2766,
+    "sha256": "c778d26d7efee0acd0b09f4bbc32081b6ca48007e8ee58f769e75d47d539197a"
+  },
+  {
+    "path": "preview/kk-Arab/layout-snapshot.json",
+    "bytes": 2890,
+    "sha256": "fe734a464c56b8d4848aec319268202a3f08b1598c2e61be0502767469b97d1b"
+  },
+  {
+    "path": "preview/kk-Arab/template.html",
+    "bytes": 10164,
+    "sha256": "83d7a7a47ec26dd91b906c6df216b453ec507a64b13e605eb516c060b115b012"
+  },
+  {
+    "path": "tools/README.md",
+    "bytes": 399,
+    "sha256": "5e381ac7f5d0b7f0bf053eb388f7aaa540ee1f89ac389c3169134471d680ccc6"
+  }
+]
