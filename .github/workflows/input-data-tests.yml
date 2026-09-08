@@ -1,0 +1,54 @@
+name: Input data tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  data:
+    name: Validate language data
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Validate datasets
+        run: python tools/validate_data.py
+      - name: Test prediction engine
+        run: python -m unittest -v tests/test_predictions.py
+
+  keyboard-preview:
+    name: Build kk-Arab keyboard preview
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout data repository
+        uses: actions/checkout@v4
+      - name: Checkout keyboard layouts
+        uses: actions/checkout@v4
+        with:
+          repository: Agisight/ios-system-keyboard
+          path: _keyboard
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install preview dependency
+        run: python -m pip install --disable-pip-version-check PyYAML
+      - name: Build interactive preview
+        run: |
+          python preview/kk-Arab/build_preview.py \
+            --keyboard-repo _keyboard \
+            --output preview/kk-Arab/dist/index.html
+      - name: Smoke-test generated preview
+        run: python tools/check_preview.py preview/kk-Arab/dist/index.html
+      - name: Upload preview artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: kk-Arab-preview
+          path: preview/kk-Arab/dist/index.html
+          if-no-files-found: error
