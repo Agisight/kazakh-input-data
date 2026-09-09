@@ -8,6 +8,8 @@ Language data for Kazakh input methods and NLP across three scripts:
 
 [Қазақша](README.kk.md) · [Русский](README.ru.md)
 
+**[Live interactive demo](https://agisight.github.io/kazakh-input-data/)**
+
 ## Dataset
 
 | Script | Lexicon | Bigrams | Trigrams | Word→emoji |
@@ -95,8 +97,44 @@ ARPA, KenLM and other compiled language-model artifacts are not stored as
 canonical repository data. They can be generated later from the canonical data
 when an appropriate probability-estimation method is available.
 
-## Preview
+## Interactive preview
 
-The Arabic-script data currently has an interactive preview under
-`preview/kk-Arab/`. Keyboard layout specifications remain in the separate
-`Agisight/ios-system-keyboard` repository.
+A live interactive demo is available at:
+
+**https://agisight.github.io/kazakh-input-data/**
+
+The preview is a reference implementation showing how the datasets in this
+repository can work together with keyboard layouts in an input-method UI.
+
+It currently demonstrates:
+
+- script switching between `kk-Arab`, `kk-Cyrl` and `kk-Latn`;
+- prefix completion from the lexicon;
+- next-word prediction from bigrams;
+- contextual prediction from trigrams;
+- word-to-emoji suggestions;
+- source ranking weights;
+- interactive on-screen keyboards;
+- Shift, Backspace, Space, number and symbol layers;
+- long-press alternatives where the source keyboard layout defines them.
+
+The highest-ranked suggestion is shown in the center. While an unfinished word
+is being typed, pressing Space accepts the highlighted completion and inserts a
+space. Next-word predictions are not accepted automatically by Space; they must
+be selected explicitly.
+
+### Keyboard layouts used by the demo
+
+- **Arabic (`kk-Arab`)** — uses the Kazakh Arabic / Töte jazu layout from
+  [`Agisight/ios-system-keyboard`](https://github.com/Agisight/ios-system-keyboard).
+- **Cyrillic (`kk-Cyrl`)** — the preview keyboard is adapted from the Keyman
+  **Kazakh Basic** touch layout.
+- **Latin (`kk-Latn`)** — currently uses an experimental preview layout based on
+  standard QWERTY with an additional row for Kazakh Latin letters.
+
+The Latin layout is **not a finalized or standardized Kazakh Latin keyboard**.
+Its alphabet, character set, casing and key placement require further research
+and validation.
+
+The preview is a demo of the language data and keyboard behavior, not a
+production input method or a keyboard-layout standard.
