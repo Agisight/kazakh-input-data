@@ -40,6 +40,19 @@
 const ARAB_LAYOUT=__LAYOUT__;
 const DATASETS=__DATASETS__;
 
+const STATIC_SYMBOLS={
+  'symbols-1':[
+    ['1','2','3','4','5','6','7','8','9','0'],
+    ['-','/',':',';','(',')','₸','&','@','"'],
+    ['\\s{shiftSymbols}', '.', ',', '?', '!', "'", '\\s{backspace}']
+  ],
+  'symbols-2':[
+    ['[',']','{','}','#','%','^','*','+','='],
+    ['_','\\','|','~','<','>','$','€','¥','•'],
+    ['\\s{shiftSymbols}', '.', ',', '?', '!', "'", '\\s{backspace}']
+  ]
+};
+
 const CYRL_LAYOUT={
   source:'Cyrillic layout adapted from Keyman Kazakh Basic',
   extraDefault:['ә','і','ң','ғ','ү','ұ','қ','ө','һ'],
@@ -73,9 +86,9 @@ const LATN_LAYOUT={
 };
 
 const SCRIPT_INFO={
- 'kk-Arab':{name:'Arabic',description:'Arabic script · Töte jazu / төте жазу',dir:'rtl',layout:'arab'},
- 'kk-Cyrl':{name:'Cyrillic',description:'Cyrillic script · kk-Cyrl',dir:'ltr',layout:'cyrl'},
- 'kk-Latn':{name:'Latin',description:'Latin script · kk-Latn',dir:'ltr',layout:'latn'}
+ 'kk-Arab':{name:'Arabic',description:'Arabic script · Töte jazu / төте жазу',dir:'rtl'},
+ 'kk-Cyrl':{name:'Cyrillic',description:'Cyrillic script · kk-Cyrl',dir:'ltr'},
+ 'kk-Latn':{name:'Latin',description:'Latin script · kk-Latn',dir:'ltr'}
 };
 
 const editor=document.getElementById('editor'),kb=document.getElementById('keyboard'),suggestionsEl=document.getElementById('suggestions'),statusEl=document.getElementById('status'),lp=document.getElementById('lp'),scriptDescription=document.getElementById('scriptDescription'),inputLabel=document.getElementById('inputLabel'),layoutSource=document.getElementById('layoutSource');
@@ -89,41 +102,17 @@ function initial(n=3){const o=[];for(const[w,c]of DATA.lexicon){if(isSuggestible
 function prefix(p,n=3){if(!p||!isSuggestible(p))return[];const o=[];for(const[w,c]of DATA.lexicon){if(isSuggestible(w)&&w.startsWith(p)&&w!==p){o.push([w,c,'prefix']);if(o.length>=n)break}}return o}
 function context(prev,partial,n=3){let src=null,a=null;if(prev.length>=2){const k=prev.at(-2)+'\t'+prev.at(-1);if(trigramIndex.has(k)){a=trigramIndex.get(k);src='trigram'}}if(!a&&prev.length&&bigramIndex.has(prev.at(-1))){a=bigramIndex.get(prev.at(-1));src='bigram'}if(!a)return[];const o=[],seen=new Set();for(const[w,c]of a){if(!isSuggestible(w))continue;if((!partial||w.startsWith(partial))&&!seen.has(w)){seen.add(w);o.push([w,c,src]);if(o.length>=n)break}}return o}
 function esc(s){return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-
-function refresh(){
-  const{prev,partial}=state(editor.value);
-  let items=context(prev,partial,3);
-  if(items.length<3&&partial){const seen=new Set(items.map(x=>x[0]));for(const x of prefix(partial,8)){if(!seen.has(x[0])){items.push(x);seen.add(x[0])}if(items.length===3)break}}
-  if(!editor.value.trim()&&!items.length)items=initial(3);
-
-  suggestionsEl.innerHTML='';
-  if(!items.length)suggestionsEl.innerHTML='<div class="empty">No candidates</div>';
-  else{
-    const ranked=items.map((item,index)=>({item,index}));
-    const shown=ranked.length===3?[ranked[1],ranked[0],ranked[2]]:ranked;
-    for(const entry of shown){
-      const[word,w,src]=entry.item,b=document.createElement('button');
-      b.className='suggestion'+(entry.index===0?' primary':'');
-      b.innerHTML=`<div class="word">${esc(word)}</div><div class="meta">${src} · weight ${w}</div>`;
-      b.onclick=()=>suggest(word);suggestionsEl.appendChild(b)
-    }
-  }
-  const cur=partial||(prev.length?prev.at(-1):''),em=DATA.emoji[cur]||[];
-  statusEl.innerHTML=`<span class="badge">${currentTag}</span><span class="badge">lexicon ${DATA.lexicon.length.toLocaleString()}</span><span class="badge">bigrams ${DATA.bigrams.length.toLocaleString()}</span><span class="badge">trigrams ${DATA.trigrams.length.toLocaleString()}</span>`+(em.length?`<span class="badge">emoji ${em.join(' ')}</span>`:'')
-}
-
+function refresh(){const{prev,partial}=state(editor.value);let items=context(prev,partial,3);if(items.length<3&&partial){const seen=new Set(items.map(x=>x[0]));for(const x of prefix(partial,8)){if(!seen.has(x[0])){items.push(x);seen.add(x[0])}if(items.length===3)break}}if(!editor.value.trim()&&!items.length)items=initial(3);suggestionsEl.innerHTML='';if(!items.length)suggestionsEl.innerHTML='<div class="empty">No candidates</div>';else{const ranked=items.map((item,index)=>({item,index}));const shown=ranked.length===3?[ranked[1],ranked[0],ranked[2]]:ranked;for(const entry of shown){const[word,w,src]=entry.item,b=document.createElement('button');b.className='suggestion'+(entry.index===0?' primary':'');b.innerHTML=`<div class="word">${esc(word)}</div><div class="meta">${src} · weight ${w}</div>`;b.onclick=()=>suggest(word);suggestionsEl.appendChild(b)}}const cur=partial||(prev.length?prev.at(-1):''),em=DATA.emoji[cur]||[];statusEl.innerHTML=`<span class="badge">${currentTag}</span><span class="badge">lexicon ${DATA.lexicon.length.toLocaleString()}</span><span class="badge">bigrams ${DATA.bigrams.length.toLocaleString()}</span><span class="badge">trigrams ${DATA.trigrams.length.toLocaleString()}</span>`+(em.length?`<span class="badge">emoji ${em.join(' ')}</span>`:'')}
 function suggest(w){const t=editor.value;if(/\s$/u.test(t)||!t.trim())editor.value=t+w+' ';else{const m=t.match(/^(.*?)([^\s]*)$/us);editor.value=(m?m[1]:'')+w+' '}editor.focus();refresh()}
 function insert(s){const a=editor.selectionStart??editor.value.length,b=editor.selectionEnd??a;editor.setRangeText(s,a,b,'end');editor.focus();refresh()}
 function backspace(){const a=editor.selectionStart??editor.value.length,b=editor.selectionEnd??a;if(a!==b)editor.setRangeText('',a,b,'end');else if(a>0){const before=editor.value.slice(0,a),x=cps(before);x.pop();const nb=x.join('');editor.value=nb+editor.value.slice(a);editor.selectionStart=editor.selectionEnd=nb.length}editor.focus();refresh()}
 function clearAll(){editor.value='';layer='default';hideLP();render();refresh();editor.focus()}
-function special(t){if(t.includes('shiftSymbols'))return layer==='symbols-1'?'#+=':'123';if(t.includes('shift'))return'⇧';if(t.includes('backspace'))return'⌫';return''}
-
-function activeStaticLayout(){return currentTag==='kk-Cyrl'?CYRL_LAYOUT:LATN_LAYOUT}
 function isArab(){return currentTag==='kk-Arab'}
+function special(t){if(t.includes('shiftSymbols'))return layer==='symbols-1'?'#+=':'123';if(t.includes('shift'))return'⇧';if(t.includes('backspace'))return'⌫';return''}
 
 function token(t){
   if(t.startsWith('\\s{')){
-    if(isArab()&&t.includes('shiftSymbols')){layer=layer==='symbols-1'?'symbols-2':'symbols-1';render();return}
+    if(t.includes('shiftSymbols')){layer=layer==='symbols-1'?'symbols-2':'symbols-1';render();return}
     if(t.includes('shift')){layer=layer==='shift'?'default':'shift';render();return}
     if(t.includes('backspace')){backspace();return}
     return
@@ -132,77 +121,50 @@ function token(t){
   if(layer==='shift'){layer='default';render()}
 }
 
-function showLP(el,t){
-  if(!isArab())return false;
-  const opts=ARAB_LAYOUT.longpress[t];if(!opts?.length)return false;
-  lp.innerHTML='';for(const o of opts){const b=document.createElement('button');b.textContent=o;b.onclick=e=>{e.stopPropagation();hideLP();insert(o)};lp.appendChild(b)}
-  const r=el.getBoundingClientRect();lp.style.left=Math.max(6,Math.min(innerWidth-160,r.left))+'px';lp.style.top=Math.max(6,r.top-58)+'px';lp.classList.add('show');return true
-}
+function showLP(el,t){if(!isArab())return false;const opts=ARAB_LAYOUT.longpress[t];if(!opts?.length)return false;lp.innerHTML='';for(const o of opts){const b=document.createElement('button');b.textContent=o;b.onclick=e=>{e.stopPropagation();hideLP();insert(o)};lp.appendChild(b)}const r=el.getBoundingClientRect();lp.style.left=Math.max(6,Math.min(innerWidth-160,r.left))+'px';lp.style.top=Math.max(6,r.top-58)+'px';lp.classList.add('show');return true}
 function hideLP(){lp.classList.remove('show')}
+function key(t,extra=false){const b=document.createElement('button');b.className='key'+(extra?' extra':'');if(t.startsWith('\\s{spacer')){b.classList.add('spacer');return b}if(t.startsWith('\\s{'))b.classList.add('special');b.textContent=t.startsWith('\\s{')?special(t):t;b.addEventListener('pointerdown',()=>{longPressed=false;longPressTimer=setTimeout(()=>{if(showLP(b,t)){longPressed=true;navigator.vibrate?.(10)}},450)});b.addEventListener('pointerup',()=>{clearTimeout(longPressTimer);if(!longPressed)token(t);longPressed=false});b.addEventListener('pointercancel',()=>clearTimeout(longPressTimer));b.addEventListener('contextmenu',e=>{if(isArab()&&ARAB_LAYOUT.longpress[t]){e.preventDefault();showLP(b,t)}});return b}
 
-function key(t,extra=false){
-  const b=document.createElement('button');b.className='key'+(extra?' extra':'');
-  if(t.startsWith('\\s{spacer')){b.classList.add('spacer');return b}
-  if(t.startsWith('\\s{'))b.classList.add('special');
-  b.textContent=t.startsWith('\\s{')?special(t):t;
-  b.addEventListener('pointerdown',()=>{longPressed=false;longPressTimer=setTimeout(()=>{if(showLP(b,t)){longPressed=true;navigator.vibrate?.(10)}},450)});
-  b.addEventListener('pointerup',()=>{clearTimeout(longPressTimer);if(!longPressed)token(t);longPressed=false});
-  b.addEventListener('pointercancel',()=>clearTimeout(longPressTimer));
-  b.addEventListener('contextmenu',e=>{if(isArab()&&ARAB_LAYOUT.longpress[t]){e.preventDefault();showLP(b,t)}});
-  return b
-}
-
-function appendBottom(includeMode){
+function appendBottom(){
   const b=document.createElement('div');b.className='bottom';
-  if(includeMode){
-    const mode=document.createElement('button');mode.className='wide';
-    if(layer.startsWith('symbols')){mode.textContent=ARAB_LAYOUT.abc||'ABC';mode.onclick=()=>{layer='default';render()}}
-    else{mode.textContent='123';mode.onclick=()=>{layer='symbols-1';render()}}
-    b.appendChild(mode)
-  }
+  const mode=document.createElement('button');mode.className='wide';
+  if(layer.startsWith('symbols')){mode.textContent=isArab()?(ARAB_LAYOUT.abc||'ABC'):'ABC';mode.onclick=()=>{layer='default';render()}}
+  else{mode.textContent='123';mode.onclick=()=>{layer='symbols-1';render()}}
   const sp=document.createElement('button');sp.className='space';sp.textContent='space';sp.onclick=()=>insert(' ');
   const ret=document.createElement('button');ret.className='wide';ret.textContent='↵';ret.onclick=()=>insert('\n');
-  b.append(sp,ret);kb.appendChild(b)
+  b.append(mode,sp,ret);kb.appendChild(b)
 }
 
 function render(){
   kb.innerHTML='';
+
   if(isArab()){
     for(const row of(ARAB_LAYOUT.layers[layer]||ARAB_LAYOUT.layers.default)){const r=document.createElement('div');r.className='row';for(const t of row)r.appendChild(key(t));kb.appendChild(r)}
-    appendBottom(true);
+    appendBottom();
     layoutSource.textContent='Layout source · Agisight/ios-system-keyboard';
     return
   }
 
-  const L=activeStaticLayout();
+  const L=currentTag==='kk-Cyrl'?CYRL_LAYOUT:LATN_LAYOUT;
+
+  if(layer.startsWith('symbols')){
+    for(const row of STATIC_SYMBOLS[layer]){const r=document.createElement('div');r.className='row';for(const t of row)r.appendChild(key(t));kb.appendChild(r)}
+    appendBottom();
+    layoutSource.textContent=L.source;
+    return
+  }
+
   const extras=layer==='shift'?L.extraShift:L.extraDefault;
-  const er=document.createElement('div');er.className='row';
-  for(const t of extras)er.appendChild(key(t,true));
-  kb.appendChild(er);
+  const er=document.createElement('div');er.className='row';for(const t of extras)er.appendChild(key(t,true));kb.appendChild(er);
 
   const rows=layer==='shift'?L.shift:L.default;
   for(const row of rows){const r=document.createElement('div');r.className='row';for(const t of row)r.appendChild(key(t));kb.appendChild(r)}
-  appendBottom(false);
+  appendBottom();
   layoutSource.textContent=L.source
 }
 
-function switchScript(tag){
-  if(!DATASETS[tag])return;
-  currentTag=tag;DATA=DATASETS[tag];const info=SCRIPT_INFO[tag];
-  document.querySelectorAll('.script-tab').forEach(b=>{const active=b.dataset.script===tag;b.classList.toggle('active',active);b.setAttribute('aria-selected',active?'true':'false')});
-  scriptDescription.textContent=info.description;inputLabel.textContent=`INPUT · ${info.name.toUpperCase()}`;
-  editor.dir=info.dir;editor.style.textAlign=info.dir==='rtl'?'right':'left';suggestionsEl.dir=info.dir;
-  editor.value='';layer='default';rebuildIndexes();render();refresh();editor.focus()
-}
-
-editor.addEventListener('input',refresh);
-editor.addEventListener('click',hideLP);
-document.addEventListener('pointerdown',e=>{if(!lp.contains(e.target)&&!e.target.classList.contains('key'))hideLP()});
-document.getElementById('clearAll').onclick=clearAll;
-document.getElementById('addSpace').onclick=()=>insert(' ');
-document.getElementById('backspaceTop').onclick=backspace;
-document.querySelectorAll('.script-tab').forEach(b=>b.onclick=()=>switchScript(b.dataset.script));
-rebuildIndexes();render();refresh();
+function switchScript(tag){if(!DATASETS[tag])return;currentTag=tag;DATA=DATASETS[tag];const info=SCRIPT_INFO[tag];document.querySelectorAll('.script-tab').forEach(b=>{const active=b.dataset.script===tag;b.classList.toggle('active',active);b.setAttribute('aria-selected',active?'true':'false')});scriptDescription.textContent=info.description;inputLabel.textContent=`INPUT · ${info.name.toUpperCase()}`;editor.dir=info.dir;editor.style.textAlign=info.dir==='rtl'?'right':'left';suggestionsEl.dir=info.dir;editor.value='';layer='default';rebuildIndexes();render();refresh();editor.focus()}
+editor.addEventListener('input',refresh);editor.addEventListener('click',hideLP);document.addEventListener('pointerdown',e=>{if(!lp.contains(e.target)&&!e.target.classList.contains('key'))hideLP()});document.getElementById('clearAll').onclick=clearAll;document.getElementById('addSpace').onclick=()=>insert(' ');document.getElementById('backspaceTop').onclick=backspace;document.querySelectorAll('.script-tab').forEach(b=>b.onclick=()=>switchScript(b.dataset.script));rebuildIndexes();render();refresh();
 </script>
 </body>
 </html>

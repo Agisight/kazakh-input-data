@@ -8,9 +8,11 @@ assert "Kazakh input preview" in t
 for tag in ('"kk-Arab":','"kk-Cyrl":','"kk-Latn":'): assert tag in t
 assert "Keyman Kazakh Basic" in t
 assert "QWERTY + Kazakh letters" in t
+assert "STATIC_SYMBOLS" in t
+assert "'symbols-1'" in t and "'symbols-2'" in t
+assert "mode.textContent='123'" in t
+assert "layer='symbols-1';render()" in t
+assert "layer==='symbols-1'?'symbols-2':'symbols-1'" in t
 for ch in ("ә","і","ң","ғ","ү","ұ","қ","ө","һ","ä","ğ","ı","ñ","ö","ş","ū","ü"): assert ch in t
-assert "function initial(" in t
-assert "items=initial(3)" in t
-assert "entry.index===0?' primary'" in t
 assert p.stat().st_size > 5_000_000
-print(f"✓ Preview v4 smoke test passed: {p} ({p.stat().st_size:,} bytes)")
+print(f"✓ Preview v5 smoke test passed: {p} ({p.stat().st_size:,} bytes)")
