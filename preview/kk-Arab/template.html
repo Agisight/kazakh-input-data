@@ -70,7 +70,7 @@ const CYRL_LAYOUT={
 };
 
 const LATN_LAYOUT={
-  source:'Latin preview layout · QWERTY + Kazakh letters · Turkic i/ı casing · edge-aligned controls',
+  source:'Latin preview layout · QWERTY + Kazakh letters · Space accepts highlighted completion',
   extraDefault:['ä','ğ','ı','ñ','ö','ş','ū','ü'],
   extraShift:['Ä','Ğ','I','Ñ','Ö','Ş','Ū','Ü'],
   default:[
@@ -92,7 +92,7 @@ const SCRIPT_INFO={
 };
 
 const editor=document.getElementById('editor'),kb=document.getElementById('keyboard'),suggestionsEl=document.getElementById('suggestions'),statusEl=document.getElementById('status'),lp=document.getElementById('lp'),scriptDescription=document.getElementById('scriptDescription'),inputLabel=document.getElementById('inputLabel'),layoutSource=document.getElementById('layoutSource');
-let currentTag='kk-Arab',DATA=DATASETS[currentTag],layer='default',longPressTimer=null,longPressed=false,bigramIndex=new Map(),trigramIndex=new Map();
+let currentTag='kk-Arab',DATA=DATASETS[currentTag],layer='default',longPressTimer=null,longPressed=false,bigramIndex=new Map(),trigramIndex=new Map(),primaryCandidate=null;
 
 function rebuildIndexes(){bigramIndex=new Map();for(const[a,b,w]of DATA.bigrams){if(!bigramIndex.has(a))bigramIndex.set(a,[]);bigramIndex.get(a).push([b,w])}for(const a of bigramIndex.values())a.sort((x,y)=>x[1]-y[1]);trigramIndex=new Map();for(const[a,b,c,w]of DATA.trigrams){const k=a+'\t'+b;if(!trigramIndex.has(k))trigramIndex.set(k,[]);trigramIndex.get(k).push([c,w])}for(const a of trigramIndex.values())a.sort((x,y)=>x[1]-y[1])}
 function cps(s){return Array.from(s)}
@@ -102,8 +102,16 @@ function initial(n=3){const o=[];for(const[w,c]of DATA.lexicon){if(isSuggestible
 function prefix(p,n=3){if(!p||!isSuggestible(p))return[];const o=[];for(const[w,c]of DATA.lexicon){if(isSuggestible(w)&&w.startsWith(p)&&w!==p){o.push([w,c,'prefix']);if(o.length>=n)break}}return o}
 function context(prev,partial,n=3){let src=null,a=null;if(prev.length>=2){const k=prev.at(-2)+'\t'+prev.at(-1);if(trigramIndex.has(k)){a=trigramIndex.get(k);src='trigram'}}if(!a&&prev.length&&bigramIndex.has(prev.at(-1))){a=bigramIndex.get(prev.at(-1));src='bigram'}if(!a)return[];const o=[],seen=new Set();for(const[w,c]of a){if(!isSuggestible(w))continue;if((!partial||w.startsWith(partial))&&!seen.has(w)){seen.add(w);o.push([w,c,src]);if(o.length>=n)break}}return o}
 function esc(s){return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-function refresh(){const{prev,partial}=state(editor.value);let items=context(prev,partial,3);if(items.length<3&&partial){const seen=new Set(items.map(x=>x[0]));for(const x of prefix(partial,8)){if(!seen.has(x[0])){items.push(x);seen.add(x[0])}if(items.length===3)break}}if(!editor.value.trim()&&!items.length)items=initial(3);suggestionsEl.innerHTML='';if(!items.length)suggestionsEl.innerHTML='<div class="empty">No candidates</div>';else{const ranked=items.map((item,index)=>({item,index}));const shown=ranked.length===3?[ranked[1],ranked[0],ranked[2]]:ranked;for(const entry of shown){const[word,w,src]=entry.item,b=document.createElement('button');b.className='suggestion'+(entry.index===0?' primary':'');b.innerHTML=`<div class="word">${esc(word)}</div><div class="meta">${src} · weight ${w}</div>`;b.onclick=()=>suggest(word);suggestionsEl.appendChild(b)}}const cur=partial||(prev.length?prev.at(-1):''),em=DATA.emoji[cur]||[];statusEl.innerHTML=`<span class="badge">${currentTag}</span><span class="badge">lexicon ${DATA.lexicon.length.toLocaleString()}</span><span class="badge">bigrams ${DATA.bigrams.length.toLocaleString()}</span><span class="badge">trigrams ${DATA.trigrams.length.toLocaleString()}</span>`+(em.length?`<span class="badge">emoji ${em.join(' ')}</span>`:'')}
+function refresh(){const{prev,partial}=state(editor.value);let items=context(prev,partial,3);if(items.length<3&&partial){const seen=new Set(items.map(x=>x[0]));for(const x of prefix(partial,8)){if(!seen.has(x[0])){items.push(x);seen.add(x[0])}if(items.length===3)break}}if(!editor.value.trim()&&!items.length)items=initial(3);primaryCandidate=items.length?items[0][0]:null;suggestionsEl.innerHTML='';if(!items.length)suggestionsEl.innerHTML='<div class="empty">No candidates</div>';else{const ranked=items.map((item,index)=>({item,index}));const shown=ranked.length===3?[ranked[1],ranked[0],ranked[2]]:ranked;for(const entry of shown){const[word,w,src]=entry.item,b=document.createElement('button');b.className='suggestion'+(entry.index===0?' primary':'');b.innerHTML=`<div class="word">${esc(word)}</div><div class="meta">${src} · weight ${w}</div>`;b.onclick=()=>suggest(word);suggestionsEl.appendChild(b)}}const cur=partial||(prev.length?prev.at(-1):''),em=DATA.emoji[cur]||[];statusEl.innerHTML=`<span class="badge">${currentTag}</span><span class="badge">lexicon ${DATA.lexicon.length.toLocaleString()}</span><span class="badge">bigrams ${DATA.bigrams.length.toLocaleString()}</span><span class="badge">trigrams ${DATA.trigrams.length.toLocaleString()}</span>`+(em.length?`<span class="badge">emoji ${em.join(' ')}</span>`:'')}
 function suggest(w){const t=editor.value;if(/\s$/u.test(t)||!t.trim())editor.value=t+w+' ';else{const m=t.match(/^(.*?)([^\s]*)$/us);editor.value=(m?m[1]:'')+w+' '}editor.focus();refresh()}
+function spaceAction(){
+  const {partial}=state(editor.value);
+  if(partial&&primaryCandidate&&primaryCandidate.startsWith(partial)&&primaryCandidate!==partial){
+    suggest(primaryCandidate);
+    return;
+  }
+  insert(' ');
+}
 function insert(s){const a=editor.selectionStart??editor.value.length,b=editor.selectionEnd??a;editor.setRangeText(s,a,b,'end');editor.focus();refresh()}
 function backspace(){const a=editor.selectionStart??editor.value.length,b=editor.selectionEnd??a;if(a!==b)editor.setRangeText('',a,b,'end');else if(a>0){const before=editor.value.slice(0,a),x=cps(before);x.pop();const nb=x.join('');editor.value=nb+editor.value.slice(a);editor.selectionStart=editor.selectionEnd=nb.length}editor.focus();refresh()}
 function clearAll(){editor.value='';layer='default';hideLP();render();refresh();editor.focus()}
@@ -146,7 +154,7 @@ function appendBottom(){
     mode.textContent='123';
     mode.onclick=()=>setLayer('symbols-1')
   }
-  const sp=document.createElement('button');sp.className='space';sp.textContent='space';sp.onclick=()=>insert(' ');
+  const sp=document.createElement('button');sp.className='space';sp.textContent='space';sp.onclick=spaceAction;
   const ret=document.createElement('button');ret.className='wide return-bottom';ret.textContent='↵';ret.onclick=()=>insert('\n');
   b.append(mode,sp,ret);kb.appendChild(b)
 }
@@ -180,7 +188,7 @@ function render(){
 }
 
 function switchScript(tag){if(!DATASETS[tag])return;currentTag=tag;DATA=DATASETS[tag];const info=SCRIPT_INFO[tag];document.querySelectorAll('.script-tab').forEach(b=>{const active=b.dataset.script===tag;b.classList.toggle('active',active);b.setAttribute('aria-selected',active?'true':'false')});scriptDescription.textContent=info.description;inputLabel.textContent=`INPUT · ${info.name.toUpperCase()}`;editor.dir=info.dir;editor.style.textAlign=info.dir==='rtl'?'right':'left';suggestionsEl.dir=info.dir;editor.value='';layer='default';rebuildIndexes();render();refresh();editor.focus()}
-editor.addEventListener('input',refresh);editor.addEventListener('click',hideLP);document.addEventListener('pointerdown',e=>{if(!lp.contains(e.target)&&!e.target.classList.contains('key'))hideLP()});document.getElementById('clearAll').onclick=clearAll;document.getElementById('addSpace').onclick=()=>insert(' ');document.getElementById('backspaceTop').onclick=backspace;document.querySelectorAll('.script-tab').forEach(b=>b.onclick=()=>switchScript(b.dataset.script));rebuildIndexes();render();refresh();
+editor.addEventListener('input',refresh);editor.addEventListener('keydown',e=>{if(e.key===' '){const{partial}=state(editor.value);if(partial&&primaryCandidate&&primaryCandidate.startsWith(partial)&&primaryCandidate!==partial){e.preventDefault();spaceAction()}}});editor.addEventListener('click',hideLP);document.addEventListener('pointerdown',e=>{if(!lp.contains(e.target)&&!e.target.classList.contains('key'))hideLP()});document.getElementById('clearAll').onclick=clearAll;document.getElementById('addSpace').onclick=spaceAction;document.getElementById('backspaceTop').onclick=backspace;document.querySelectorAll('.script-tab').forEach(b=>b.onclick=()=>switchScript(b.dataset.script));rebuildIndexes();render();refresh();
 </script>
 </body>
 </html>
