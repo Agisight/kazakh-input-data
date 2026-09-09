@@ -11,11 +11,11 @@
 .script-switch{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:14px}.script-tab{border:1px solid var(--border);background:var(--panel);color:var(--text);border-radius:11px;padding:9px 8px;cursor:pointer;font-weight:600;text-align:center}.script-tab small{display:block;font-size:10px;color:var(--muted);font-weight:500;margin-top:2px}.script-tab.active{background:var(--text);color:var(--panel);border-color:var(--text)}.script-tab.active small{color:inherit;opacity:.72}
 .editor-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:6px}.editor-label{font-size:12px;color:var(--muted);font-weight:600}.clear-all{border:1px solid var(--border);background:transparent;color:var(--text);border-radius:9px;padding:6px 10px;cursor:pointer;font-size:12px}textarea{width:100%;min-height:110px;resize:vertical;border:0;outline:0;background:transparent;color:var(--text);font-size:27px;line-height:1.55;padding:4px}.controls{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.controls button{border:1px solid var(--border);background:var(--panel);color:var(--text);border-radius:8px;padding:7px 12px;cursor:pointer}
 .suggestions{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;min-height:56px}.suggestion{border:1px solid transparent;border-radius:11px;background:var(--key);color:var(--text);box-shadow:0 1px 2px var(--border);padding:7px 8px;cursor:pointer;min-width:0}.suggestion .word{font-size:20px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.suggestion .meta{font-size:10px;color:var(--muted);margin-top:2px}.suggestion.primary{border-color:var(--border);background:color-mix(in srgb,var(--key) 94%,var(--text) 6%)}.suggestion.primary .word{font-weight:700}.empty{display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:13px;grid-column:1/-1}.status{display:flex;gap:10px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-top:10px}.badge{padding:4px 7px;border-radius:999px;background:var(--bg)}
-.keyboard{user-select:none;-webkit-user-select:none;touch-action:manipulation}.row{display:flex;gap:6px;justify-content:center;margin:6px 0}.key{position:relative;flex:1 1 0;max-width:76px;min-width:30px;height:50px;border:1px solid var(--border);border-radius:7px;background:var(--key);color:var(--text);box-shadow:0 1px 2px rgba(0,0,0,.18);font-size:23px;cursor:pointer}.key.special{background:var(--key2);font-size:17px}.key.extra{background:color-mix(in srgb,var(--key) 92%,var(--text) 8%);font-size:20px}.key.shift-key{flex:0 0 72px;max-width:72px;margin-right:12px}.key.backspace-key{flex:0 0 72px;max-width:72px;margin-left:12px}.key.mode-key{flex:0 0 82px;max-width:82px;margin-right:12px}.key.spacer{visibility:hidden;pointer-events:none;max-width:22px}.key:active,.key.active{transform:translateY(1px);filter:brightness(.94)}
-.bottom{display:flex;gap:7px;margin-top:7px}.bottom button{height:46px;border:1px solid var(--border);border-radius:8px;background:var(--key2);color:var(--text);font-size:16px;box-shadow:0 1px 2px rgba(0,0,0,.14)}.bottom .wide{flex:1}.bottom .space{flex:3;background:var(--key);font-weight:500}.bottom .space:active{transform:translateY(1px);filter:brightness(.94)}
+.keyboard{user-select:none;-webkit-user-select:none;touch-action:manipulation}.row{display:flex;width:100%;gap:6px;justify-content:center;margin:6px 0}.key{position:relative;flex:1 1 0;max-width:76px;min-width:30px;height:50px;border:1px solid var(--border);border-radius:7px;background:var(--key);color:var(--text);box-shadow:0 1px 2px rgba(0,0,0,.18);font-size:23px;cursor:pointer}.key.special{background:var(--key2);font-size:17px}.key.extra{background:color-mix(in srgb,var(--key) 92%,var(--text) 8%);font-size:20px}.key.shift-key{flex:0 0 72px;max-width:72px}.key.backspace-key{flex:0 0 72px;max-width:72px}.key.mode-key{flex:0 0 82px;max-width:82px}.row.edge-row .shift-key,.row.edge-row .mode-key{margin-right:auto}.row.edge-row .backspace-key{margin-left:auto}.key.spacer{visibility:hidden;pointer-events:none;max-width:22px}.key:active,.key.active{transform:translateY(1px);filter:brightness(.94)}
+.bottom{display:flex;gap:7px;margin-top:7px}.bottom button{height:46px;border:1px solid var(--border);border-radius:8px;background:var(--key2);color:var(--text);font-size:16px;box-shadow:0 1px 2px rgba(0,0,0,.14)}.bottom .wide{flex:1}.bottom .mode-bottom{flex:0 0 96px}.bottom .return-bottom{flex:0 0 96px}.bottom .space{flex:1;background:var(--key);font-weight:500}.bottom .space:active{transform:translateY(1px);filter:brightness(.94)}
 .layout-source{text-align:center;color:var(--muted);font-size:10px;margin-top:7px}
 .lp{position:fixed;z-index:20;display:none;background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:6px;box-shadow:0 8px 28px rgba(0,0,0,.28);gap:5px}.lp.show{display:flex}.lp button{min-width:44px;height:44px;border:0;border-radius:7px;background:var(--key);font-size:22px;color:var(--text)}
-@media(max-width:560px){.app{padding:10px}.panel{padding:10px}.row{gap:3px}.key{height:44px;min-width:22px;font-size:18px}.key.extra{font-size:17px}.key.shift-key{flex-basis:52px;max-width:52px;margin-right:6px}.key.backspace-key{flex-basis:52px;max-width:52px;margin-left:6px}.key.mode-key{flex-basis:64px;max-width:64px;margin-right:6px}.suggestion .word{font-size:17px}.script-tab{padding:8px 4px;font-size:13px}}
+@media(max-width:560px){.app{padding:10px}.panel{padding:10px}.row{gap:3px}.key{height:44px;min-width:22px;font-size:18px}.key.extra{font-size:17px}.key.shift-key{flex-basis:52px;max-width:52px}.key.backspace-key{flex-basis:52px;max-width:52px}.key.mode-key{flex-basis:64px;max-width:64px}.bottom .mode-bottom,.bottom .return-bottom{flex-basis:72px}.suggestion .word{font-size:17px}.script-tab{padding:8px 4px;font-size:13px}}
 </style>
 </head>
 <body>
@@ -70,7 +70,7 @@ const CYRL_LAYOUT={
 };
 
 const LATN_LAYOUT={
-  source:'Latin preview layout · QWERTY + Kazakh letters · Turkic i/ı casing',
+  source:'Latin preview layout · QWERTY + Kazakh letters · Turkic i/ı casing · edge-aligned controls',
   extraDefault:['ä','ğ','ı','ñ','ö','ş','ū','ü'],
   extraShift:['Ä','Ğ','I','Ñ','Ö','Ş','Ū','Ü'],
   default:[
@@ -127,9 +127,18 @@ function showLP(el,t){if(!isArab())return false;const opts=ARAB_LAYOUT.longpress
 function hideLP(){lp.classList.remove('show')}
 function key(t,extra=false){const b=document.createElement('button');b.className='key'+(extra?' extra':'');if(t.startsWith('\\s{spacer')){b.classList.add('spacer');return b}if(t.startsWith('\\s{')){b.classList.add('special');if(t.includes('shiftSymbols'))b.classList.add('mode-key');else if(t.includes('shift'))b.classList.add('shift-key');else if(t.includes('backspace'))b.classList.add('backspace-key')}b.textContent=t.startsWith('\\s{')?special(t):t;b.addEventListener('pointerdown',()=>{longPressed=false;longPressTimer=setTimeout(()=>{if(showLP(b,t)){longPressed=true;navigator.vibrate?.(10)}},450)});b.addEventListener('pointerup',()=>{clearTimeout(longPressTimer);if(!longPressed)token(t);longPressed=false});b.addEventListener('pointercancel',()=>clearTimeout(longPressTimer));b.addEventListener('contextmenu',e=>{if(isArab()&&ARAB_LAYOUT.longpress[t]){e.preventDefault();showLP(b,t)}});return b}
 
+function renderRow(tokens){
+  const r=document.createElement('div');
+  r.className='row';
+  const first=tokens[0]||'',last=tokens[tokens.length-1]||'';
+  if((first.includes('shift')||first.includes('shiftSymbols'))&&last.includes('backspace'))r.classList.add('edge-row');
+  for(const tok of tokens)r.appendChild(key(tok));
+  kb.appendChild(r);
+}
+
 function appendBottom(){
   const b=document.createElement('div');b.className='bottom';
-  const mode=document.createElement('button');mode.className='wide';mode.dataset.role='layer-mode';
+  const mode=document.createElement('button');mode.className='wide mode-bottom';mode.dataset.role='layer-mode';
   if(layer.startsWith('symbols')){
     mode.textContent=isArab()?(ARAB_LAYOUT.abc||'ABC'):'ABC';
     mode.onclick=()=>setLayer('default')
@@ -138,7 +147,7 @@ function appendBottom(){
     mode.onclick=()=>setLayer('symbols-1')
   }
   const sp=document.createElement('button');sp.className='space';sp.textContent='space';sp.onclick=()=>insert(' ');
-  const ret=document.createElement('button');ret.className='wide';ret.textContent='↵';ret.onclick=()=>insert('\n');
+  const ret=document.createElement('button');ret.className='wide return-bottom';ret.textContent='↵';ret.onclick=()=>insert('\n');
   b.append(mode,sp,ret);kb.appendChild(b)
 }
 
@@ -146,7 +155,7 @@ function render(){
   kb.innerHTML='';
 
   if(isArab()){
-    for(const row of(ARAB_LAYOUT.layers[layer]||ARAB_LAYOUT.layers.default)){const r=document.createElement('div');r.className='row';for(const t of row)r.appendChild(key(t));kb.appendChild(r)}
+    for(const row of(ARAB_LAYOUT.layers[layer]||ARAB_LAYOUT.layers.default))renderRow(row)
     appendBottom();
     layoutSource.textContent='Layout source · Agisight/ios-system-keyboard';
     return
@@ -155,7 +164,7 @@ function render(){
   const L=currentTag==='kk-Cyrl'?CYRL_LAYOUT:LATN_LAYOUT;
 
   if(layer.startsWith('symbols')){
-    for(const row of STATIC_SYMBOLS[layer]){const r=document.createElement('div');r.className='row';for(const t of row)r.appendChild(key(t));kb.appendChild(r)}
+    for(const row of STATIC_SYMBOLS[layer])renderRow(row)
     appendBottom();
     layoutSource.textContent=L.source;
     return
@@ -165,7 +174,7 @@ function render(){
   const er=document.createElement('div');er.className='row';for(const t of extras)er.appendChild(key(t,true));kb.appendChild(er);
 
   const rows=layer==='shift'?L.shift:L.default;
-  for(const row of rows){const r=document.createElement('div');r.className='row';for(const t of row)r.appendChild(key(t));kb.appendChild(r)}
+  for(const row of rows)renderRow(row)
   appendBottom();
   layoutSource.textContent=L.source
 }
