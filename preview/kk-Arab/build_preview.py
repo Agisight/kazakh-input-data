@@ -57,6 +57,26 @@ def read_layout(keyboard_repo):
     }
 
 
+def read_macos_layout(keyboard_repo):
+    path = keyboard_repo / "layout" / "kaz" / "kaz-latn-macos-experimental.yaml"
+    data = load_yaml(path)
+    layers = data["macOS"]["primary"]["layers"]
+    names = data.get("displayNames") or {}
+    return {
+        "source_repository": "Agisight/ios-system-keyboard",
+        "source_path": "layout/kaz/kaz-latn-macos-experimental.yaml",
+        "display_name": names.get("kaz") or names.get("en") or "Kazakh Latin",
+        "display_name_en": names.get("en") or "Kazakh Latin",
+        "label": data.get("label") or "Experimental",
+        "keylayout_file": "kaz-latn-experimental.keylayout",
+        "layers": {
+            key: rows(value)
+            for key, value in layers.items()
+            if isinstance(value, str)
+        },
+    }
+
+
 def read_script_data(tag):
     data_root = REPO_ROOT / "data" / tag
 
@@ -105,6 +125,10 @@ def main():
     html = html.replace(
         "__LAYOUT__",
         json.dumps(read_layout(args.keyboard_repo), ensure_ascii=False, separators=(",", ":")),
+    )
+    html = html.replace(
+        "__MACOS_LAYOUT__",
+        json.dumps(read_macos_layout(args.keyboard_repo), ensure_ascii=False, separators=(",", ":")),
     )
     html = html.replace(
         "__DATASETS__",

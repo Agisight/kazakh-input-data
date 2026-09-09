@@ -1,8 +1,14 @@
 # Preview
 
-`kk-Arab/` contains the interactive keyboard/data preview for the Arabic-script
-dataset. It reads the keyboard layout from the separate
-`Agisight/ios-system-keyboard` repository.
+`kk-Arab/` contains the shared interactive preview for the Kazakh Arabic,
+Cyrillic and Latin datasets.
 
-Equivalent keyboard previews for `kk-Cyrl` and `kk-Latn` can be added when their
-layout specifications are available in the keyboard-layout repository.
+Keyboard layout sources stay in the separate `Agisight/ios-system-keyboard`
+repository. The preview reads the Arabic mobile layout and the experimental
+Kazakh Latin macOS layout from that repository at build time. CI also builds
+and publishes the generated `kaz-latn-experimental.keylayout` file with the
+GitHub Pages artifact.
+
+The Cyrillic on-screen keyboard remains an adaptation of Keyman Kazakh Basic;
+the Latin on-screen keyboard remains experimental. The macOS desktop layout is
+also explicitly experimental and is not presented as a finalized standard.

@@ -60,6 +60,13 @@ jobs:
             --keyboard-repo _keyboard \
             --output preview/kk-Arab/dist/index.html
 
+      - name: Build Kazakh Latin macOS layout
+        run: |
+          python _keyboard/scripts/build_keylayout.py --lang kaz
+          mkdir -p preview/kk-Arab/dist/keylayout
+          cp _keyboard/dist/keylayout/kaz-latn-experimental.keylayout \
+            preview/kk-Arab/dist/keylayout/kaz-latn-experimental.keylayout
+
       - name: Smoke-test generated preview
         run: python tools/check_preview.py preview/kk-Arab/dist/index.html
 

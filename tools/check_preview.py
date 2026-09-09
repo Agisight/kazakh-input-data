@@ -6,8 +6,11 @@ p=Path(sys.argv[1])
 t=p.read_text(encoding="utf-8")
 
 assert "<!doctype html>" in t.lower()
-assert "__LAYOUT__" not in t and "__DATASETS__" not in t
+assert "__LAYOUT__" not in t and "__MACOS_LAYOUT__" not in t and "__DATASETS__" not in t
 assert "Kazakh input preview" in t
+assert "const MACOS_LAYOUT=" in t
+assert "kaz-latn-experimental.keylayout" in t
+assert (p.parent / "keylayout" / "kaz-latn-experimental.keylayout").is_file()
 
 for tag in ('"kk-Arab":','"kk-Cyrl":','"kk-Latn":'):
     assert tag in t
