@@ -7,7 +7,7 @@
     "entries": 58632,
     "weight_range": [
       37,
-      254
+      236
     ],
     "fst_type": "compact_tiny_acceptor_l8w8s24_unweighted_arc",
     "arc_type": "standard",
@@ -59,21 +59,27 @@
       "41": "ۇ",
       "42": "ۋ",
       "43": "ە"
-    }
+    },
+    "state_id_policy": "Existing canonical state_id values retained as stable token identifiers; refreshed v2 ranking weights joined by normalized token."
   },
   "ngrams": {
     "magic_hex": "0d8a0389",
-    "source_words_with_bigram_data": 8473,
-    "bigrams": 60000,
-    "trigram_continuations": 61160,
+    "source_words_with_bigram_data": 9093,
+    "bigrams": 60833,
+    "trigram_continuations": 73645,
     "bigram_weight_range": [
       0,
-      145
+      146
     ],
     "trigram_weight_range": [
       1,
       116
-    ]
+    ],
+    "merge_strategy": "Refreshed v2 context is authoritative when present; v1 is retained only for contexts absent entirely from v2.",
+    "v2_primary_bigrams": 60000,
+    "v1_fallback_bigrams": 833,
+    "v2_primary_trigrams": 70000,
+    "v1_fallback_trigrams": 3645
   },
   "emoji": {
     "magic_hex": "0d8a0389",
@@ -83,7 +89,8 @@
     "unique_words": 25,
     "unique_word_emoji_pairs": 25,
     "distinct_emojis_used": 17,
-    "special_or_nonmapping_records": 0
+    "special_or_nonmapping_records": 0,
+    "policy": "Existing emoji inventory and word-to-emoji mappings retained unchanged."
   },
   "weight_note": "Weights are raw source ranking/cost values, not verified corpus frequencies or probabilities."
 }

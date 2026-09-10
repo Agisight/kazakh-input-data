@@ -6,18 +6,18 @@
   },
   {
     "path": "README.kk.md",
-    "bytes": 1928,
-    "sha256": "32f8feeb4ca94b8eaf0b02be5b555368fe39138fc42daebb9e8dd7b379c62a37"
+    "bytes": 4816,
+    "sha256": "c78b79f3f27475f0414066074aed647a4b0ab41a6d08533862360b0d0c5c28b7"
   },
   {
     "path": "README.md",
-    "bytes": 2048,
-    "sha256": "b1a372684c1df88c8712d4da14ee01ced9700a57c87b866b6794f13dc0b8642a"
+    "bytes": 3648,
+    "sha256": "4c12b8fa84f7ad3598bdc27f5f8badf1f5622cdba0361cc407d49a9836be05fd"
   },
   {
     "path": "README.ru.md",
-    "bytes": 1956,
-    "sha256": "087441c531ee5647f40fde21ed04a3da9b563ce1bddc1f6ab82925564f3747fb"
+    "bytes": 4751,
+    "sha256": "4b9b0c50c4be446371096c6f3c435fcf9579da61c282b9019e2bf70c9ecfb3d6"
   },
   {
     "path": "data/kk-Arab/emoji/emoji_inventory.tsv",
@@ -41,13 +41,13 @@
   },
   {
     "path": "data/kk-Arab/lexicon/lexicon.jsonl",
-    "bytes": 3642837,
-    "sha256": "d3d9753fd04335382eab85ff528db5fd6d86848145f927d6a90020a53c3b5ec0"
+    "bytes": 3642832,
+    "sha256": "bef4935e8bc9750962b534dccfd0bdfed9beadca179e7b7ce54f175424b8e998"
   },
   {
     "path": "data/kk-Arab/lexicon/lexicon.tsv",
-    "bytes": 1473475,
-    "sha256": "f182630c35f000368931d8ee37fd4feac5641760b4d9b9977358a4385208774f"
+    "bytes": 1473470,
+    "sha256": "96c6da6d3a9b845186c0e25ab103028fe3f6418c294948227e9372c695795fc4"
   },
   {
     "path": "data/kk-Arab/lexicon/lexicon.txt",
@@ -56,18 +56,18 @@
   },
   {
     "path": "data/kk-Arab/metadata/metadata.json",
-    "bytes": 1789,
-    "sha256": "d146dc9cf76830a10074ad076df902e087aa8497269ab702d2e87f14d263dd72"
+    "bytes": 2302,
+    "sha256": "8802eb6736c6d6c18243e84d56607baf63edd5c58f0b46a829913dfea6b50fe6"
   },
   {
     "path": "data/kk-Arab/ngrams/bigrams.tsv",
-    "bytes": 1523952,
-    "sha256": "3a981fb13737469ac7694cf25ba660a3263bef8d6b99540cad44fac195d589b8"
+    "bytes": 1551473,
+    "sha256": "dd868e20baf8f0d7001cfe74edcb7db9037b18052c0362072a8c62bc3c307ef9"
   },
   {
     "path": "data/kk-Arab/ngrams/trigrams.tsv",
-    "bytes": 2152976,
-    "sha256": "4785d6b967c8a0a8d8193b142039345151ae57b2a44600aa20015a5c2825a47b"
+    "bytes": 2605296,
+    "sha256": "1e99920ffd865bd4a03173c3f2619ddf58d1f06eba35ea9d374a677d8ba4c8da"
   },
   {
     "path": "data/kk-Cyrl/emoji/emoji_inventory.tsv",
@@ -172,17 +172,17 @@
   {
     "path": "metadata.json",
     "bytes": 620,
-    "sha256": "21494641da89a8e0cd7ea3f6e0be09eb8d3a65bf4f46d5808c45bfe76e8cfc76"
+    "sha256": "16f85b59cfaa5725cc851b5ee783cadf496ddf45a808241309461ae8a3cc4760"
   },
   {
     "path": "preview/README.md",
-    "bytes": 343,
-    "sha256": "e0785bccd1270a5604ff303442ce83fb94e5c924380b54fcf544b059fa5ce89c"
+    "bytes": 676,
+    "sha256": "45cd85f238b3c2b3caaa3b9fa2f1a8977c30a677b4f48f835da455fd22736259"
   },
   {
     "path": "preview/kk-Arab/build_preview.py",
-    "bytes": 2766,
-    "sha256": "c778d26d7efee0acd0b09f4bbc32081b6ca48007e8ee58f769e75d47d539197a"
+    "bytes": 4709,
+    "sha256": "771a827f4de0a058340da42a82e2dfad48d91dec674df0e98b621aa1bb8792f0"
   },
   {
     "path": "preview/kk-Arab/layout-snapshot.json",
@@ -191,8 +191,8 @@
   },
   {
     "path": "preview/kk-Arab/template.html",
-    "bytes": 10164,
-    "sha256": "83d7a7a47ec26dd91b906c6df216b453ec507a64b13e605eb516c060b115b012"
+    "bytes": 23412,
+    "sha256": "bf4ac5785f6f0982c627032c5ddeec123d8f89563aed35ab81e5b8d4fa3d5e55"
   },
   {
     "path": "tools/README.md",

@@ -14,7 +14,7 @@ Language data for Kazakh input methods and NLP across three scripts:
 
 | Script | Lexicon | Bigrams | Trigrams | Word→emoji |
 | --- | ---: | ---: | ---: | ---: |
-| `kk-Arab` | 58,632 | 60,000 | 61,160 | 25 |
+| `kk-Arab` | 58,632 | 60,833 | 73,645 | 25 |
 | `kk-Cyrl` | 90,052 | 40,002 | 4,861 | 244 |
 | `kk-Latn` | 45,073 | 7,384 | 982 | 244 |
 
