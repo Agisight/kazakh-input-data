@@ -10,8 +10,8 @@
   "scripts_summary": {
     "kk-Arab": {
       "lexicon_entries": 58632,
-      "bigrams": 60000,
-      "trigram_continuations": 61160,
+      "bigrams": 60833,
+      "trigram_continuations": 73645,
       "word_to_emoji_records": 25
     },
     "kk-Cyrl": {
