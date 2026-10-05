@@ -342,7 +342,7 @@ function installMacPreviewV2(){
   for(const g of geometries){
     const b=document.createElement('button');b.dataset.geometry=g;
     const l=MACOS_LAYOUTS.layouts[g];
-    b.textContent=`${g.toUpperCase()}${l?.recommended?' · default':' · optional'}`;
+    b.textContent=`${g.toUpperCase()}${l?.recommended?' · primary':' · optional'}`;
     b.onclick=()=>{selectedGeometry=g;selectedLayer='default';buildLayerSwitch();draw()};
     geometrySwitch.appendChild(b);
   }
@@ -362,7 +362,7 @@ function installMacPreviewV2(){
   function showDesktop(){
     currentTag='desktop';regularPanels.forEach(p=>p.style.display='none');desktop.classList.add('show');
     document.querySelectorAll('.script-tab').forEach(b=>{const active=b.dataset.script==='desktop';b.classList.toggle('active',active);b.setAttribute('aria-selected',active?'true':'false')});
-    scriptDescription.textContent='Desktop layout · macOS · ISO default / ANSI optional';
+    scriptDescription.textContent='Desktop layout · macOS · ISO primary / ANSI optional';
   }
   function showMobile(){regularPanels.forEach(p=>p.style.display='');desktop.classList.remove('show')}
   document.querySelectorAll('.script-tab').forEach(b=>b.addEventListener('click',()=>{if(b.dataset.script==='desktop')showDesktop();else showMobile()}));
