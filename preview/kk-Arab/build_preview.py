@@ -57,24 +57,64 @@ def read_layout(keyboard_repo):
     }
 
 
-def read_macos_layout(keyboard_repo):
-    path = keyboard_repo / "layout" / "kaz" / "kaz-latn-macos-experimental.yaml"
+def read_macos_layout_file(keyboard_repo, filename, keylayout_file):
+    path = keyboard_repo / "layout" / "kaz" / filename
     data = load_yaml(path)
     layers = data["macOS"]["primary"]["layers"]
     names = data.get("displayNames") or {}
+    geometry = str(data.get("geometry") or "ISO").lower()
     return {
         "source_repository": "Agisight/ios-system-keyboard",
-        "source_path": "layout/kaz/kaz-latn-macos-experimental.yaml",
+        "source_path": f"layout/kaz/{filename}",
         "display_name": names.get("kaz") or names.get("en") or "Kazakh Latin",
         "display_name_en": names.get("en") or "Kazakh Latin",
         "label": data.get("label") or "Experimental",
-        "keylayout_file": "kaz-latn-experimental.keylayout",
+        "geometry": geometry,
+        "recommended": bool(data.get("recommended")),
+        "keylayout_file": keylayout_file,
         "layers": {
             key: rows(value)
             for key, value in layers.items()
             if isinstance(value, str)
         },
     }
+
+
+def read_macos_layouts(keyboard_repo):
+    specs = (
+        ("iso", "kaz-latn-macos-iso-experimental.yaml", "kaz-latn-iso-experimental.keylayout"),
+        ("ansi", "kaz-latn-macos-ansi-experimental.yaml", "kaz-latn-ansi-experimental.keylayout"),
+    )
+    layouts = {}
+    for key, filename, keylayout_file in specs:
+        path = keyboard_repo / "layout" / "kaz" / filename
+        if path.exists():
+            layouts[key] = read_macos_layout_file(keyboard_repo, filename, keylayout_file)
+
+    if not layouts:
+        old = keyboard_repo / "layout" / "kaz" / "kaz-latn-macos-experimental.yaml"
+        if old.exists():
+            layouts["iso"] = read_macos_layout_file(
+                keyboard_repo,
+                "kaz-latn-macos-experimental.yaml",
+                "kaz-latn-experimental.keylayout",
+            )
+            layouts["iso"]["geometry"] = "iso"
+            layouts["iso"]["recommended"] = True
+
+    if not layouts:
+        raise FileNotFoundError("No Kazakh Latin macOS desktop layout found")
+
+    default_geometry = next(
+        (key for key, value in layouts.items() if value.get("recommended")),
+        next(iter(layouts)),
+    )
+    return {"default_geometry": default_geometry, "layouts": layouts}
+
+
+def read_macos_layout(keyboard_repo):
+    layouts = read_macos_layouts(keyboard_repo)
+    return layouts["layouts"][layouts["default_geometry"]]
 
 
 def read_script_data(tag):
@@ -126,9 +166,18 @@ def main():
         "__LAYOUT__",
         json.dumps(read_layout(args.keyboard_repo), ensure_ascii=False, separators=(",", ":")),
     )
+    macos_layouts = read_macos_layouts(args.keyboard_repo)
     html = html.replace(
         "__MACOS_LAYOUT__",
-        json.dumps(read_macos_layout(args.keyboard_repo), ensure_ascii=False, separators=(",", ":")),
+        json.dumps(
+            macos_layouts["layouts"][macos_layouts["default_geometry"]],
+            ensure_ascii=False,
+            separators=(",", ":"),
+        ),
+    )
+    html = html.replace(
+        "__MACOS_LAYOUTS__",
+        json.dumps(macos_layouts, ensure_ascii=False, separators=(",", ":")),
     )
     html = html.replace(
         "__DATASETS__",

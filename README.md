@@ -131,6 +131,10 @@ be selected explicitly.
   **Kazakh Basic** touch layout.
 - **Latin (`kk-Latn`)** — currently uses an experimental preview layout based on
   standard QWERTY with an additional row for Kazakh Latin letters.
+- **Desktop macOS (`kk-Latn`)** — uses experimental hardware adaptations from
+  `Agisight/ios-system-keyboard`: ISO is the primary experimental geometry and
+  ANSI is an optional adaptation for ANSI hardware. The underlying letter order
+  is based on a government-published Kazakh Latin keyboard proposal from 2021.
 
 The Latin layout is **not a finalized or standardized Kazakh Latin keyboard**.
 Its alphabet, character set, casing and key placement require further research
