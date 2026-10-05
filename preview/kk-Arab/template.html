@@ -31,7 +31,7 @@
 <div class="panel">
 <div class="editor-head"><div class="editor-label" id="inputLabel">INPUT · ARABIC</div><button class="clear-all" id="clearAll">Clear all</button></div>
 <textarea id="editor" dir="rtl" spellcheck="false" placeholder="…"></textarea>
-<div class="controls"><button id="addSpace">Space</button><button id="backspaceTop">⌫</button></div>
+<div class="controls"><button id="backspaceTop">⌦</button><button id="addSpace">Space</button></div>
 </div>
 <div class="panel"><div id="suggestions" class="suggestions" dir="rtl"></div><div id="status" class="status"></div></div>
 <div class="panel keyboard"><div id="keyboard"></div><div id="layoutSource" class="layout-source"></div></div>
@@ -119,7 +119,7 @@ function insert(s){const a=editor.selectionStart??editor.value.length,b=editor.s
 function backspace(){const a=editor.selectionStart??editor.value.length,b=editor.selectionEnd??a;if(a!==b)editor.setRangeText('',a,b,'end');else if(a>0){const before=editor.value.slice(0,a),x=cps(before);x.pop();const nb=x.join('');editor.value=nb+editor.value.slice(a);editor.selectionStart=editor.selectionEnd=nb.length}editor.focus();refresh()}
 function clearAll(){editor.value='';layer='default';hideLP();render();refresh();editor.focus()}
 function isArab(){return currentTag==='kk-Arab'}
-function special(t){if(t.includes('shiftSymbols'))return layer==='symbols-1'?'#+=':'123';if(t.includes('shift'))return'⇧';if(t.includes('backspace'))return'⌫';return''}
+function special(t){if(t.includes('shiftSymbols'))return layer==='symbols-1'?'#+=':'123';if(t.includes('shift'))return'⇧';if(t.includes('backspace'))return isArab()?'⌦':'⌫';return''}
 
 function setLayer(next){layer=next;render()}
 function alphabetLayer(){return layer==='shift'?'shift':'default'}
@@ -190,7 +190,7 @@ function render(){
   layoutSource.textContent=L.source
 }
 
-function switchScript(tag){if(!DATASETS[tag])return;currentTag=tag;DATA=DATASETS[tag];const info=SCRIPT_INFO[tag];document.querySelectorAll('.script-tab').forEach(b=>{const active=b.dataset.script===tag;b.classList.toggle('active',active);b.setAttribute('aria-selected',active?'true':'false')});scriptDescription.textContent=info.description;inputLabel.textContent=`INPUT · ${info.name.toUpperCase()}`;editor.dir=info.dir;editor.style.textAlign=info.dir==='rtl'?'right':'left';suggestionsEl.dir=info.dir;editor.value='';layer='default';rebuildIndexes();render();refresh();editor.focus()}
+function switchScript(tag){if(!DATASETS[tag])return;currentTag=tag;DATA=DATASETS[tag];const info=SCRIPT_INFO[tag];document.querySelectorAll('.script-tab').forEach(b=>{const active=b.dataset.script===tag;b.classList.toggle('active',active);b.setAttribute('aria-selected',active?'true':'false')});scriptDescription.textContent=info.description;inputLabel.textContent=`INPUT · ${info.name.toUpperCase()}`;editor.dir=info.dir;editor.style.textAlign=info.dir==='rtl'?'right':'left';document.querySelector('.controls').style.display=tag==='kk-Arab'?'flex':'none';suggestionsEl.dir=info.dir;editor.value='';layer='default';rebuildIndexes();render();refresh();editor.focus()}
 
 function installMacPreviewV2(){
   const style=document.createElement('style');
