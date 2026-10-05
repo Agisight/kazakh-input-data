@@ -26,7 +26,7 @@
 <button class="script-tab active" data-script="kk-Arab" role="tab">Arabic<small>kk-Arab</small></button>
 <button class="script-tab" data-script="kk-Cyrl" role="tab">Cyrillic<small>kk-Cyrl</small></button>
 <button class="script-tab" data-script="kk-Latn" role="tab">Latin<small>kk-Latn</small></button>
-<button class="script-tab" data-script="desktop" role="tab">Desktop<small>macOS</small></button>
+<button class="script-tab" data-script="desktop" role="tab">Desktop<small>macOS · ISO/ANSI</small></button>
 </div>
 <div class="panel">
 <div class="editor-head"><div class="editor-label" id="inputLabel">INPUT · ARABIC</div><button class="clear-all" id="clearAll">Clear all</button></div>
@@ -40,6 +40,7 @@
 <script>
 const ARAB_LAYOUT=__LAYOUT__;
 const MACOS_LAYOUT=__MACOS_LAYOUT__;
+const MACOS_LAYOUTS=__MACOS_LAYOUTS__;
 const DATASETS=__DATASETS__;
 
 const STATIC_SYMBOLS={
@@ -191,62 +192,183 @@ function render(){
 
 function switchScript(tag){if(!DATASETS[tag])return;currentTag=tag;DATA=DATASETS[tag];const info=SCRIPT_INFO[tag];document.querySelectorAll('.script-tab').forEach(b=>{const active=b.dataset.script===tag;b.classList.toggle('active',active);b.setAttribute('aria-selected',active?'true':'false')});scriptDescription.textContent=info.description;inputLabel.textContent=`INPUT · ${info.name.toUpperCase()}`;editor.dir=info.dir;editor.style.textAlign=info.dir==='rtl'?'right':'left';suggestionsEl.dir=info.dir;editor.value='';layer='default';rebuildIndexes();render();refresh();editor.focus()}
 
-function installMacPreview(){
+function installMacPreviewV2(){
   const style=document.createElement('style');
-  style.textContent='.desktop-view{display:none}.desktop-view.show{display:block}.desktop-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:14px}.desktop-title{font-size:20px;font-weight:800}.desktop-sub{color:var(--muted);font-size:12px;margin-top:3px}.desktop-actions{display:flex;gap:8px;flex-wrap:wrap}.desktop-action{border:1px solid var(--border);background:var(--panel);color:var(--text);padding:8px 11px;border-radius:9px;text-decoration:none;font-weight:650;font-size:12px}.desktop-action.primary{background:var(--text);color:var(--panel);border-color:var(--text)}.desktop-source{font-size:11px;color:var(--muted);text-decoration:none}.desktop-source:hover{text-decoration:underline}.mac-switch{display:flex;gap:7px;margin-bottom:10px}.mac-switch button{border:1px solid var(--border);background:var(--panel);color:var(--text);padding:7px 10px;border-radius:8px;cursor:pointer}.mac-switch button.active{background:var(--text);color:var(--panel)}.mac-board{background:#17171d;border-radius:15px;padding:12px;overflow-x:hidden}.mac-row{display:flex;gap:6px;margin:6px 0;width:100%;min-width:0}.mac-cap{height:50px;min-width:42px;flex:1;display:flex;align-items:center;justify-content:center;border-radius:7px;background:linear-gradient(#363643,#282833);border:1px solid #454551;color:#fff;font-weight:600}.mac-cap.mod{flex:1.55;color:#aeb0ba;font-size:12px}.mac-cap.wide{flex:2.2}.desktop-install{margin-top:16px;padding-top:14px;border-top:1px solid var(--border);font-size:12px;line-height:1.7;color:var(--muted)}.desktop-install b{color:var(--text)}.desktop-install code{background:var(--bg);padding:2px 5px;border-radius:4px}@media(max-width:680px){.script-switch{grid-template-columns:repeat(2,1fr)}.desktop-head{flex-direction:column}.desktop-actions{width:100%}.mac-board{overflow-x:auto}.mac-row{width:auto;min-width:820px}}';
+  style.textContent=`
+    .desktop-view{display:none}.desktop-view.show{display:block}
+    .desktop-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:14px}
+    .desktop-title{font-size:20px;font-weight:800}.desktop-sub{color:var(--muted);font-size:12px;margin-top:3px}
+    .desktop-note{color:var(--muted);font-size:11px;margin-top:7px;line-height:1.45}
+    .desktop-actions{display:flex;gap:8px;flex-wrap:wrap}
+    .desktop-action{border:1px solid var(--border);background:var(--panel);color:var(--text);padding:8px 11px;border-radius:9px;text-decoration:none;font-weight:650;font-size:12px}
+    .desktop-action.primary{background:var(--text);color:var(--panel);border-color:var(--text)}
+    .desktop-source{font-size:11px;color:var(--muted);text-decoration:none}.desktop-source:hover{text-decoration:underline}
+    .desktop-selector{display:flex;gap:7px;margin:0 0 10px;flex-wrap:wrap}
+    .desktop-selector button{border:1px solid var(--border);background:var(--panel);color:var(--text);padding:7px 10px;border-radius:8px;cursor:pointer}
+    .desktop-selector button.active{background:var(--text);color:var(--panel)}
+    .desktop-selector-label{font-size:11px;color:var(--muted);font-weight:650;display:flex;align-items:center;margin-right:3px}
+
+    .mac-board-clean{background:#17171d;border-radius:15px;padding:12px;overflow-x:auto}
+    .mac-grid-clean{
+      --u:14.5px;
+      display:grid;
+      grid-template-columns:repeat(60,var(--u));
+      grid-template-rows:repeat(4,50px);
+      row-gap:6px;
+      width:calc(60 * var(--u));
+      margin:0 auto
+    }
+    .mac-cap-clean{
+      margin:0 3px;min-width:0;
+      display:flex;align-items:center;justify-content:center;
+      border-radius:7px;
+      background:linear-gradient(#363643,#282833);
+      border:1px solid #454551;
+      color:#fff;font-weight:600;box-sizing:border-box
+    }
+    .mac-cap-clean.mod{color:#aeb0ba;font-size:12px}
+
+    .iso-return-clean{
+      grid-row:2 / 4;
+      grid-column:55 / 61;
+      position:relative;
+      z-index:3;
+      pointer-events:none
+    }
+    .iso-return-clean svg{
+      position:absolute;left:0;top:0;
+      width:87px;height:106px;
+      display:block;overflow:visible
+    }
+    .iso-return-clean .label{
+      position:absolute;
+      left:32px;right:3px;top:56px;bottom:0;
+      display:flex;align-items:center;justify-content:center;
+      color:#aeb0ba;font-size:12px;font-weight:600;
+      font-family:-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif
+    }
+
+    .desktop-install{margin-top:16px;padding-top:14px;border-top:1px solid var(--border);font-size:12px;line-height:1.7;color:var(--muted)}
+    .desktop-install b{color:var(--text)}.desktop-install code{background:var(--bg);padding:2px 5px;border-radius:4px}
+    @media(max-width:920px){.mac-grid-clean{margin:0}.desktop-head{flex-direction:column}.desktop-actions{width:100%}}
+    @media(max-width:560px){.script-switch{grid-template-columns:repeat(2,1fr)}}
+  `;
   document.head.appendChild(style);
 
   const regularPanels=Array.from(document.querySelectorAll('.app > .panel'));
-
   const desktop=document.createElement('div');
   desktop.className='panel desktop-view';
-  desktop.innerHTML=`<div class="desktop-head"><div><div class="desktop-title">${esc(MACOS_LAYOUT.display_name)}</div><div class="desktop-sub">Экспериментальная физическая раскладка для macOS</div><div style="margin-top:6px"><a class="desktop-source" href="https://github.com/Agisight/ios-system-keyboard/blob/main/${MACOS_LAYOUT.source_path}" target="_blank" rel="noopener">Исходник: ios-system-keyboard ↗</a></div></div><div class="desktop-actions"><a class="desktop-action primary" href="keylayout/${MACOS_LAYOUT.keylayout_file}" download>Скачать .keylayout</a></div></div><div class="mac-switch"><button data-layer="default" class="active">Default</button><button data-layer="shift">Shift</button></div><div class="mac-board"></div><div class="desktop-install"><b>Установка на macOS</b><br>1. Скачайте <code>.keylayout</code><br>2. Скопируйте в <code>~/Library/Keyboard Layouts/</code><br>3. Выйдите из учётной записи или перезагрузите Mac<br>4. System Settings → Keyboard → Input Sources → <b>+</b> → Others</div>`;
+
+  const geometries=Object.keys(MACOS_LAYOUTS.layouts||{});
+  let selectedGeometry=MACOS_LAYOUTS.default_geometry||geometries[0]||'iso';
+  let selectedLayer='default';
+
+  desktop.innerHTML=`<div class="desktop-head"><div><div class="desktop-title"></div><div class="desktop-sub"></div><div class="desktop-note"></div><div style="margin-top:6px"><a class="desktop-source" target="_blank" rel="noopener">Исходник: ios-system-keyboard ↗</a></div></div><div class="desktop-actions"><a class="desktop-action primary" download>Скачать .keylayout</a></div></div><div class="desktop-selector geometry-switch"><span class="desktop-selector-label">Geometry</span></div><div class="desktop-selector layer-switch"><span class="desktop-selector-label">Layer</span></div><div class="mac-board-clean"><div class="mac-grid-clean"></div></div><div class="desktop-install"><b>Установка на macOS</b><br>1. Скачайте <code>.keylayout</code><br>2. Скопируйте в <code>~/Library/Keyboard Layouts/</code><br>3. Выйдите из учётной записи или перезагрузите Mac<br>4. System Settings → Keyboard → Input Sources → <b>+</b> → Others</div>`;
   document.querySelector('.panel.keyboard').after(desktop);
 
-  const board=desktop.querySelector('.mac-board');
-  function cap(text,cls=''){const d=document.createElement('div');d.className='mac-cap'+(cls?' '+cls:'');d.textContent=text;return d}
-  function draw(layerName){
-    const rs=MACOS_LAYOUT.layers[layerName]||MACOS_LAYOUT.layers.default||[];
-    board.innerHTML='';
-    const mods=[['','delete'],['tab',''],['caps lock','return'],['shift','shift']];
-    rs.forEach((tokens,i)=>{
-      const r=document.createElement('div');r.className='mac-row';
-      const[before,after]=mods[i]||['',''];
-      if(before)r.appendChild(cap(before,i===3?'mod wide':'mod'));
-      tokens.forEach(t=>r.appendChild(cap(t)));
-      if(after)r.appendChild(cap(after,i===3?'mod wide':'mod'));
-      board.appendChild(r)
-    });
-    desktop.querySelectorAll('[data-layer]').forEach(b=>b.classList.toggle('active',b.dataset.layer===layerName))
+  const grid=desktop.querySelector('.mac-grid-clean');
+  const title=desktop.querySelector('.desktop-title');
+  const subtitle=desktop.querySelector('.desktop-sub');
+  const note=desktop.querySelector('.desktop-note');
+  const source=desktop.querySelector('.desktop-source');
+  const download=desktop.querySelector('.desktop-action.primary');
+  const geometrySwitch=desktop.querySelector('.geometry-switch');
+  const layerSwitch=desktop.querySelector('.layer-switch');
+
+  function selected(){return MACOS_LAYOUTS.layouts[selectedGeometry]||MACOS_LAYOUTS.layouts[geometries[0]]}
+
+  function cap(text,row,start,span,cls=''){
+    const d=document.createElement('div');
+    d.className='mac-cap-clean'+(cls?' '+cls:'');
+    d.textContent=text;
+    d.style.gridRow=String(row);
+    d.style.gridColumn=`${start} / span ${span}`;
+    grid.appendChild(d);
   }
-  desktop.querySelectorAll('[data-layer]').forEach(b=>b.onclick=()=>draw(b.dataset.layer));
-  draw('default');
+
+  function isoReturn(){
+    const d=document.createElement('div');
+    d.className='iso-return-clean';
+    d.innerHTML=`<svg viewBox="0 0 87 106" aria-hidden="true">
+      <defs>
+        <linearGradient id="isoReturnGradientClean" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#363643"/>
+          <stop offset="100%" stop-color="#282833"/>
+        </linearGradient>
+      </defs>
+      <path d="M10 0.75 H77 Q84 0.75 84 7.75 V98.25 Q84 105.25 77 105.25 H39 Q32 105.25 32 98.25 V62 Q32 56 32 56 C32 53 29 50 26 50 H10 Q3 50 3 43 V7.75 Q3 0.75 10 0.75 Z"
+        fill="url(#isoReturnGradientClean)" stroke="#454551" stroke-width="1.5"/>
+    </svg><div class="label" aria-label="Return" role="img">return</div>`;
+    grid.appendChild(d);
+  }
+
+  function renderISO(rows){
+    const r0=rows[0]||[],r1=rows[1]||[],r2=rows[2]||[],r3=rows[3]||[];
+    let c=1;
+    r0.forEach(t=>{cap(t,1,c,4);c+=4}); cap('delete',1,c,8,'mod');
+    c=1; cap('tab',2,c,6,'mod');c+=6; r1.forEach(t=>{cap(t,2,c,4);c+=4});
+    c=1; cap('caps lock',3,c,8,'mod');c+=8; r2.forEach(t=>{cap(t,3,c,4);c+=4});
+    c=1; cap('shift',4,c,6,'mod');c+=6; r3.forEach(t=>{cap(t,4,c,4);c+=4}); cap('shift',4,c,10,'mod');
+    isoReturn();
+  }
+
+  function renderANSI(rows){
+    const r0=rows[0]||[],r1=rows[1]||[],r2=rows[2]||[],r3=rows[3]||[];
+    let c=1;
+    r0.forEach(t=>{cap(t,1,c,4);c+=4}); cap('delete',1,c,8,'mod');
+    c=1; cap('tab',2,c,6,'mod');c+=6;
+    r1.forEach((t,i)=>{const span=i===r1.length-1?6:4;cap(t,2,c,span);c+=span});
+    c=1; cap('caps lock',3,c,8,'mod');c+=8; r2.forEach(t=>{cap(t,3,c,4);c+=4}); cap('return',3,c,8,'mod');
+    c=1; cap('shift',4,c,9,'mod');c+=9; r3.forEach(t=>{cap(t,4,c,4);c+=4}); cap('shift',4,c,11,'mod');
+  }
+
+  function draw(){
+    const layout=selected();if(!layout)return;
+    const rows=layout.layers[selectedLayer]||layout.layers.default||[];
+    const g=(layout.geometry||selectedGeometry||'iso').toLowerCase();
+    grid.innerHTML='';
+    if(g==='iso')renderISO(rows);else renderANSI(rows);
+    title.textContent=layout.display_name||layout.display_name_en||'Kazakh Latin';
+    subtitle.textContent=`macOS · ${String(layout.geometry||selectedGeometry).toUpperCase()} · experimental`;
+    note.textContent=g==='ansi'
+      ? 'Optional ANSI adaptation: Ü/ü uses the physical ANSI backslash-key position; Option restores \\ and |.'
+      : 'Primary ISO geometry: the extra ISO key before Z carries \\ / |, preserving the source Kazakh letter rows.';
+    source.href=`https://github.com/Agisight/ios-system-keyboard/blob/main/${layout.source_path}`;
+    download.href=`keylayout/${layout.keylayout_file}`;
+    geometrySwitch.querySelectorAll('button').forEach(b=>b.classList.toggle('active',b.dataset.geometry===selectedGeometry));
+    layerSwitch.querySelectorAll('button').forEach(b=>b.classList.toggle('active',b.dataset.layer===selectedLayer));
+  }
+
+  for(const g of geometries){
+    const b=document.createElement('button');b.dataset.geometry=g;
+    const l=MACOS_LAYOUTS.layouts[g];
+    b.textContent=`${g.toUpperCase()}${l?.recommended?' · default':' · optional'}`;
+    b.onclick=()=>{selectedGeometry=g;selectedLayer='default';buildLayerSwitch();draw()};
+    geometrySwitch.appendChild(b);
+  }
+
+  function buildLayerSwitch(){
+    layerSwitch.querySelectorAll('button').forEach(b=>b.remove());
+    const l=selected();
+    const choices=[['default','Default'],['shift','Shift'],['alt','Option']].filter(([id])=>l?.layers?.[id]);
+    for(const[id,label]of choices){
+      const b=document.createElement('button');b.dataset.layer=id;b.textContent=label;
+      b.onclick=()=>{selectedLayer=id;draw()};layerSwitch.appendChild(b);
+    }
+  }
+
+  buildLayerSwitch();draw();
 
   function showDesktop(){
-    currentTag='desktop';
-    regularPanels.forEach(p=>p.style.display='none');
-    desktop.classList.add('show');
-    document.querySelectorAll('.script-tab').forEach(b=>{
-      const active=b.dataset.script==='desktop';
-      b.classList.toggle('active',active);
-      b.setAttribute('aria-selected',active?'true':'false')
-    });
-    scriptDescription.textContent='Desktop layout · macOS · experimental';
+    currentTag='desktop';regularPanels.forEach(p=>p.style.display='none');desktop.classList.add('show');
+    document.querySelectorAll('.script-tab').forEach(b=>{const active=b.dataset.script==='desktop';b.classList.toggle('active',active);b.setAttribute('aria-selected',active?'true':'false')});
+    scriptDescription.textContent='Desktop layout · macOS · ISO default / ANSI optional';
   }
-
-  function showMobile(){
-    regularPanels.forEach(p=>p.style.display='');
-    desktop.classList.remove('show');
-  }
-
-  document.querySelectorAll('.script-tab').forEach(b=>{
-    b.addEventListener('click',()=>{
-      if(b.dataset.script==='desktop') showDesktop();
-      else showMobile();
-    })
-  });
+  function showMobile(){regularPanels.forEach(p=>p.style.display='');desktop.classList.remove('show')}
+  document.querySelectorAll('.script-tab').forEach(b=>b.addEventListener('click',()=>{if(b.dataset.script==='desktop')showDesktop();else showMobile()}));
 }
-installMacPreview();
+
+installMacPreviewV2();
 
 editor.addEventListener('input',refresh);editor.addEventListener('keydown',e=>{if(e.key===' '){const{partial}=state(editor.value);if(partial&&primaryCandidate&&primaryCandidate.startsWith(partial)&&primaryCandidate!==partial){e.preventDefault();spaceAction()}}});editor.addEventListener('click',hideLP);document.addEventListener('pointerdown',e=>{if(!lp.contains(e.target)&&!e.target.classList.contains('key'))hideLP()});document.getElementById('clearAll').onclick=clearAll;document.getElementById('addSpace').onclick=spaceAction;document.getElementById('backspaceTop').onclick=backspace;document.querySelectorAll('.script-tab').forEach(b=>b.onclick=()=>switchScript(b.dataset.script));rebuildIndexes();render();refresh();
 </script>
