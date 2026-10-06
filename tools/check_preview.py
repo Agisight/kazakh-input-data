@@ -26,6 +26,14 @@ assert "function spaceAction()" in t
 assert "primaryCandidate.startsWith(partial)" in t
 assert "suggest(primaryCandidate)" in t
 
+# Suggestions match typed prefixes case-insensitively while preserving
+# the user's initial/all-caps style in the candidate.
+assert "function matchTypedCase(w,p)" in t
+assert "toLocaleLowerCase('kk')" in t
+assert "toLocaleUpperCase('kk')" in t
+assert "lower(w).startsWith(q)" in t
+assert "matchTypedCase(w,p)" in t
+
 # Both on-screen Space controls use the same action.
 assert "sp.onclick=spaceAction" in t
 assert "document.getElementById('addSpace').onclick=spaceAction" in t
