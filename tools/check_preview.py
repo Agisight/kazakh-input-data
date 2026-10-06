@@ -34,6 +34,11 @@ assert "toLocaleUpperCase('kk')" in t
 assert "lower(w).startsWith(q)" in t
 assert "matchTypedCase(w,p)" in t
 
+# Completion-on-Space can be disabled without hiding suggestions.
+assert 'id="spaceAutocomplete"' in t
+assert 'Space autocomplete' in t
+assert "spaceAutocomplete.checked&&partial&&primaryCandidate" in t
+
 # Both on-screen Space controls use the same action.
 assert "sp.onclick=spaceAction" in t
 assert "document.getElementById('addSpace').onclick=spaceAction" in t
