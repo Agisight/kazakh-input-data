@@ -47,6 +47,20 @@ assert "editor.readOnly=true" in t
 assert "editor.readOnly=false" in t
 assert "navigator.virtualKeyboard?.hide?.()" in t
 
+# Responsive mobile preview controls.
+assert 'id="mobileScriptSelect"' in t
+assert 'class="mobile-script-picker"' in t
+assert "mobileScriptSelect.onchange" in t
+assert 'id="infoButton"' in t
+assert 'id="infoPopover"' in t
+assert "function refreshInfo()" in t
+assert "suggestions-panel" in t
+assert "@media(max-width:700px)" in t
+assert "No suggestions" in t
+assert "Lexicon:" in t
+assert "Bigrams:" in t
+assert "Trigrams:" in t
+
 # Both on-screen Space controls use the same action.
 assert "sp.onclick=spaceAction" in t
 assert "document.getElementById('addSpace').onclick=spaceAction" in t
