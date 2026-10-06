@@ -30,7 +30,7 @@
 </div>
 <div class="panel">
 <div class="editor-head"><div class="editor-label" id="inputLabel">INPUT · ARABIC</div><button class="clear-all" id="clearAll">Clear all</button></div>
-<textarea id="editor" dir="rtl" spellcheck="false" placeholder="…"></textarea>
+<textarea id="editor" dir="rtl" spellcheck="false" inputmode="none" readonly placeholder="…"></textarea>
 <div class="controls"><button id="backspaceTop">⌦</button><button id="addSpace">Space</button></div>
 </div>
 <div class="panel"><div id="suggestions" class="suggestions" dir="rtl"></div><div id="status" class="status"></div></div>
@@ -188,6 +188,70 @@ function render(){
   for(const row of rows)renderRow(row)
   appendBottom();
   layoutSource.textContent=L.source
+}
+
+
+const PHYSICAL_ROWS=[
+  ['KeyQ','KeyW','KeyE','KeyR','KeyT','KeyY','KeyU','KeyI','KeyO','KeyP','BracketLeft','BracketRight'],
+  ['KeyA','KeyS','KeyD','KeyF','KeyG','KeyH','KeyJ','KeyK','KeyL','Semicolon','Quote'],
+  ['KeyZ','KeyX','KeyC','KeyV','KeyB','KeyN','KeyM','Comma','Period','Slash']
+];
+
+function previewRowsForPhysicalKeyboard(useShift){
+  if(currentTag==='kk-Arab'){
+    const name=useShift?'shift':'default';
+    return ARAB_LAYOUT.layers[name]||ARAB_LAYOUT.layers.default||[];
+  }
+
+  const L=currentTag==='kk-Cyrl'?CYRL_LAYOUT:LATN_LAYOUT;
+  return useShift?L.shift:L.default;
+}
+
+function printableRow(row){
+  return (row||[]).filter(t=>!t.startsWith('\\s{'));
+}
+
+function physicalCharacter(code,useShift){
+  const rows=previewRowsForPhysicalKeyboard(useShift);
+
+  for(let r=0;r<PHYSICAL_ROWS.length;r++){
+    const index=PHYSICAL_ROWS[r].indexOf(code);
+    if(index<0)continue;
+
+    const chars=printableRow(rows[r]);
+    return chars[index]??null;
+  }
+
+  return null;
+}
+
+function handlePhysicalKeyboard(e){
+  if(currentTag==='desktop')return;
+  if(e.metaKey||e.ctrlKey||e.altKey)return;
+
+  if(e.code==='Backspace'){
+    e.preventDefault();
+    backspace();
+    return;
+  }
+
+  if(e.code==='Space'){
+    e.preventDefault();
+    spaceAction();
+    return;
+  }
+
+  if(e.code==='Enter'){
+    e.preventDefault();
+    insert('\n');
+    return;
+  }
+
+  const ch=physicalCharacter(e.code,e.shiftKey);
+  if(ch===null)return;
+
+  e.preventDefault();
+  insert(ch);
 }
 
 function switchScript(tag){if(!DATASETS[tag])return;currentTag=tag;DATA=DATASETS[tag];const info=SCRIPT_INFO[tag];document.querySelectorAll('.script-tab').forEach(b=>{const active=b.dataset.script===tag;b.classList.toggle('active',active);b.setAttribute('aria-selected',active?'true':'false')});scriptDescription.textContent=info.description;inputLabel.textContent=`INPUT · ${info.name.toUpperCase()}`;editor.dir=info.dir;editor.style.textAlign=info.dir==='rtl'?'right':'left';document.querySelector('.controls').style.display=tag==='kk-Arab'?'flex':'none';suggestionsEl.dir=info.dir;editor.value='';layer='default';rebuildIndexes();render();refresh();editor.focus()}
@@ -372,7 +436,7 @@ function installMacPreviewV2(){
 
 installMacPreviewV2();
 
-editor.addEventListener('input',refresh);editor.addEventListener('keydown',e=>{if(e.key===' '){const{partial}=state(editor.value);if(partial&&primaryCandidate&&primaryCandidate.startsWith(partial)&&primaryCandidate!==partial){e.preventDefault();spaceAction()}}});editor.addEventListener('click',hideLP);document.addEventListener('pointerdown',e=>{if(!lp.contains(e.target)&&!e.target.classList.contains('key'))hideLP()});document.getElementById('clearAll').onclick=clearAll;document.getElementById('addSpace').onclick=spaceAction;document.getElementById('backspaceTop').onclick=backspace;document.querySelectorAll('.script-tab').forEach(b=>b.onclick=()=>switchScript(b.dataset.script));rebuildIndexes();render();refresh();
+editor.addEventListener('input',refresh);editor.addEventListener('keydown',handlePhysicalKeyboard);editor.addEventListener('click',hideLP);document.addEventListener('pointerdown',e=>{if(!lp.contains(e.target)&&!e.target.classList.contains('key'))hideLP()});document.getElementById('clearAll').onclick=clearAll;document.getElementById('addSpace').onclick=spaceAction;document.getElementById('backspaceTop').onclick=backspace;document.querySelectorAll('.script-tab').forEach(b=>b.onclick=()=>switchScript(b.dataset.script));rebuildIndexes();render();refresh();
 </script>
 </body>
 </html>

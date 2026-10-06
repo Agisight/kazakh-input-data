@@ -30,10 +30,17 @@ assert "suggest(primaryCandidate)" in t
 assert "sp.onclick=spaceAction" in t
 assert "document.getElementById('addSpace').onclick=spaceAction" in t
 
-# Physical keyboard Space accepts the highlighted completion too.
-assert "editor.addEventListener('keydown'" in t
-assert "if(e.key===' ')" in t
-assert "e.preventDefault();spaceAction()" in t
+# Physical keyboard input is mapped by hardware key position rather than
+# the active OS keyboard layout. Space still accepts the highlighted completion.
+assert "function handlePhysicalKeyboard(e)" in t
+assert "PHYSICAL_ROWS" in t
+assert "e.code==='Space'" in t
+assert "e.preventDefault();" in t
+assert "spaceAction()" in t
+assert "editor.addEventListener('keydown',handlePhysicalKeyboard)" in t
+assert 'inputmode="none"' in t
+assert "readonly" in t
+assert "e.metaKey||e.ctrlKey||e.altKey" in t
 
 # Keep v7 edge geometry.
 assert "edge-row" in t
