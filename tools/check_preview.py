@@ -49,6 +49,12 @@ assert "margin-left:auto" in t
 assert "mode-bottom" in t
 assert "return-bottom" in t
 
+# QWERTY4 uses Turkic dotted/dotless I casing:
+# standard i -> İ, extra ı -> I.
+assert "extraDefault:['ä','ğ','ı','ñ','ö','ş','ū','ü']" in t
+assert "extraShift:['Ä','Ğ','I','Ñ','Ö','Ş','Ū','Ü']" in t
+assert "['Q','W','E','R','T','Y','U','İ','O','P']" in t
+
 # Keep number/symbol navigation.
 assert "STATIC_SYMBOLS" in t
 assert "mode.onclick=()=>setLayer('symbols-1')" in t
