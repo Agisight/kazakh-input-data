@@ -39,6 +39,14 @@ assert 'id="spaceAutocomplete"' in t
 assert 'Space autocomplete' in t
 assert "spaceAutocomplete.checked&&partial&&primaryCandidate" in t
 
+# Keep a visible caret without summoning the native touch keyboard.
+assert "caret-color:var(--text)" in t
+assert "function enableEditorCaret()" in t
+assert "function suppressNativeKeyboard()" in t
+assert "editor.readOnly=true" in t
+assert "editor.readOnly=false" in t
+assert "navigator.virtualKeyboard?.hide?.()" in t
+
 # Both on-screen Space controls use the same action.
 assert "sp.onclick=spaceAction" in t
 assert "document.getElementById('addSpace').onclick=spaceAction" in t
