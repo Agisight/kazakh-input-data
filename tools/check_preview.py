@@ -61,6 +61,25 @@ assert "Lexicon:" in t
 assert "Bigrams:" in t
 assert "Trigrams:" in t
 
+# Extra Kazakh letter rows inherit key geometry from the first
+# standard letter row instead of stretching to fill the keyboard.
+assert "row extra-row" in t
+assert "const baseCount=printableRow(rows[0]).length" in t
+assert "er.style.setProperty('--base-count',baseCount)" in t
+assert "var(--base-count) * 76px" in t
+assert "Math.floor((baseCount-extras.length)/2)" in t
+assert "gridTemplateColumns=`repeat(${baseCount},minmax(0,1fr))`" in t
+
+# Cyrillic mobile long-press follows the compact iOS-style layout.
+assert "'е':['ё']" in t
+assert "'Е':['Ё']" in t
+assert "'ь':['ъ']" in t
+assert "'Ь':['Ъ']" in t
+assert "['й','ц','у','к','е','н','г','ш','щ','з','х']" in t
+assert "['Й','Ц','У','К','Е','Н','Г','Ш','Щ','З','Х']" in t
+assert "function longPressOptions(t)" in t
+assert "currentTag==='kk-Cyrl'" in t
+
 # Both on-screen Space controls use the same action.
 assert "sp.onclick=spaceAction" in t
 assert "document.getElementById('addSpace').onclick=spaceAction" in t

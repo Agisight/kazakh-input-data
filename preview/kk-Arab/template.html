@@ -18,7 +18,36 @@
 .lp{position:fixed;z-index:20;display:none;background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:6px;box-shadow:0 8px 28px rgba(0,0,0,.28);gap:5px}.lp.show{display:flex}.lp button{min-width:44px;height:44px;border:0;border-radius:7px;background:var(--key);font-size:22px;color:var(--text)}
 @media(max-width:560px){.app{padding:10px}.panel{padding:10px}.row{gap:3px}.key{height:44px;min-width:22px;font-size:18px}.key.extra{font-size:17px}.key.shift-key{flex-basis:52px;max-width:52px}.key.backspace-key{flex-basis:52px;max-width:52px}.key.mode-key{flex-basis:64px;max-width:64px}.bottom .mode-bottom,.bottom .return-bottom{flex-basis:72px}.suggestion .word{font-size:17px}.script-tab{padding:8px 4px;font-size:13px}}
 
+@media(min-width:701px){
+  .keyboard #keyboard{
+    max-width:840px;
+    margin-left:auto;
+    margin-right:auto;
+  }
+
+  .keyboard .layout-source{
+    max-width:840px;
+    margin-left:auto;
+    margin-right:auto;
+  }
+
+  .row.extra-row{
+    display:grid;
+    width:min(100%,calc(var(--base-count) * 76px + (var(--base-count) - 1) * 6px));
+    margin-left:auto;
+    margin-right:auto;
+    justify-content:stretch;
+  }
+
+  .row.extra-row .key{
+    width:100%;
+    max-width:none;
+  }
+}
+
 @media(max-width:700px){
+  .row.extra-row{display:grid;justify-content:stretch}
+  .row.extra-row .key{width:100%;max-width:none}
   .app{padding:10px}
   h1{font-size:20px}
   .sub{margin-bottom:10px}
@@ -138,13 +167,19 @@ const CYRL_LAYOUT={
   source:'Cyrillic layout adapted from Keyman Kazakh Basic',
   extraDefault:['ә','і','ң','ғ','ү','ұ','қ','ө','һ'],
   extraShift:['Ә','І','Ң','Ғ','Ү','Ұ','Қ','Ө','Һ'],
+  longpress:{
+    'е':['ё'],
+    'Е':['Ё'],
+    'ь':['ъ'],
+    'Ь':['Ъ']
+  },
   default:[
-    ['й','ц','у','к','е','н','г','ш','щ','з','х','ъ'],
+    ['й','ц','у','к','е','н','г','ш','щ','з','х'],
     ['ф','ы','в','а','п','р','о','л','д','ж','э'],
     ['\\s{shift}','я','ч','с','м','и','т','ь','б','ю','\\s{backspace}']
   ],
   shift:[
-    ['Й','Ц','У','К','Е','Н','Г','Ш','Щ','З','Х','Ъ'],
+    ['Й','Ц','У','К','Е','Н','Г','Ш','Щ','З','Х'],
     ['Ф','Ы','В','А','П','Р','О','Л','Д','Ж','Э'],
     ['\\s{shift}','Я','Ч','С','М','И','Т','Ь','Б','Ю','\\s{backspace}']
   ]
@@ -247,9 +282,14 @@ function token(t){
   if(layer==='shift')setLayer('default')
 }
 
-function showLP(el,t){if(!isArab())return false;const opts=ARAB_LAYOUT.longpress[t];if(!opts?.length)return false;lp.innerHTML='';for(const o of opts){const b=document.createElement('button');b.textContent=o;b.onclick=e=>{e.stopPropagation();hideLP();insert(o)};lp.appendChild(b)}const r=el.getBoundingClientRect();lp.style.left=Math.max(6,Math.min(innerWidth-160,r.left))+'px';lp.style.top=Math.max(6,r.top-58)+'px';lp.classList.add('show');return true}
+function longPressOptions(t){
+  if(isArab())return ARAB_LAYOUT.longpress[t]||[];
+  if(currentTag==='kk-Cyrl')return CYRL_LAYOUT.longpress?.[t]||[];
+  return[];
+}
+function showLP(el,t){const opts=longPressOptions(t);if(!opts.length)return false;lp.innerHTML='';for(const o of opts){const b=document.createElement('button');b.textContent=o;b.onclick=e=>{e.stopPropagation();hideLP();insert(o)};lp.appendChild(b)}const r=el.getBoundingClientRect();lp.style.left=Math.max(6,Math.min(innerWidth-160,r.left))+'px';lp.style.top=Math.max(6,r.top-58)+'px';lp.classList.add('show');return true}
 function hideLP(){lp.classList.remove('show')}
-function key(t,extra=false){const b=document.createElement('button');b.className='key'+(extra?' extra':'');if(t.startsWith('\\s{spacer')){b.classList.add('spacer');return b}if(t.startsWith('\\s{')){b.classList.add('special');if(t.includes('shiftSymbols'))b.classList.add('mode-key');else if(t.includes('shift'))b.classList.add('shift-key');else if(t.includes('backspace'))b.classList.add('backspace-key')}b.textContent=t.startsWith('\\s{')?special(t):t;b.addEventListener('pointerdown',()=>{longPressed=false;longPressTimer=setTimeout(()=>{if(showLP(b,t)){longPressed=true;navigator.vibrate?.(10)}},450)});b.addEventListener('pointerup',()=>{clearTimeout(longPressTimer);if(!longPressed)token(t);longPressed=false});b.addEventListener('pointercancel',()=>clearTimeout(longPressTimer));b.addEventListener('contextmenu',e=>{if(isArab()&&ARAB_LAYOUT.longpress[t]){e.preventDefault();showLP(b,t)}});return b}
+function key(t,extra=false){const b=document.createElement('button');b.className='key'+(extra?' extra':'');if(t.startsWith('\\s{spacer')){b.classList.add('spacer');return b}if(t.startsWith('\\s{')){b.classList.add('special');if(t.includes('shiftSymbols'))b.classList.add('mode-key');else if(t.includes('shift'))b.classList.add('shift-key');else if(t.includes('backspace'))b.classList.add('backspace-key')}b.textContent=t.startsWith('\\s{')?special(t):t;b.addEventListener('pointerdown',()=>{longPressed=false;longPressTimer=setTimeout(()=>{if(showLP(b,t)){longPressed=true;navigator.vibrate?.(10)}},450)});b.addEventListener('pointerup',()=>{clearTimeout(longPressTimer);if(!longPressed)token(t);longPressed=false});b.addEventListener('pointercancel',()=>clearTimeout(longPressTimer));b.addEventListener('contextmenu',e=>{if(longPressOptions(t).length){e.preventDefault();showLP(b,t)}});return b}
 
 function renderRow(tokens){
   const r=document.createElement('div');
@@ -294,10 +334,24 @@ function render(){
     return
   }
 
-  const extras=layer==='shift'?L.extraShift:L.extraDefault;
-  const er=document.createElement('div');er.className='row';for(const t of extras)er.appendChild(key(t,true));kb.appendChild(er);
-
   const rows=layer==='shift'?L.shift:L.default;
+  const extras=layer==='shift'?L.extraShift:L.extraDefault;
+  const baseCount=printableRow(rows[0]).length;
+  const offset=Math.floor((baseCount-extras.length)/2);
+
+  const er=document.createElement('div');
+  er.className='row extra-row';
+  er.style.setProperty('--base-count',baseCount);
+  er.style.gridTemplateColumns=`repeat(${baseCount},minmax(0,1fr))`;
+
+  for(const [i,t] of extras.entries()){
+    const k=key(t,true);
+    k.style.gridColumn=String(offset+i+1);
+    er.appendChild(k)
+  }
+
+  kb.appendChild(er);
+
   for(const row of rows)renderRow(row)
   appendBottom();
   layoutSource.textContent=L.source
