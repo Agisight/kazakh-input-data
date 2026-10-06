@@ -80,6 +80,12 @@ assert "['Й','Ц','У','К','Е','Н','Г','Ш','Щ','З','Х']" in t
 assert "function longPressOptions(t)" in t
 assert "currentTag==='kk-Cyrl'" in t
 
+# Arabic RTL preview mirrors only the edge action keys.
+assert "function rtlEdgeKeys(row)" in t
+assert "out.findIndex(t=>t.includes('shift'))" in t
+assert "out.findIndex(t=>t.includes('backspace'))" in t
+assert "renderRow(rtlEdgeKeys(row))" in t
+
 # Both on-screen Space controls use the same action.
 assert "sp.onclick=spaceAction" in t
 assert "document.getElementById('addSpace').onclick=spaceAction" in t
