@@ -315,11 +315,25 @@ function appendBottom(){
   b.append(mode,sp,ret);kb.appendChild(b)
 }
 
+function rtlEdgeKeys(row){
+  if(!isArab())return row;
+
+  const out=[...row];
+  const shift=out.findIndex(t=>t.includes('shift'));
+  const backspace=out.findIndex(t=>t.includes('backspace'));
+
+  if(shift>=0&&backspace>=0){
+    [out[shift],out[backspace]]=[out[backspace],out[shift]];
+  }
+
+  return out;
+}
+
 function render(){
   kb.innerHTML='';
 
   if(isArab()){
-    for(const row of(ARAB_LAYOUT.layers[layer]||ARAB_LAYOUT.layers.default))renderRow(row)
+    for(const row of(ARAB_LAYOUT.layers[layer]||ARAB_LAYOUT.layers.default))renderRow(rtlEdgeKeys(row))
     appendBottom();
     layoutSource.textContent='Layout source · Agisight/ios-system-keyboard';
     return
