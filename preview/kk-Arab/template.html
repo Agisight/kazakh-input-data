@@ -72,8 +72,10 @@ const CYRL_LAYOUT={
   ]
 };
 
+// Kazakh/Turkic casing follows the Turkish-style dotted/dotless I model:
+// i ↔ İ on the standard QWERTY I key, and ı ↔ I on the extra Kazakh key.
 const LATN_LAYOUT={
-  source:'Latin preview layout · QWERTY + Kazakh letters · Space accepts highlighted completion',
+  source:'Latin preview layout · QWERTY4 · Turkic I casing · Space accepts highlighted completion',
   extraDefault:['ä','ğ','ı','ñ','ö','ş','ū','ü'],
   extraShift:['Ä','Ğ','I','Ñ','Ö','Ş','Ū','Ü'],
   default:[
