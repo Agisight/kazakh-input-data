@@ -11,11 +11,13 @@
 .script-switch{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-bottom:14px}.script-tab{border:1px solid var(--border);background:var(--panel);color:var(--text);border-radius:11px;padding:9px 8px;cursor:pointer;font-weight:600;text-align:center}.script-tab small{display:block;font-size:10px;color:var(--muted);font-weight:500;margin-top:2px}.script-tab.active{background:var(--text);color:var(--panel);border-color:var(--text)}.script-tab.active small{color:inherit;opacity:.72}.mobile-script-picker{display:none;margin-bottom:10px;position:relative}.mobile-script-picker::after{content:'▾';position:absolute;right:15px;top:0;bottom:0;display:flex;align-items:center;pointer-events:none;color:var(--muted);font-size:16px;font-weight:600;line-height:1}.mobile-script-picker select{width:100%;height:42px;border:1px solid var(--border);background:var(--panel);color:var(--text);border-radius:11px;padding:0 42px 0 12px;font:inherit;font-weight:600;appearance:none;-webkit-appearance:none}
 .editor-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:6px}.editor-label{font-size:12px;color:var(--muted);font-weight:600}.editor-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.space-autocomplete{display:flex;align-items:center;gap:5px;color:var(--muted);font-size:11px;cursor:pointer;user-select:none}.space-autocomplete input{margin:0}.clear-all{border:1px solid var(--border);background:transparent;color:var(--text);border-radius:9px;padding:6px 10px;cursor:pointer;font-size:12px}textarea{width:100%;min-height:110px;resize:vertical;border:0;outline:0;background:transparent;color:var(--text);caret-color:var(--text);font-size:27px;line-height:1.55;padding:4px}.controls{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.controls button{border:1px solid var(--border);background:var(--panel);color:var(--text);border-radius:8px;padding:7px 12px;cursor:pointer}
 .suggestions{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;min-height:56px}.suggestion{border:1px solid transparent;border-radius:11px;background:var(--key);color:var(--text);box-shadow:0 1px 2px var(--border);padding:7px 8px;cursor:pointer;min-width:0}.suggestion .word{font-size:20px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.suggestion .meta{font-size:10px;color:var(--muted);margin-top:2px}.suggestion.primary{border-color:var(--border);background:color-mix(in srgb,var(--key) 94%,var(--text) 6%)}.suggestion.primary .word{font-weight:700}.empty{display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:13px;grid-column:1/-1}.status{display:flex;gap:10px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-top:10px}.badge{padding:4px 7px;border-radius:999px;background:var(--bg)}
-.keyboard{user-select:none;-webkit-user-select:none;touch-action:manipulation}.row{display:flex;width:100%;gap:6px;justify-content:center;margin:6px 0}.key{position:relative;flex:1 1 0;max-width:76px;min-width:30px;height:50px;border:1px solid var(--border);border-radius:7px;background:var(--key);color:var(--text);box-shadow:0 1px 2px rgba(0,0,0,.18);font-size:23px;cursor:pointer}.key.special{background:var(--key2);font-size:17px}.key.extra{background:color-mix(in srgb,var(--key) 92%,var(--text) 8%);font-size:20px}.key.shift-key{flex:0 0 72px;max-width:72px}.key.backspace-key{flex:0 0 72px;max-width:72px}.key.mode-key{flex:0 0 82px;max-width:82px}.row.edge-row .shift-key,.row.edge-row .mode-key{margin-right:auto}.row.edge-row .backspace-key{margin-left:auto}.key.spacer{visibility:hidden;pointer-events:none;max-width:22px}.key:active,.key.active{transform:translateY(1px);filter:brightness(.94)}
+.keyboard{user-select:none;-webkit-user-select:none;touch-action:manipulation}.row{display:flex;width:100%;gap:6px;justify-content:center;margin:6px 0}.key{touch-action:none;-webkit-touch-callout:none;position:relative;flex:1 1 0;max-width:76px;min-width:30px;height:50px;border:1px solid var(--border);border-radius:7px;background:var(--key);color:var(--text);box-shadow:0 1px 2px rgba(0,0,0,.18);font-size:23px;cursor:pointer}.key.special{background:var(--key2);font-size:17px}.key.extra{background:color-mix(in srgb,var(--key) 92%,var(--text) 8%);font-size:20px}.key.shift-key{flex:0 0 72px;max-width:72px}.key.backspace-key{flex:0 0 72px;max-width:72px}.key.mode-key{flex:0 0 82px;max-width:82px}.row.edge-row .shift-key,.row.edge-row .mode-key{margin-right:auto}.row.edge-row .backspace-key{margin-left:auto}.key.spacer{visibility:hidden;pointer-events:none;max-width:22px}.key:active,.key.active{transform:translateY(1px);filter:brightness(.94)}
 .bottom{display:flex;gap:7px;margin-top:7px}.bottom button{height:46px;border:1px solid var(--border);border-radius:8px;background:var(--key2);color:var(--text);font-size:16px;box-shadow:0 1px 2px rgba(0,0,0,.14)}.bottom .wide{flex:1}.bottom .mode-bottom{flex:0 0 96px}.bottom .return-bottom{flex:0 0 96px}.bottom .space{flex:1;background:var(--key);font-weight:500}.bottom .space:active{transform:translateY(1px);filter:brightness(.94)}
 .layout-source{text-align:center;color:var(--muted);font-size:10px;margin-top:7px}
+.latin-variant-switch{display:none;align-items:center;gap:2px;padding:2px;border:1px solid var(--border);border-radius:9px;background:var(--bg);margin-left:auto}.latin-variant-switch button{height:32px;min-width:38px;border:0;background:transparent;color:var(--muted);border-radius:7px;padding:0 9px;cursor:pointer;font-size:11px;font-weight:650}.latin-variant-switch button.active{background:var(--panel);color:var(--text);box-shadow:0 1px 3px var(--border)}
+
 .input-tools{display:flex;align-items:flex-end;gap:8px;margin-top:10px}.input-tools .controls{margin-top:0;flex:1}.info-wrap{position:relative;margin-left:auto}.info-button{width:40px;height:38px;padding:0;border:1px solid var(--border);background:var(--panel);color:var(--muted);border-radius:8px;cursor:pointer;font-size:17px;line-height:1}.info-popover{display:none;position:absolute;right:0;bottom:46px;z-index:30;width:max-content;min-width:180px;max-width:260px;padding:10px 12px;border:1px solid var(--border);border-radius:12px;background:var(--panel);color:var(--text);box-shadow:0 8px 28px rgba(0,0,0,.22);font-size:12px;line-height:1.6}.info-wrap.open .info-popover{display:block}.info-popover strong{font-size:13px}
-.lp{position:fixed;z-index:20;display:none;background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:6px;box-shadow:0 8px 28px rgba(0,0,0,.28);gap:5px}.lp.show{display:flex}.lp button{min-width:44px;height:44px;border:0;border-radius:7px;background:var(--key);font-size:22px;color:var(--text)}
+.lp{position:fixed;z-index:50;display:none;align-items:center;gap:3px;background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:4px;box-shadow:0 6px 20px rgba(0,0,0,.24);user-select:none;-webkit-user-select:none}.lp.show{display:flex}.lp::after{content:'';position:absolute;left:50%;bottom:-6px;width:10px;height:10px;background:var(--panel);border-right:1px solid var(--border);border-bottom:1px solid var(--border);transform:translateX(-50%) rotate(45deg)}.lp button{position:relative;z-index:1;min-width:48px;height:50px;padding:0 10px;border:0;border-radius:9px;background:var(--key);font-size:24px;font-weight:500;color:var(--text);cursor:pointer}.lp button.active{background:var(--text);color:var(--panel);transform:translateY(-1px)}
 @media(max-width:560px){.app{padding:10px}.panel{padding:10px}.row{gap:3px}.key{height:44px;min-width:22px;font-size:18px}.key.extra{font-size:17px}.key.shift-key{flex-basis:52px;max-width:52px}.key.backspace-key{flex-basis:52px;max-width:52px}.key.mode-key{flex-basis:64px;max-width:64px}.bottom .mode-bottom,.bottom .return-bottom{flex-basis:72px}.suggestion .word{font-size:17px}.script-tab{padding:8px 4px;font-size:13px}}
 
 @media(min-width:701px){
@@ -46,6 +48,9 @@
 }
 
 @media(max-width:700px){
+  .latin-variant-switch .variant-label{font-size:0}
+  .latin-variant-switch button[data-latin-variant="qwerty4"] .variant-label::after{content:'Q4';font-size:11px}
+  .latin-variant-switch button[data-latin-variant="qwerty3"] .variant-label::after{content:'Q3';font-size:11px}
   .row.extra-row{display:grid;justify-content:stretch}
   .row.extra-row .key{width:100%;max-width:none}
   .app{padding:10px}
@@ -138,7 +143,7 @@
 <div class="panel">
 <div class="editor-head"><div class="editor-label" id="inputLabel">INPUT · ARABIC</div><div class="editor-actions"><label class="space-autocomplete"><input type="checkbox" id="spaceAutocomplete" checked>Space autocomplete</label><button class="clear-all" id="clearAll">Clear all</button></div></div>
 <textarea id="editor" dir="rtl" spellcheck="false" inputmode="none" readonly placeholder="…"></textarea>
-<div class="input-tools"><div class="controls"><button id="backspaceTop">⌦</button><button id="addSpace">Space</button></div><div class="info-wrap" id="infoWrap"><button class="info-button" id="infoButton" type="button" aria-label="Dataset information" aria-expanded="false">ⓘ</button><div class="info-popover" id="infoPopover"></div></div></div>
+<div class="input-tools"><div class="controls"><button id="backspaceTop">⌦</button><button id="addSpace">Space</button></div><div class="latin-variant-switch" id="latinVariantSwitch"><button type="button" data-latin-variant="qwerty4" aria-pressed="true" class="active"><span class="variant-label">QWERTY4</span></button><button type="button" data-latin-variant="qwerty3" aria-pressed="false"><span class="variant-label">QWERTY3</span></button></div><div class="info-wrap" id="infoWrap"><button class="info-button" id="infoButton" type="button" aria-label="Dataset information" aria-expanded="false">ⓘ</button><div class="info-popover" id="infoPopover"></div></div></div>
 </div>
 <div class="panel suggestions-panel"><div id="suggestions" class="suggestions" dir="rtl"></div><div id="status" class="status"></div></div>
 <div class="panel keyboard"><div id="keyboard"></div><div id="layoutSource" class="layout-source"></div></div>
@@ -187,7 +192,7 @@ const CYRL_LAYOUT={
 
 // Kazakh/Turkic casing follows the Turkish-style dotted/dotless I model:
 // i ↔ İ on the standard QWERTY I key, and ı ↔ I on the extra Kazakh key.
-const LATN_LAYOUT={
+const LATN_QWERTY4={
   source:'Latin preview layout · QWERTY4 · Turkic I casing · Space accepts highlighted completion',
   extraDefault:['ä','ğ','ı','ñ','ö','ş','ū','ü'],
   extraShift:['Ä','Ğ','I','Ñ','Ö','Ş','Ū','Ü'],
@@ -203,14 +208,42 @@ const LATN_LAYOUT={
   ]
 };
 
+const LATN_QWERTY3={
+  source:'Latin preview layout · QWERTY3 · Kazakh letters via long press',
+  longpress:{
+    'a':['ä'],'A':['Ä'],
+    'g':['ğ'],'G':['Ğ'],
+    'i':['ı'],'I':['İ'],
+    'n':['ñ'],'N':['Ñ'],
+    'o':['ö'],'O':['Ö'],
+    's':['ş'],'S':['Ş'],
+    'u':['ū'],'U':['Ū'],
+    'y':['ü'],'Y':['Ü']
+  },
+  default:[
+    ['q','w','e','r','t','y','u','i','o','p'],
+    ['a','s','d','f','g','h','j','k','l'],
+    ['\\s{shift}','z','x','c','v','b','n','m','\\s{backspace}']
+  ],
+  shift:[
+    ['Q','W','E','R','T','Y','U','I','O','P'],
+    ['A','S','D','F','G','H','J','K','L'],
+    ['\\s{shift}','Z','X','C','V','B','N','M','\\s{backspace}']
+  ]
+};
+
+function latinLayout(){
+  return latinVariant==='qwerty3'?LATN_QWERTY3:LATN_QWERTY4
+}
+
 const SCRIPT_INFO={
  'kk-Arab':{name:'Arabic',description:'Arabic script · Töte jazu / төте жазу',dir:'rtl'},
  'kk-Cyrl':{name:'Cyrillic',description:'Cyrillic script · kk-Cyrl',dir:'ltr'},
  'kk-Latn':{name:'Latin',description:'Latin script · kk-Latn',dir:'ltr'}
 };
 
-const editor=document.getElementById('editor'),kb=document.getElementById('keyboard'),suggestionsEl=document.getElementById('suggestions'),statusEl=document.getElementById('status'),lp=document.getElementById('lp'),scriptDescription=document.getElementById('scriptDescription'),inputLabel=document.getElementById('inputLabel'),layoutSource=document.getElementById('layoutSource'),spaceAutocomplete=document.getElementById('spaceAutocomplete'),mobileScriptSelect=document.getElementById('mobileScriptSelect'),infoWrap=document.getElementById('infoWrap'),infoButton=document.getElementById('infoButton'),infoPopover=document.getElementById('infoPopover');
-let currentTag='kk-Arab',DATA=DATASETS[currentTag],layer='default',longPressTimer=null,longPressed=false,bigramIndex=new Map(),trigramIndex=new Map(),primaryCandidate=null;
+const editor=document.getElementById('editor'),kb=document.getElementById('keyboard'),suggestionsEl=document.getElementById('suggestions'),statusEl=document.getElementById('status'),lp=document.getElementById('lp'),scriptDescription=document.getElementById('scriptDescription'),inputLabel=document.getElementById('inputLabel'),layoutSource=document.getElementById('layoutSource'),spaceAutocomplete=document.getElementById('spaceAutocomplete'),mobileScriptSelect=document.getElementById('mobileScriptSelect'),infoWrap=document.getElementById('infoWrap'),infoButton=document.getElementById('infoButton'),infoPopover=document.getElementById('infoPopover'),latinVariantSwitch=document.getElementById('latinVariantSwitch');
+let currentTag='kk-Arab',DATA=DATASETS[currentTag],layer='default',longPressTimer=null,longPressed=false,longPressPointerId=null,longPressSelection=null,bigramIndex=new Map(),trigramIndex=new Map(),primaryCandidate=null,latinVariant='qwerty4';
 
 function rebuildIndexes(){bigramIndex=new Map();for(const[a,b,w]of DATA.bigrams){if(!bigramIndex.has(a))bigramIndex.set(a,[]);bigramIndex.get(a).push([b,w])}for(const a of bigramIndex.values())a.sort((x,y)=>x[1]-y[1]);trigramIndex=new Map();for(const[a,b,c,w]of DATA.trigrams){const k=a+'\t'+b;if(!trigramIndex.has(k))trigramIndex.set(k,[]);trigramIndex.get(k).push([c,w])}for(const a of trigramIndex.values())a.sort((x,y)=>x[1]-y[1])}
 function cps(s){return Array.from(s)}
@@ -285,11 +318,137 @@ function token(t){
 function longPressOptions(t){
   if(isArab())return ARAB_LAYOUT.longpress[t]||[];
   if(currentTag==='kk-Cyrl')return CYRL_LAYOUT.longpress?.[t]||[];
+  if(currentTag==='kk-Latn')return latinLayout().longpress?.[t]||[];
   return[];
 }
-function showLP(el,t){const opts=longPressOptions(t);if(!opts.length)return false;lp.innerHTML='';for(const o of opts){const b=document.createElement('button');b.textContent=o;b.onclick=e=>{e.stopPropagation();hideLP();insert(o)};lp.appendChild(b)}const r=el.getBoundingClientRect();lp.style.left=Math.max(6,Math.min(innerWidth-160,r.left))+'px';lp.style.top=Math.max(6,r.top-58)+'px';lp.classList.add('show');return true}
-function hideLP(){lp.classList.remove('show')}
-function key(t,extra=false){const b=document.createElement('button');b.className='key'+(extra?' extra':'');if(t.startsWith('\\s{spacer')){b.classList.add('spacer');return b}if(t.startsWith('\\s{')){b.classList.add('special');if(t.includes('shiftSymbols'))b.classList.add('mode-key');else if(t.includes('shift'))b.classList.add('shift-key');else if(t.includes('backspace'))b.classList.add('backspace-key')}b.textContent=t.startsWith('\\s{')?special(t):t;b.addEventListener('pointerdown',()=>{longPressed=false;longPressTimer=setTimeout(()=>{if(showLP(b,t)){longPressed=true;navigator.vibrate?.(10)}},450)});b.addEventListener('pointerup',()=>{clearTimeout(longPressTimer);if(!longPressed)token(t);longPressed=false});b.addEventListener('pointercancel',()=>clearTimeout(longPressTimer));b.addEventListener('contextmenu',e=>{if(longPressOptions(t).length){e.preventDefault();showLP(b,t)}});return b}
+function showLP(el,t){
+  const opts=longPressOptions(t);
+  if(!opts.length)return false;
+
+  lp.innerHTML='';
+  longPressSelection=null;
+
+  for(const o of opts){
+    const b=document.createElement('button');
+    b.type='button';
+    b.textContent=o;
+    b.dataset.value=o;
+    lp.appendChild(b)
+  }
+
+  const r=el.getBoundingClientRect();
+  lp.style.left='0px';
+  lp.style.top='0px';
+  lp.classList.add('show');
+
+  const w=lp.offsetWidth;
+  const h=lp.offsetHeight;
+  const center=r.left+r.width/2;
+  const left=Math.max(6,Math.min(innerWidth-w-6,center-w/2));
+  const top=Math.max(6,r.top-h-10);
+
+  lp.style.left=left+'px';
+  lp.style.top=top+'px';
+
+  return true
+}
+function updateLongPressSelection(x,y){
+  if(!lp.classList.contains('show'))return;
+
+  let hit=null;
+  for(const b of lp.querySelectorAll('button')){
+    const r=b.getBoundingClientRect();
+    if(x>=r.left&&x<=r.right&&y>=r.top&&y<=r.bottom){
+      hit=b;
+      break
+    }
+  }
+
+  lp.querySelectorAll('button').forEach(b=>b.classList.toggle('active',b===hit));
+  longPressSelection=hit?.dataset.value||null
+}
+
+function finishLongPress(){
+  const value=longPressSelection;
+  hideLP();
+  if(value)token(value)
+}
+
+function hideLP(){
+  clearTimeout(longPressTimer);
+  longPressTimer=null;
+  longPressed=false;
+  longPressPointerId=null;
+  longPressSelection=null;
+  lp.classList.remove('show');
+  lp.querySelectorAll('button').forEach(b=>b.classList.remove('active'))
+}
+function key(t,extra=false){
+  const b=document.createElement('button');
+  b.type='button';
+  b.className='key'+(extra?' extra':'');
+
+  if(t.startsWith('\\s{spacer')){
+    b.classList.add('spacer');
+    return b
+  }
+
+  if(t.startsWith('\\s{')){
+    b.classList.add('special');
+    if(t.includes('shiftSymbols'))b.classList.add('mode-key');
+    else if(t.includes('shift'))b.classList.add('shift-key');
+    else if(t.includes('backspace'))b.classList.add('backspace-key')
+  }
+
+  b.textContent=t.startsWith('\\s{')?special(t):t;
+
+  let pointerX=0,pointerY=0;
+  b.addEventListener('pointerdown',e=>{
+    if(e.button!==0||!e.isPrimary||longPressPointerId!==null)return;
+    hideLP();
+    longPressPointerId=e.pointerId;
+    pointerX=e.clientX;
+    pointerY=e.clientY;
+    b.setPointerCapture(e.pointerId);
+
+    if(longPressOptions(t).length){
+      longPressTimer=setTimeout(()=>{
+        if(showLP(b,t)){
+          longPressed=true;
+          navigator.vibrate?.(10);
+          updateLongPressSelection(pointerX,pointerY)
+        }
+      },450)
+    }
+  });
+
+  b.addEventListener('pointermove',e=>{
+    if(e.pointerId!==longPressPointerId)return;
+    pointerX=e.clientX;
+    pointerY=e.clientY;
+    if(longPressed)updateLongPressSelection(pointerX,pointerY)
+  });
+
+  b.addEventListener('pointerup',e=>{
+    if(e.pointerId!==longPressPointerId)return;
+    if(longPressed){
+      updateLongPressSelection(e.clientX,e.clientY);
+      finishLongPress()
+    }else{
+      hideLP();
+      token(t)
+    }
+  });
+
+  const cancel=e=>{if(e.pointerId===longPressPointerId)hideLP()};
+  b.addEventListener('pointercancel',cancel);
+  b.addEventListener('lostpointercapture',cancel);
+  b.addEventListener('contextmenu',e=>{
+    if(longPressOptions(t).length)e.preventDefault()
+  });
+
+  return b
+}
 
 function renderRow(tokens){
   const r=document.createElement('div');
@@ -330,6 +489,7 @@ function rtlEdgeKeys(row){
 }
 
 function render(){
+  hideLP();
   kb.innerHTML='';
 
   if(isArab()){
@@ -339,7 +499,7 @@ function render(){
     return
   }
 
-  const L=currentTag==='kk-Cyrl'?CYRL_LAYOUT:LATN_LAYOUT;
+  const L=currentTag==='kk-Cyrl'?CYRL_LAYOUT:latinLayout();
 
   if(layer.startsWith('symbols')){
     for(const row of STATIC_SYMBOLS[layer])renderRow(row)
@@ -350,21 +510,24 @@ function render(){
 
   const rows=layer==='shift'?L.shift:L.default;
   const extras=layer==='shift'?L.extraShift:L.extraDefault;
-  const baseCount=printableRow(rows[0]).length;
-  const offset=Math.floor((baseCount-extras.length)/2);
 
-  const er=document.createElement('div');
-  er.className='row extra-row';
-  er.style.setProperty('--base-count',baseCount);
-  er.style.gridTemplateColumns=`repeat(${baseCount},minmax(0,1fr))`;
+  if(extras?.length){
+    const baseCount=printableRow(rows[0]).length;
+    const offset=Math.floor((baseCount-extras.length)/2);
 
-  for(const [i,t] of extras.entries()){
-    const k=key(t,true);
-    k.style.gridColumn=String(offset+i+1);
-    er.appendChild(k)
+    const er=document.createElement('div');
+    er.className='row extra-row';
+    er.style.setProperty('--base-count',baseCount);
+    er.style.gridTemplateColumns=`repeat(${baseCount},minmax(0,1fr))`;
+
+    for(const [i,t] of extras.entries()){
+      const k=key(t,true);
+      k.style.gridColumn=String(offset+i+1);
+      er.appendChild(k)
+    }
+
+    kb.appendChild(er)
   }
-
-  kb.appendChild(er);
 
   for(const row of rows)renderRow(row)
   appendBottom();
@@ -384,7 +547,7 @@ function previewRowsForPhysicalKeyboard(useShift){
     return ARAB_LAYOUT.layers[name]||ARAB_LAYOUT.layers.default||[];
   }
 
-  const L=currentTag==='kk-Cyrl'?CYRL_LAYOUT:LATN_LAYOUT;
+  const L=currentTag==='kk-Cyrl'?CYRL_LAYOUT:latinLayout();
   return useShift?L.shift:L.default;
 }
 
@@ -435,7 +598,7 @@ function handlePhysicalKeyboard(e){
   insert(ch);
 }
 
-function switchScript(tag){if(!DATASETS[tag])return;if(mobileScriptSelect)mobileScriptSelect.value=tag;currentTag=tag;DATA=DATASETS[tag];const info=SCRIPT_INFO[tag];document.querySelectorAll('.script-tab').forEach(b=>{const active=b.dataset.script===tag;b.classList.toggle('active',active);b.setAttribute('aria-selected',active?'true':'false')});scriptDescription.textContent=info.description;inputLabel.textContent=`INPUT · ${info.name.toUpperCase()}`;editor.dir=info.dir;editor.style.textAlign=info.dir==='rtl'?'right':'left';document.querySelector('.controls').style.display=tag==='kk-Arab'?'flex':'none';suggestionsEl.dir=info.dir;editor.value='';layer='default';rebuildIndexes();render();refresh();editor.focus()}
+function switchScript(tag){if(!DATASETS[tag])return;if(mobileScriptSelect)mobileScriptSelect.value=tag;currentTag=tag;latinVariantSwitch.style.display=tag==='kk-Latn'?'flex':'none';DATA=DATASETS[tag];const info=SCRIPT_INFO[tag];document.querySelectorAll('.script-tab').forEach(b=>{const active=b.dataset.script===tag;b.classList.toggle('active',active);b.setAttribute('aria-selected',active?'true':'false')});scriptDescription.textContent=info.description;inputLabel.textContent=`INPUT · ${info.name.toUpperCase()}`;editor.dir=info.dir;editor.style.textAlign=info.dir==='rtl'?'right':'left';document.querySelector('.controls').style.display=tag==='kk-Arab'?'flex':'none';suggestionsEl.dir=info.dir;editor.value='';layer='default';rebuildIndexes();render();refresh();editor.focus()}
 
 function installMacPreviewV2(){
   const style=document.createElement('style');
@@ -607,6 +770,7 @@ function installMacPreviewV2(){
   buildLayerSwitch();draw();
 
   function showDesktop(){
+    hideLP();
     currentTag='desktop';if(mobileScriptSelect)mobileScriptSelect.value='desktop';regularPanels.forEach(p=>p.style.display='none');desktop.classList.add('show');
     document.querySelectorAll('.script-tab').forEach(b=>{const active=b.dataset.script==='desktop';b.classList.toggle('active',active);b.setAttribute('aria-selected',active?'true':'false')});
     scriptDescription.textContent='Desktop layout · macOS · ISO primary / ANSI optional';
@@ -639,7 +803,18 @@ editor.addEventListener('click',()=>{
 
 editor.addEventListener('blur',suppressNativeKeyboard);
 
-editor.addEventListener('input',refresh);editor.addEventListener('keydown',handlePhysicalKeyboard);editor.addEventListener('click',hideLP);document.addEventListener('pointerdown',e=>{if(!lp.contains(e.target)&&!e.target.classList.contains('key'))hideLP()});document.getElementById('clearAll').onclick=clearAll;document.getElementById('addSpace').onclick=spaceAction;document.getElementById('backspaceTop').onclick=backspace;document.querySelectorAll('.script-tab').forEach(b=>b.onclick=()=>switchScript(b.dataset.script));mobileScriptSelect.onchange=()=>{const tab=document.querySelector(`.script-tab[data-script="${mobileScriptSelect.value}"]`);tab?.click()};infoButton.onclick=e=>{e.stopPropagation();const open=infoWrap.classList.toggle('open');infoButton.setAttribute('aria-expanded',open?'true':'false')};document.addEventListener('click',e=>{if(!infoWrap.contains(e.target)){infoWrap.classList.remove('open');infoButton.setAttribute('aria-expanded','false')}});rebuildIndexes();render();refresh();
+window.addEventListener('blur',hideLP);
+editor.addEventListener('input',refresh);editor.addEventListener('keydown',handlePhysicalKeyboard);editor.addEventListener('click',hideLP);document.addEventListener('pointerdown',e=>{if(!lp.contains(e.target)&&!e.target.classList.contains('key'))hideLP()});document.getElementById('clearAll').onclick=clearAll;document.getElementById('addSpace').onclick=spaceAction;latinVariantSwitch.querySelectorAll('button').forEach(b=>b.onclick=()=>{
+  latinVariant=b.dataset.latinVariant;
+  latinVariantSwitch.querySelectorAll('button').forEach(x=>{
+    const active=x===b;
+    x.classList.toggle('active',active);
+    x.setAttribute('aria-pressed',String(active))
+  });
+  layer='default';
+  render()
+});
+document.getElementById('backspaceTop').onclick=backspace;document.querySelectorAll('.script-tab').forEach(b=>b.onclick=()=>switchScript(b.dataset.script));mobileScriptSelect.onchange=()=>{const tab=document.querySelector(`.script-tab[data-script="${mobileScriptSelect.value}"]`);tab?.click()};infoButton.onclick=e=>{e.stopPropagation();const open=infoWrap.classList.toggle('open');infoButton.setAttribute('aria-expanded',open?'true':'false')};document.addEventListener('click',e=>{if(!infoWrap.contains(e.target)){infoWrap.classList.remove('open');infoButton.setAttribute('aria-expanded','false')}});rebuildIndexes();render();refresh();
 </script>
 </body>
 </html>
