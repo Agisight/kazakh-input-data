@@ -65,8 +65,8 @@ for (const expected of cases) {
   });
 }
 
-test('kazakh-compact replaces w/x, retains c and puts ğ directly after g', () => {
-  const layout = layouts['kazakh-compact'];
+test('27-letter layout replaces w/x, retains c and puts ğ directly after g', () => {
+  const layout = layouts.qwerty27;
   assert.deepEqual(layout.default.map(row=>letters(row).join('')), ['qüertyuiop', 'asdfgğhjkl', 'zşcvbnm']);
   assert.equal(new Set(layout.default.flatMap(letters)).size, 27);
   assert.equal(layout.default[2][0], '\\s{shift}');
@@ -76,8 +76,8 @@ test('kazakh-compact replaces w/x, retains c and puts ğ directly after g', () =
   assert.equal(layout.geometry.edgeWeight, 1.5);
 });
 
-test('kazakh-compact keeps every letter reachable once in both cases, including displaced ASCII', () => {
-  const layout = layouts['kazakh-compact'];
+test('27-letter layout keeps every letter reachable once in both cases, including displaced ASCII', () => {
+  const layout = layouts.qwerty27;
   for (const [layer, capital] of [['default',false],['shift',true]]) {
     const visible = layout[layer].flatMap(letters);
     const hidden = visible.flatMap(base=>layout.longpress[base]||[]);
