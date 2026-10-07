@@ -65,6 +65,31 @@ for (const expected of cases) {
   });
 }
 
+test('26 swap replaces only w/x/c and preserves a 26-letter budget', () => {
+  const layout = layouts.qwerty26;
+  assert.deepEqual(layout.default.map(row=>letters(row).join('')), ['qüertyuiop', 'asdfghjkl', 'zşğvbnm']);
+  assert.equal(new Set(layout.default.flatMap(letters)).size, 26);
+  assert.equal(layout.default[2][0], '\\s{shift}');
+  assert.equal(layout.default[2].at(-1), '\\s{backspace}');
+  assert.deepEqual(layout.shift, layout.default.map(row=>row.map(t=>t.startsWith('\\s{')?t:upper(t))));
+  assert.equal(layout.geometry.baseCount, 10);
+  assert.equal(layout.geometry.edgeWeight, 1.5);
+});
+
+test('26 swap keeps every letter reachable once in both cases, including displaced ASCII', () => {
+  const layout = layouts.qwerty26;
+  for (const [layer, capital] of [['default',false],['shift',true]]) {
+    const visible = layout[layer].flatMap(letters);
+    const hidden = visible.flatMap(base=>layout.longpress[base]||[]);
+    const expected = capital ? alphabet.map(upper).sort() : alphabet;
+    assert.deepEqual([...visible, ...hidden].sort(), expected);
+    for (const [base, alt] of Object.entries({ü:'w', ş:'x', ğ:'c'})) {
+      assert.deepEqual(layout.longpress[capital?upper(base):base], [capital?upper(alt):alt]);
+    }
+  }
+  for (const base of ['g','s','y','G','S','Y']) assert.equal(layout.longpress[base], undefined);
+});
+
 test('The selector resolves all variants and falls back to QWERTY4', () => {
   for (const id of Object.keys(layouts)) {
     context.latinVariant = id;

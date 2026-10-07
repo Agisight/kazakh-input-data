@@ -10,6 +10,7 @@ ROOT = Path(__file__).resolve().parents[1]
 LEXICON = ROOT / "data/kk-Latn/lexicon/lexicon.tsv"
 HIDDEN = {
     "QWERTY3 (26)": "äğıñöşūü",
+    "26 swap": "äıñöūwxc",
     "29 letters": "äöşūü",
     "30 letters": "äöūü",
     "31 letters": "äöū",
