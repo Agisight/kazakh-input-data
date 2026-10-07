@@ -23,18 +23,43 @@ are also explicitly experimental and are not presented as finalized standards.
 
 ## Experimental Latin touch variants
 
-Select **Latin**, then **29 letters**, **30 letters** or **31 letters** beside
-the input field. On narrow screens the selector uses **Q4**, **Q3**, **29**,
+Select **Latin**, then **27 letters**, **29 letters**, **30 letters** or **31 letters**
+beside the input field. On narrow screens the selector uses **Q4**, **Q3**, **27**, **29**,
 **30**, **31**. QWERTY4 and QWERTY3 remain available as comparison layouts.
 The numeric labels count visible letters, not rows or service keys.
 Latin keys with long-press alternatives show a small gray hint in their upper
 corner. The hint follows the active letter case and exposes the alternative to
 screen readers; tap and hold-slide-release behavior stays the same.
 
-All three new variants keep the 26 ASCII QWERTY letters, in their original
+The 29–31-letter variants keep the 26 ASCII QWERTY letters, in their original
 relative row order. Added letters shift some positions; familiarity and typing
 speed therefore still need testing. The preview is a touch-layout experiment,
 not a change to the exported macOS ISO/ANSI layouts.
+
+### 27 letters: replace w/x and add ğ beside g
+
+A good compact option for a small on-screen keyboard: two ten-letter upper
+rows, direct access to ü/ş/ğ, and a visible c. Typing speed, errors and learning
+effort still need testing on phones.
+
+```text
+q ü e r t y u i o p
+a s d f g ğ h j k l
+⇧ z ş c v b n m ⌫
+```
+
+- **ü** occupies the original **w** position and **ş** replaces **x**.
+- **c** stays in its original position; **ğ** has a separate key immediately after **g**.
+- Displaced letters remain available through **ü → w, ş → x** long-press.
+- Other long-press pairs: **a → ä, i → ı, n → ñ, o → ö, u → ū**.
+- There are 27 visible letters in **10 / 10 / 7** letter rows. The two upper
+  rows share the same width; Shift and Backspace each use 1.5 grid units,
+  giving the bottom row the same total width of 10 units.
+- Each of the 34 supported letters is reachable once per case. There are no
+  duplicate **g → ğ**, **s → ş** or **y → ü** alternatives in this variant.
+- Hardware **KeyW / KeyX / KeyC** in the preview type **ü / ş / c** respectively;
+  **KeyH** types the added **ğ** according to its middle-row position. Shift
+  types the uppercase equivalents. This is a separate selectable experiment.
 
 ### 29 letters: three added visible letters
 
@@ -76,7 +101,7 @@ a s ş d f g ğ h j k l
 - Letter rows: **11 / 11 / 9**. Including service keys: **11 / 11 / 11**.
 - Letter, Shift and Backspace keys use the same width.
 
-The new variants use Turkic I casing: **i ↔ İ**, **ı ↔ I**. Long-press
+The 27-letter and 29–31-letter variants use Turkic I casing: **i ↔ İ**, **ı ↔ I**. Long-press
 alternatives have uppercase equivalents. Hold a key, slide into the popup and
 release to enter an alternative; releasing outside the popup cancels selection.
 Hardware input within the on-screen preview follows displayed row positions,
@@ -109,6 +134,7 @@ not independent empirical observations.
 | Layout | Hidden letters | Holds / 1,000 letters, Zipf 1.0 | Range across 7 models |
 | --- | --- | ---: | ---: |
 | QWERTY3, 26 visible | ä, ğ, ı, ñ, ö, ş, ū, ü | 108.3 | 83.8–129.5 |
+| 27 letters | ä, ı, ñ, ö, ū, w, x | 75.6 | 56.4–92.0 |
 | 29 visible | ä, ö, ş, ū, ü | 36.7 | 28.9–44.1 |
 | 30 visible | ä, ö, ū, ü | 25.2 | 20.5–28.5 |
 | 31 visible | ä, ö, ū | 18.0 | 14.3–21.2 |
@@ -117,11 +143,13 @@ Adding **ş** to the 29-letter layout saves **11.5 holds per 1,000 letters** und
 Zipf 1.0; adding **ü** to the 30-letter layout saves another **7.2**. Keeping **ı**
 visible avoids **42.9** holds per 1,000 letters under that model, compared with
 **7.2** for ü. Moving ü from long-press on y to long-press on w would not change
-the counted events; this experiment keeps **y → ü**.
+the counted events; the 29- and 30-letter variants keep **y → ü**.
 
-All ASCII letters remain visible, including **c, w, x**, which are absent from
-this particular lexicon. Zero observations do not measure their usefulness for
-names, other languages or URLs.
+The 29–31-letter layouts keep all ASCII letters visible, including **c, w, x**,
+which are absent from this particular lexicon. The 27-letter layout puts
+**w/x** on long-press while keeping **c** visible, and saves **32.7 holds per 1,000 letters**
+against QWERTY3 under Zipf 1.0. Zero observations do not measure their usefulness
+for names, other languages or URLs; such input can add holds in the 27-letter layout.
 
 Reproduce the estimates with Python's standard library:
 

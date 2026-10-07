@@ -132,7 +132,10 @@ be selected explicitly.
 - **Latin (`kk-Latn`)** — offers QWERTY4 (an additional Kazakh-letter row),
   QWERTY3 (26 visible letters with long-press alternatives), and experimental
   three-row variants with **29, 30 or 31 visible letters**. These preserve all
-  26 QWERTY letters and expose progressively more Kazakh letters.
+  26 QWERTY letters and expose progressively more Kazakh letters. **27 letters**
+  is a good compact option: 27 visible letters in 10/10/7 rows, **w → ü, x → ş**,
+  plus **ğ** immediately after **g**;
+  **c** stays visible. Long-press on ü/ş restores w/x.
 - **Desktop macOS (`kk-Latn`)** — uses experimental hardware adaptations from
   `Agisight/ios-system-keyboard`: ISO is the primary experimental geometry and
   ANSI is an optional adaptation for ANSI hardware. The underlying letter order

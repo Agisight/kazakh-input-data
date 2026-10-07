@@ -115,6 +115,9 @@ assert 'data-latin-variant="qwerty4"' in t
 assert 'data-latin-variant="qwerty3"' in t
 assert '<span class="variant-label" data-short-label="Q4">QWERTY4</span>' in t
 assert '<span class="variant-label" data-short-label="Q3">QWERTY3</span>' in t
+assert 'data-latin-variant="qwerty27"' in t
+assert 'data-short-label="27">27 letters</span>' in t
+assert 'qwerty27:LATN_QWERTY27' in t
 for count in (29, 30, 31):
     assert f'data-latin-variant="qwerty{count}"' in t
     assert f'data-short-label="{count}">{count} letters</span>' in t
