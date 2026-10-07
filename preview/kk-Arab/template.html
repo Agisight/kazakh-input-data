@@ -28,7 +28,7 @@
 
 @media(min-width:701px){
   .keyboard #keyboard{
-    max-width:840px;
+    max-width:min(840px,calc(var(--latin-base-count,11) * 76px + (var(--latin-base-count,11) - 1) * 6px));
     margin-left:auto;
     margin-right:auto;
   }
@@ -566,6 +566,7 @@ function rtlEdgeKeys(row){
 function render(){
   hideLP();
   kb.innerHTML='';
+  kb.style.removeProperty('--latin-base-count');
 
   if(isArab()){
     for(const row of(ARAB_LAYOUT.layers[layer]||ARAB_LAYOUT.layers.default))renderRow(rtlEdgeKeys(row))
@@ -575,6 +576,10 @@ function render(){
   }
 
   const L=currentTag==='kk-Cyrl'?CYRL_LAYOUT:latinLayout();
+  if(currentTag==='kk-Latn'){
+    const topRow=layer.startsWith('symbols')?STATIC_SYMBOLS[layer][0]:L.default[0];
+    kb.style.setProperty('--latin-base-count',printableRow(topRow).length)
+  }
 
   if(layer.startsWith('symbols')){
     for(const row of STATIC_SYMBOLS[layer])renderRow(row)
