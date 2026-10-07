@@ -65,10 +65,10 @@ for (const expected of cases) {
   });
 }
 
-test('kazakh-compact replaces only w/x/c and preserves a 26-letter budget', () => {
+test('kazakh-compact replaces w/x, retains c and puts ğ directly after g', () => {
   const layout = layouts['kazakh-compact'];
-  assert.deepEqual(layout.default.map(row=>letters(row).join('')), ['qüertyuiop', 'asdfghjkl', 'zşğvbnm']);
-  assert.equal(new Set(layout.default.flatMap(letters)).size, 26);
+  assert.deepEqual(layout.default.map(row=>letters(row).join('')), ['qüertyuiop', 'asdfgğhjkl', 'zşcvbnm']);
+  assert.equal(new Set(layout.default.flatMap(letters)).size, 27);
   assert.equal(layout.default[2][0], '\\s{shift}');
   assert.equal(layout.default[2].at(-1), '\\s{backspace}');
   assert.deepEqual(layout.shift, layout.default.map(row=>row.map(t=>t.startsWith('\\s{')?t:upper(t))));
@@ -83,11 +83,11 @@ test('kazakh-compact keeps every letter reachable once in both cases, including 
     const hidden = visible.flatMap(base=>layout.longpress[base]||[]);
     const expected = capital ? alphabet.map(upper).sort() : alphabet;
     assert.deepEqual([...visible, ...hidden].sort(), expected);
-    for (const [base, alt] of Object.entries({ü:'w', ş:'x', ğ:'c'})) {
+    for (const [base, alt] of Object.entries({ü:'w', ş:'x'})) {
       assert.deepEqual(layout.longpress[capital?upper(base):base], [capital?upper(alt):alt]);
     }
   }
-  for (const base of ['g','s','y','G','S','Y']) assert.equal(layout.longpress[base], undefined);
+  for (const base of ['g','ğ','c','s','y','G','Ğ','C','S','Y']) assert.equal(layout.longpress[base], undefined);
 });
 
 test('The selector resolves all variants and falls back to QWERTY4', () => {

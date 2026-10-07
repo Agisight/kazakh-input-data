@@ -149,7 +149,7 @@
 <div class="panel">
 <div class="editor-head"><div class="editor-label" id="inputLabel">INPUT · ARABIC</div><div class="editor-actions"><label class="space-autocomplete"><input type="checkbox" id="spaceAutocomplete" checked>Space autocomplete</label><button class="clear-all" id="clearAll">Clear all</button></div></div>
 <textarea id="editor" dir="rtl" spellcheck="false" inputmode="none" readonly placeholder="…"></textarea>
-<div class="input-tools"><div class="controls"><button id="backspaceTop">⌦</button><button id="addSpace">Space</button></div><div class="latin-variant-switch" id="latinVariantSwitch" role="group" aria-label="Latin layout variant"><button type="button" data-latin-variant="qwerty4" aria-pressed="true" class="active"><span class="variant-label" data-short-label="Q4">QWERTY4</span></button><button type="button" data-latin-variant="qwerty3" aria-pressed="false"><span class="variant-label" data-short-label="Q3">QWERTY3</span></button><button type="button" data-latin-variant="kazakh-compact" aria-pressed="false" title="26 letters: w → ü, x → ş, c → ğ"><span class="variant-label" data-short-label="Compact">kazakh-compact</span></button><button type="button" data-latin-variant="qwerty29" aria-pressed="false"><span class="variant-label" data-short-label="29">29 letters</span></button><button type="button" data-latin-variant="qwerty30" aria-pressed="false"><span class="variant-label" data-short-label="30">30 letters</span></button><button type="button" data-latin-variant="qwerty31" aria-pressed="false"><span class="variant-label" data-short-label="31">31 letters</span></button></div><div class="info-wrap" id="infoWrap"><button id="infoButton" class="info-button" type="button" aria-label="Dataset information" aria-expanded="false">ⓘ</button><div class="info-popover" id="infoPopover"></div></div></div>
+<div class="input-tools"><div class="controls"><button id="backspaceTop">⌦</button><button id="addSpace">Space</button></div><div class="latin-variant-switch" id="latinVariantSwitch" role="group" aria-label="Latin layout variant"><button type="button" data-latin-variant="qwerty4" aria-pressed="true" class="active"><span class="variant-label" data-short-label="Q4">QWERTY4</span></button><button type="button" data-latin-variant="qwerty3" aria-pressed="false"><span class="variant-label" data-short-label="Q3">QWERTY3</span></button><button type="button" data-latin-variant="kazakh-compact" aria-pressed="false" title="27 letters: w → ü, x → ş; ğ beside g"><span class="variant-label" data-short-label="Compact">kazakh-compact</span></button><button type="button" data-latin-variant="qwerty29" aria-pressed="false"><span class="variant-label" data-short-label="29">29 letters</span></button><button type="button" data-latin-variant="qwerty30" aria-pressed="false"><span class="variant-label" data-short-label="30">30 letters</span></button><button type="button" data-latin-variant="qwerty31" aria-pressed="false"><span class="variant-label" data-short-label="31">31 letters</span></button></div><div class="info-wrap" id="infoWrap"><button id="infoButton" class="info-button" type="button" aria-label="Dataset information" aria-expanded="false">ⓘ</button><div class="info-popover" id="infoPopover"></div></div></div>
 </div>
 <div class="panel suggestions-panel"><div id="suggestions" class="suggestions" dir="rtl"></div><div id="status" class="status"></div></div>
 <div class="panel keyboard"><div id="keyboard"></div><div id="layoutSource" class="layout-source"></div></div>
@@ -239,7 +239,7 @@ const LATN_QWERTY3={
 };
 
 const LATN_KAZAKH_COMPACT={
-  source:'Latin preview layout · kazakh-compact · w → ü, x → ş, c → ğ',
+  source:'Latin preview layout · kazakh-compact · 27 letters · w → ü, x → ş, g ğ',
   geometry:{baseCount:10,edgeWeight:1.5},
   longpress:{
     'a':['ä'],'A':['Ä'],
@@ -248,18 +248,17 @@ const LATN_KAZAKH_COMPACT={
     'o':['ö'],'O':['Ö'],
     'u':['ū'],'U':['Ū'],
     'ü':['w'],'Ü':['W'],
-    'ş':['x'],'Ş':['X'],
-    'ğ':['c'],'Ğ':['C']
+    'ş':['x'],'Ş':['X']
   },
   default:[
     ['q','ü','e','r','t','y','u','i','o','p'],
-    ['a','s','d','f','g','h','j','k','l'],
-    ['\\s{shift}','z','ş','ğ','v','b','n','m','\\s{backspace}']
+    ['a','s','d','f','g','ğ','h','j','k','l'],
+    ['\\s{shift}','z','ş','c','v','b','n','m','\\s{backspace}']
   ],
   shift:[
     ['Q','Ü','E','R','T','Y','U','İ','O','P'],
-    ['A','S','D','F','G','H','J','K','L'],
-    ['\\s{shift}','Z','Ş','Ğ','V','B','N','M','\\s{backspace}']
+    ['A','S','D','F','G','Ğ','H','J','K','L'],
+    ['\\s{shift}','Z','Ş','C','V','B','N','M','\\s{backspace}']
   ]
 };
 

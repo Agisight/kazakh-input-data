@@ -36,24 +36,26 @@ relative row order. Added letters shift some positions; familiarity and typing
 speed therefore still need testing. The preview is a touch-layout experiment,
 not a change to the exported macOS ISO/ANSI layouts.
 
-### kazakh-compact: replace w, x and c with ü, ş and ğ
+### kazakh-compact: replace w/x and add ğ beside g
 
 ```text
 q ü e r t y u i o p
- a s d f g h j k l
-⇧ z ş ğ v b n m ⌫
+a s d f g ğ h j k l
+⇧ z ş c v b n m ⌫
 ```
 
-- **ü** occupies the original **w** position, **ş** replaces **x**, and **ğ** replaces **c**.
-- Displaced letters remain available through **ü → w, ş → x, ğ → c** long-press.
+- **ü** occupies the original **w** position and **ş** replaces **x**.
+- **c** stays in its original position; **ğ** has a separate key immediately after **g**.
+- Displaced letters remain available through **ü → w, ş → x** long-press.
 - Other long-press pairs: **a → ä, i → ı, n → ñ, o → ö, u → ū**.
-- There are 26 visible letters in **10 / 9 / 7** letter rows. The middle row
-  is centered; Shift and Backspace each use 1.5 grid units, giving the bottom
-  row the same total width as the 10-unit top row.
+- There are 27 visible letters in **10 / 10 / 7** letter rows. The two upper
+  rows share the same width; Shift and Backspace each use 1.5 grid units,
+  giving the bottom row the same total width of 10 units.
 - Each of the 34 supported letters is reachable once per case. There are no
   duplicate **g → ğ**, **s → ş** or **y → ü** alternatives in this variant.
-- Hardware **KeyW / KeyX / KeyC** in the preview type **ü / ş / ğ** respectively;
-  Shift types **Ü / Ş / Ğ**. This is a separate selectable experiment.
+- Hardware **KeyW / KeyX / KeyC** in the preview type **ü / ş / c** respectively;
+  **KeyH** types the added **ğ** according to its middle-row position. Shift
+  types the uppercase equivalents. This is a separate selectable experiment.
 
 ### 29 letters: three added visible letters
 
@@ -128,7 +130,7 @@ not independent empirical observations.
 | Layout | Hidden letters | Holds / 1,000 letters, Zipf 1.0 | Range across 7 models |
 | --- | --- | ---: | ---: |
 | QWERTY3, 26 visible | ä, ğ, ı, ñ, ö, ş, ū, ü | 108.3 | 83.8–129.5 |
-| kazakh-compact | ä, ı, ñ, ö, ū, w, x, c | 75.6 | 56.4–92.0 |
+| kazakh-compact, 27 visible | ä, ı, ñ, ö, ū, w, x | 75.6 | 56.4–92.0 |
 | 29 visible | ä, ö, ş, ū, ü | 36.7 | 28.9–44.1 |
 | 30 visible | ä, ö, ū, ü | 25.2 | 20.5–28.5 |
 | 31 visible | ä, ö, ū | 18.0 | 14.3–21.2 |
@@ -140,8 +142,8 @@ visible avoids **42.9** holds per 1,000 letters under that model, compared with
 the counted events; the 29- and 30-letter variants keep **y → ü**.
 
 The 29–31-letter layouts keep all ASCII letters visible, including **c, w, x**,
-which are absent from this particular lexicon. The kazakh-compact layout instead puts
-those three letters on long-press and saves **32.7 holds per 1,000 letters**
+which are absent from this particular lexicon. The kazakh-compact layout puts
+**w/x** on long-press while keeping **c** visible, and saves **32.7 holds per 1,000 letters**
 against QWERTY3 under Zipf 1.0. Zero observations do not measure their usefulness
 for names, other languages or URLs; such input can add holds in kazakh-compact.
 

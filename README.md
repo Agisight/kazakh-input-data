@@ -133,8 +133,8 @@ be selected explicitly.
   QWERTY3 (26 visible letters with long-press alternatives), and experimental
   three-row variants with **29, 30 or 31 visible letters**. These preserve all
   26 QWERTY letters and expose progressively more Kazakh letters. **kazakh-compact**
-  keeps 26 visible letters by replacing **w → ü, x → ş, c → ğ**, with the
-  displaced ASCII letters available through long-press on those keys.
+  has 27 visible letters: **w → ü, x → ş**, plus **ğ** immediately after **g**;
+  **c** stays visible. Long-press on ü/ş restores w/x.
 - **Desktop macOS (`kk-Latn`)** — uses experimental hardware adaptations from
   `Agisight/ios-system-keyboard`: ISO is the primary experimental geometry and
   ANSI is an optional adaptation for ANSI hardware. The underlying letter order
