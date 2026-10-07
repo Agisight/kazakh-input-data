@@ -27,6 +27,9 @@ Select **Latin**, then **29 letters**, **30 letters** or **31 letters** beside
 the input field. On narrow screens the selector uses **Q4**, **Q3**, **29**,
 **30**, **31**. QWERTY4 and QWERTY3 remain available as comparison layouts.
 The numeric labels count visible letters, not rows or service keys.
+Latin keys with long-press alternatives show a small gray hint in their upper
+corner. The hint follows the active letter case and exposes the alternative to
+screen readers; tap and hold-slide-release behavior stays the same.
 
 All three new variants keep the 26 ASCII QWERTY letters, in their original
 relative row order. Added letters shift some positions; familiarity and typing
