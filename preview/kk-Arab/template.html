@@ -14,6 +14,10 @@
 .keyboard{user-select:none;-webkit-user-select:none;touch-action:manipulation}.row{display:flex;width:100%;gap:6px;justify-content:center;margin:6px 0}.key{touch-action:none;-webkit-touch-callout:none;position:relative;flex:1 1 0;max-width:76px;min-width:30px;height:50px;border:1px solid var(--border);border-radius:7px;background:var(--key);color:var(--text);box-shadow:0 1px 2px rgba(0,0,0,.18);font-size:23px;cursor:pointer}.key.special{background:var(--key2);font-size:17px}.key.extra{background:color-mix(in srgb,var(--key) 92%,var(--text) 8%);font-size:20px}.key.shift-key{flex:0 0 72px;max-width:72px}.key.backspace-key{flex:0 0 72px;max-width:72px}.key.mode-key{flex:0 0 82px;max-width:82px}.row.edge-row .shift-key,.row.edge-row .mode-key{margin-right:auto}.row.edge-row .backspace-key{margin-left:auto}.key.spacer{visibility:hidden;pointer-events:none;max-width:22px}.key:active,.key.active{transform:translateY(1px);filter:brightness(.94)}
 .bottom{display:flex;gap:7px;margin-top:7px}.bottom button{height:46px;border:1px solid var(--border);border-radius:8px;background:var(--key2);color:var(--text);font-size:16px;box-shadow:0 1px 2px rgba(0,0,0,.14)}.bottom .wide{flex:1}.bottom .mode-bottom{flex:0 0 96px}.bottom .return-bottom{flex:0 0 96px}.bottom .space{flex:1;background:var(--key);font-weight:500}.bottom .space:active{transform:translateY(1px);filter:brightness(.94)}
 .layout-source{text-align:center;color:var(--muted);font-size:10px;margin-top:7px}
+.row.expanded-latin-row{--row-gap:6px;display:grid;gap:var(--row-gap);width:calc((100% + var(--row-gap)) * var(--row-fraction) - var(--row-gap));max-width:calc(var(--row-units) * 76px + (var(--row-units) - 1) * var(--row-gap));margin-left:auto;margin-right:auto}
+.row.expanded-latin-row .key{width:100%;min-width:0;max-width:none}
+.row.expanded-latin-row .shift-key,.row.expanded-latin-row .backspace-key{margin:0}
+@media(max-width:560px){.row.expanded-latin-row{--row-gap:3px}}
 .latin-variant-switch{display:none;align-items:center;gap:2px;padding:2px;border:1px solid var(--border);border-radius:9px;background:var(--bg);margin-left:auto}.latin-variant-switch button{height:32px;min-width:38px;border:0;background:transparent;color:var(--muted);border-radius:7px;padding:0 9px;cursor:pointer;font-size:11px;font-weight:650}.latin-variant-switch button.active{background:var(--panel);color:var(--text);box-shadow:0 1px 3px var(--border)}
 
 .input-tools{display:flex;align-items:flex-end;gap:8px;margin-top:10px}.input-tools .controls{margin-top:0;flex:1}.info-wrap{position:relative;margin-left:auto}.info-button{width:40px;height:38px;padding:0;border:1px solid var(--border);background:var(--panel);color:var(--muted);border-radius:8px;cursor:pointer;font-size:17px;line-height:1}.info-popover{display:none;position:absolute;right:0;bottom:46px;z-index:30;width:max-content;min-width:180px;max-width:260px;padding:10px 12px;border:1px solid var(--border);border-radius:12px;background:var(--panel);color:var(--text);box-shadow:0 8px 28px rgba(0,0,0,.22);font-size:12px;line-height:1.6}.info-wrap.open .info-popover{display:block}.info-popover strong{font-size:13px}
@@ -49,8 +53,7 @@
 
 @media(max-width:700px){
   .latin-variant-switch .variant-label{font-size:0}
-  .latin-variant-switch button[data-latin-variant="qwerty4"] .variant-label::after{content:'Q4';font-size:11px}
-  .latin-variant-switch button[data-latin-variant="qwerty3"] .variant-label::after{content:'Q3';font-size:11px}
+  .latin-variant-switch .variant-label::after{content:attr(data-short-label);font-size:11px}
   .row.extra-row{display:grid;justify-content:stretch}
   .row.extra-row .key{width:100%;max-width:none}
   .app{padding:10px}
@@ -143,7 +146,7 @@
 <div class="panel">
 <div class="editor-head"><div class="editor-label" id="inputLabel">INPUT · ARABIC</div><div class="editor-actions"><label class="space-autocomplete"><input type="checkbox" id="spaceAutocomplete" checked>Space autocomplete</label><button class="clear-all" id="clearAll">Clear all</button></div></div>
 <textarea id="editor" dir="rtl" spellcheck="false" inputmode="none" readonly placeholder="…"></textarea>
-<div class="input-tools"><div class="controls"><button id="backspaceTop">⌦</button><button id="addSpace">Space</button></div><div class="latin-variant-switch" id="latinVariantSwitch"><button type="button" data-latin-variant="qwerty4" aria-pressed="true" class="active"><span class="variant-label">QWERTY4</span></button><button type="button" data-latin-variant="qwerty3" aria-pressed="false"><span class="variant-label">QWERTY3</span></button></div><div class="info-wrap" id="infoWrap"><button class="info-button" id="infoButton" type="button" aria-label="Dataset information" aria-expanded="false">ⓘ</button><div class="info-popover" id="infoPopover"></div></div></div>
+<div class="input-tools"><div class="controls"><button id="backspaceTop">⌦</button><button id="addSpace">Space</button></div><div class="latin-variant-switch" id="latinVariantSwitch" role="group" aria-label="Latin layout variant"><button type="button" data-latin-variant="qwerty4" aria-pressed="true" class="active"><span class="variant-label" data-short-label="Q4">QWERTY4</span></button><button type="button" data-latin-variant="qwerty3" aria-pressed="false"><span class="variant-label" data-short-label="Q3">QWERTY3</span></button><button type="button" data-latin-variant="qwerty29" aria-pressed="false"><span class="variant-label" data-short-label="29">29 letters</span></button><button type="button" data-latin-variant="qwerty30" aria-pressed="false"><span class="variant-label" data-short-label="30">30 letters</span></button><button type="button" data-latin-variant="qwerty31" aria-pressed="false"><span class="variant-label" data-short-label="31">31 letters</span></button></div><div class="info-wrap" id="infoWrap"><button id="infoButton" class="info-button" type="button" aria-label="Dataset information" aria-expanded="false">ⓘ</button><div class="info-popover" id="infoPopover"></div></div></div>
 </div>
 <div class="panel suggestions-panel"><div id="suggestions" class="suggestions" dir="rtl"></div><div id="status" class="status"></div></div>
 <div class="panel keyboard"><div id="keyboard"></div><div id="layoutSource" class="layout-source"></div></div>
@@ -232,9 +235,39 @@ const LATN_QWERTY3={
   ]
 };
 
-function latinLayout(){
-  return latinVariant==='qwerty3'?LATN_QWERTY3:LATN_QWERTY4
+// Preserve QWERTY order while progressively exposing Kazakh letters.
+function expandedLatinLayout(letterCount){
+  const rows=[
+    ['q','w','e','r','t','y','u','i','ı','o','p'],
+    ['a','s',...(letterCount>=30?['ş']:[]),'d','f','g','ğ','h','j','k','l'],
+    ['\\s{shift}','z','x','c','v','b','n','ñ','m',...(letterCount===31?['ü']:[]),'\\s{backspace}']
+  ];
+  const longpress={
+    'a':['ä'],'A':['Ä'],
+    'o':['ö'],'O':['Ö'],
+    'u':['ū'],'U':['Ū']
+  };
+  if(letterCount===29){longpress.s=['ş'];longpress.S=['Ş']}
+  if(letterCount<31){longpress.y=['ü'];longpress.Y=['Ü']}
+  const upper=t=>t.startsWith('\\s{')?t:t==='i'?'İ':t==='ı'?'I':t.toUpperCase();
+  return{
+    source:`Latin preview layout · ${letterCount} letters · experimental QWERTY adaptation`,
+    geometry:{baseCount:11,edgeWeight:letterCount===30?1.5:1},
+    default:rows,
+    shift:rows.map(row=>row.map(upper)),
+    longpress
+  }
 }
+
+const LATN_LAYOUTS={
+  qwerty4:LATN_QWERTY4,
+  qwerty3:LATN_QWERTY3,
+  qwerty29:expandedLatinLayout(29),
+  qwerty30:expandedLatinLayout(30),
+  qwerty31:expandedLatinLayout(31)
+};
+
+function latinLayout(){return LATN_LAYOUTS[latinVariant]||LATN_QWERTY4}
 
 const SCRIPT_INFO={
  'kk-Arab':{name:'Arabic',description:'Arabic script · Töte jazu / төте жазу',dir:'rtl'},
@@ -450,11 +483,20 @@ function key(t,extra=false){
   return b
 }
 
-function renderRow(tokens){
+function renderRow(tokens,geometry=null){
   const r=document.createElement('div');
   r.className='row';
   const first=tokens[0]||'',last=tokens[tokens.length-1]||'';
   if((first.includes('shift')||first.includes('shiftSymbols'))&&last.includes('backspace'))r.classList.add('edge-row');
+  if(geometry){
+    r.classList.add('expanded-latin-row');
+    const edge=r.classList.contains('edge-row');
+    const weight=edge?geometry.edgeWeight:1;
+    const units=tokens.length+2*(weight-1);
+    r.style.setProperty('--row-units',units);
+    r.style.setProperty('--row-fraction',units/geometry.baseCount);
+    r.style.gridTemplateColumns=edge?`${weight}fr repeat(${tokens.length-2},minmax(0,1fr)) ${weight}fr`:`repeat(${tokens.length},minmax(0,1fr))`
+  }
   for(const tok of tokens)r.appendChild(key(tok));
   kb.appendChild(r);
 }
@@ -529,7 +571,7 @@ function render(){
     kb.appendChild(er)
   }
 
-  for(const row of rows)renderRow(row)
+  for(const row of rows)renderRow(row,L.geometry)
   appendBottom();
   layoutSource.textContent=L.source
 }

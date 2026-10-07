@@ -110,18 +110,22 @@ assert ".lp::after" in t
 assert "min-width:48px" in t
 
 # Latin layout selector lives with the input/info controls.
-assert '<div class="latin-variant-switch" id="latinVariantSwitch">' in t
+assert '<div class="latin-variant-switch" id="latinVariantSwitch"' in t
 assert 'data-latin-variant="qwerty4"' in t
 assert 'data-latin-variant="qwerty3"' in t
-assert '<span class="variant-label">QWERTY4</span>' in t
-assert '<span class="variant-label">QWERTY3</span>' in t
+assert '<span class="variant-label" data-short-label="Q4">QWERTY4</span>' in t
+assert '<span class="variant-label" data-short-label="Q3">QWERTY3</span>' in t
+for count in (29, 30, 31):
+    assert f'data-latin-variant="qwerty{count}"' in t
+    assert f'data-short-label="{count}">{count} letters</span>' in t
+    assert f'qwerty{count}:expandedLatinLayout({count})' in t
+assert 'role="group" aria-label="Latin layout variant"' in t
 
 # Latin variant selector uses full labels on desktop and compact labels on mobile.
 assert 'aria-pressed="true"' in t
 assert 'aria-pressed="false"' in t
 assert "x.setAttribute('aria-pressed',String(active))" in t
-assert "content:'Q4'" in t
-assert "content:'Q3'" in t
+assert "content:attr(data-short-label)" in t
 
 # Experimental three-row Latin QWERTY variant.
 assert "const LATN_QWERTY3={" in t
@@ -134,8 +138,14 @@ assert "'s':['ş'],'S':['Ş']" in t
 assert "'u':['ū'],'U':['Ū']" in t
 assert "'y':['ü'],'Y':['Ü']" in t
 assert "function latinLayout()" in t
-assert "latinVariant==='qwerty3'" in t
+assert "LATN_LAYOUTS[latinVariant]||LATN_QWERTY4" in t
 assert "if(extras?.length)" in t
+
+# Expanded Latin layouts use row geometry independent of fixed edge-key widths.
+assert "function expandedLatinLayout(letterCount)" in t
+assert "edgeWeight:letterCount===30?1.5:1" in t
+assert "r.classList.add('expanded-latin-row')" in t
+assert "renderRow(row,L.geometry)" in t
 
 # Both on-screen Space controls use the same action.
 assert "sp.onclick=spaceAction" in t

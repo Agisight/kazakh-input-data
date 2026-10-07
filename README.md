@@ -129,8 +129,10 @@ be selected explicitly.
   [`Agisight/ios-system-keyboard`](https://github.com/Agisight/ios-system-keyboard).
 - **Cyrillic (`kk-Cyrl`)** — the preview keyboard is adapted from the Keyman
   **Kazakh Basic** touch layout.
-- **Latin (`kk-Latn`)** — currently uses an experimental preview layout based on
-  standard QWERTY with an additional row for Kazakh Latin letters.
+- **Latin (`kk-Latn`)** — offers QWERTY4 (an additional Kazakh-letter row),
+  QWERTY3 (26 visible letters with long-press alternatives), and experimental
+  three-row variants with **29, 30 or 31 visible letters**. These preserve all
+  26 QWERTY letters and expose progressively more Kazakh letters.
 - **Desktop macOS (`kk-Latn`)** — uses experimental hardware adaptations from
   `Agisight/ios-system-keyboard`: ISO is the primary experimental geometry and
   ANSI is an optional adaptation for ANSI hardware. The underlying letter order
@@ -139,6 +141,11 @@ be selected explicitly.
 The Latin layout is **not a finalized or standardized Kazakh Latin keyboard**.
 Its alphabet, character set, casing and key placement require further research
 and validation.
+
+The [preview README](preview/README.md#experimental-latin-touch-variants)
+documents the three variants, their row geometry, long-press mappings and
+hypothetical frequency comparison. Fewer long-press events must be weighed
+against narrower keys, shifted positions and actual typing errors.
 
 The preview is a demo of the language data and keyboard behavior, not a
 production input method or a keyboard-layout standard.
