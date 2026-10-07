@@ -86,6 +86,57 @@ assert "out.findIndex(t=>t.includes('shift'))" in t
 assert "out.findIndex(t=>t.includes('backspace'))" in t
 assert "renderRow(rtlEdgeKeys(row))" in t
 
+# Long-press supports native-style hold, slide, and release selection.
+assert "function updateLongPressSelection(x,y)" in t
+assert "function finishLongPress()" in t
+assert "longPressPointerId" in t
+assert "longPressSelection" in t
+assert "setPointerCapture" in t
+assert "pointermove" in t
+assert "b.classList.toggle('active',b===hit)" in t
+assert "if(value)token(value)" in t
+assert "touch-action:none" in t
+assert "!e.isPrimary" in t
+assert "e.button!==0" in t
+assert "if(e.pointerId!==longPressPointerId)return" in t
+assert "lostpointercapture" in t
+assert "window.addEventListener('blur',hideLP)" in t
+
+# Long-press alternatives use a compact native-like anchored popup.
+assert "const center=r.left+r.width/2" in t
+assert "center-w/2" in t
+assert "r.top-h-10" in t
+assert ".lp::after" in t
+assert "min-width:48px" in t
+
+# Latin layout selector lives with the input/info controls.
+assert '<div class="latin-variant-switch" id="latinVariantSwitch">' in t
+assert 'data-latin-variant="qwerty4"' in t
+assert 'data-latin-variant="qwerty3"' in t
+assert '<span class="variant-label">QWERTY4</span>' in t
+assert '<span class="variant-label">QWERTY3</span>' in t
+
+# Latin variant selector uses full labels on desktop and compact labels on mobile.
+assert 'aria-pressed="true"' in t
+assert 'aria-pressed="false"' in t
+assert "x.setAttribute('aria-pressed',String(active))" in t
+assert "content:'Q4'" in t
+assert "content:'Q3'" in t
+
+# Experimental three-row Latin QWERTY variant.
+assert "const LATN_QWERTY3={" in t
+assert "'a':['ä'],'A':['Ä']" in t
+assert "'g':['ğ'],'G':['Ğ']" in t
+assert "'i':['ı'],'I':['İ']" in t
+assert "'n':['ñ'],'N':['Ñ']" in t
+assert "'o':['ö'],'O':['Ö']" in t
+assert "'s':['ş'],'S':['Ş']" in t
+assert "'u':['ū'],'U':['Ū']" in t
+assert "'y':['ü'],'Y':['Ü']" in t
+assert "function latinLayout()" in t
+assert "latinVariant==='qwerty3'" in t
+assert "if(extras?.length)" in t
+
 # Both on-screen Space controls use the same action.
 assert "sp.onclick=spaceAction" in t
 assert "document.getElementById('addSpace').onclick=spaceAction" in t
