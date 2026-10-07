@@ -23,8 +23,8 @@ are also explicitly experimental and are not presented as finalized standards.
 
 ## Experimental Latin touch variants
 
-Select **Latin**, then **26 swap**, **29 letters**, **30 letters** or **31 letters**
-beside the input field. On narrow screens the selector uses **Q4**, **Q3**, **26**, **29**,
+Select **Latin**, then **kazakh-compact**, **29 letters**, **30 letters** or **31 letters**
+beside the input field. On narrow screens the selector uses **Q4**, **Q3**, **Compact**, **29**,
 **30**, **31**. QWERTY4 and QWERTY3 remain available as comparison layouts.
 The numeric labels count visible letters, not rows or service keys.
 Latin keys with long-press alternatives show a small gray hint in their upper
@@ -36,7 +36,7 @@ relative row order. Added letters shift some positions; familiarity and typing
 speed therefore still need testing. The preview is a touch-layout experiment,
 not a change to the exported macOS ISO/ANSI layouts.
 
-### 26 swap: replace w, x and c with ü, ş and ğ
+### kazakh-compact: replace w, x and c with ü, ş and ğ
 
 ```text
 q ü e r t y u i o p
@@ -95,7 +95,7 @@ a s ş d f g ğ h j k l
 - Letter rows: **11 / 11 / 9**. Including service keys: **11 / 11 / 11**.
 - Letter, Shift and Backspace keys use the same width.
 
-The 26 swap and 29–31-letter variants use Turkic I casing: **i ↔ İ**, **ı ↔ I**. Long-press
+The kazakh-compact and 29–31-letter variants use Turkic I casing: **i ↔ İ**, **ı ↔ I**. Long-press
 alternatives have uppercase equivalents. Hold a key, slide into the popup and
 release to enter an alternative; releasing outside the popup cancels selection.
 Hardware input within the on-screen preview follows displayed row positions,
@@ -128,7 +128,7 @@ not independent empirical observations.
 | Layout | Hidden letters | Holds / 1,000 letters, Zipf 1.0 | Range across 7 models |
 | --- | --- | ---: | ---: |
 | QWERTY3, 26 visible | ä, ğ, ı, ñ, ö, ş, ū, ü | 108.3 | 83.8–129.5 |
-| 26 swap | ä, ı, ñ, ö, ū, w, x, c | 75.6 | 56.4–92.0 |
+| kazakh-compact | ä, ı, ñ, ö, ū, w, x, c | 75.6 | 56.4–92.0 |
 | 29 visible | ä, ö, ş, ū, ü | 36.7 | 28.9–44.1 |
 | 30 visible | ä, ö, ū, ü | 25.2 | 20.5–28.5 |
 | 31 visible | ä, ö, ū | 18.0 | 14.3–21.2 |
@@ -140,10 +140,10 @@ visible avoids **42.9** holds per 1,000 letters under that model, compared with
 the counted events; the 29- and 30-letter variants keep **y → ü**.
 
 The 29–31-letter layouts keep all ASCII letters visible, including **c, w, x**,
-which are absent from this particular lexicon. The 26 swap layout instead puts
+which are absent from this particular lexicon. The kazakh-compact layout instead puts
 those three letters on long-press and saves **32.7 holds per 1,000 letters**
 against QWERTY3 under Zipf 1.0. Zero observations do not measure their usefulness
-for names, other languages or URLs; such input can add holds in the swap layout.
+for names, other languages or URLs; such input can add holds in kazakh-compact.
 
 Reproduce the estimates with Python's standard library:
 

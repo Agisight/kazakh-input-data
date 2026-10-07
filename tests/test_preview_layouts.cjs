@@ -65,8 +65,8 @@ for (const expected of cases) {
   });
 }
 
-test('26 swap replaces only w/x/c and preserves a 26-letter budget', () => {
-  const layout = layouts.qwerty26;
+test('kazakh-compact replaces only w/x/c and preserves a 26-letter budget', () => {
+  const layout = layouts['kazakh-compact'];
   assert.deepEqual(layout.default.map(row=>letters(row).join('')), ['qüertyuiop', 'asdfghjkl', 'zşğvbnm']);
   assert.equal(new Set(layout.default.flatMap(letters)).size, 26);
   assert.equal(layout.default[2][0], '\\s{shift}');
@@ -76,8 +76,8 @@ test('26 swap replaces only w/x/c and preserves a 26-letter budget', () => {
   assert.equal(layout.geometry.edgeWeight, 1.5);
 });
 
-test('26 swap keeps every letter reachable once in both cases, including displaced ASCII', () => {
-  const layout = layouts.qwerty26;
+test('kazakh-compact keeps every letter reachable once in both cases, including displaced ASCII', () => {
+  const layout = layouts['kazakh-compact'];
   for (const [layer, capital] of [['default',false],['shift',true]]) {
     const visible = layout[layer].flatMap(letters);
     const hidden = visible.flatMap(base=>layout.longpress[base]||[]);
