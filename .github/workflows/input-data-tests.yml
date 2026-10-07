@@ -27,6 +27,13 @@ jobs:
         with:
           python-version: "3.12"
 
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Test Latin preview layouts
+        run: node --test tests/test_preview_layouts.cjs
+
       - name: Validate datasets
         run: python tools/validate_data.py
 

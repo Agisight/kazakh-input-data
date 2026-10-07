@@ -12,3 +12,8 @@ Current extraction logic supports:
 - word-to-emoji tables
 
 Generated model binaries should remain derived artifacts rather than source data.
+
+`python3 tools/compare_latin_layouts.py` reproduces the hypothetical Latin
+long-press estimates documented in [the preview README](../preview/README.md#frequency-assumptions-and-comparison).
+It reads the canonical lexicon and reports seven weight scenarios without
+modifying the source data.
