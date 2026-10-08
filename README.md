@@ -132,7 +132,10 @@ be selected explicitly.
   40 visible letters), **3 rows** (ЙЦУКЕН with Kazakh long-press) and
   **Compact** (our experimental compact layout with 31 visible letters).
   [Cyrillic variant details](preview/README.md#experimental-cyrillic-touch-variants)
-  explain their mappings and hypothetical hold counts.
+  explain their mappings and hypothetical hold counts. The
+  [Compact placement rationale](preview/README.md#placement-rationale-for-every-letter)
+  covers every primary and long-press letter, modeled shares and deliberate
+  familiarity/mnemonic tradeoffs.
 - **Latin (`kk-Latn`)** — offers QWERTY4 (an additional Kazakh-letter row),
   QWERTY3 (26 visible letters with long-press alternatives), and experimental
   three-row variants with **29, 30 or 31 visible letters**. These preserve all
