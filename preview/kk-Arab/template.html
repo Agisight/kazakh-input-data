@@ -14,7 +14,6 @@
 .keyboard{user-select:none;-webkit-user-select:none;touch-action:manipulation}.row{display:flex;width:100%;gap:6px;justify-content:center;margin:6px 0}.key{touch-action:none;-webkit-touch-callout:none;position:relative;flex:1 1 0;max-width:76px;min-width:30px;height:50px;border:1px solid var(--border);border-radius:7px;background:var(--key);color:var(--text);box-shadow:0 1px 2px rgba(0,0,0,.18);font-size:23px;cursor:pointer}.key.special{background:var(--key2);font-size:17px}.key.extra{background:color-mix(in srgb,var(--key) 92%,var(--text) 8%);font-size:20px}.key.shift-key{flex:0 0 72px;max-width:72px}.key.backspace-key{flex:0 0 72px;max-width:72px}.key.mode-key{flex:0 0 82px;max-width:82px}.row.edge-row .shift-key,.row.edge-row .mode-key{margin-right:auto}.row.edge-row .backspace-key{margin-left:auto}.key.spacer{visibility:hidden;pointer-events:none;max-width:22px}.key:active,.key.active{transform:translateY(1px);filter:brightness(.94)}
 .bottom{display:flex;gap:7px;margin-top:7px}.bottom button{height:46px;border:1px solid var(--border);border-radius:8px;background:var(--key2);color:var(--text);font-size:16px;box-shadow:0 1px 2px rgba(0,0,0,.14)}.bottom .wide{flex:1}.bottom .mode-bottom{flex:0 0 96px}.bottom .return-bottom{flex:0 0 96px}.bottom .space{flex:1;background:var(--key);font-weight:500}.bottom .space:active{transform:translateY(1px);filter:brightness(.94)}
 .layout-source{text-align:center;color:var(--muted);font-size:10px;margin-top:7px}
-.cyrillic-variant-description{margin:8px 0 0;font-size:12px;line-height:1.4;color:var(--muted)}
 .key[data-longpress-hint]::after{content:attr(data-longpress-hint);position:absolute;top:3px;right:4px;color:var(--muted);font-size:11px;line-height:1;font-weight:400;pointer-events:none}
 @media(max-width:560px){.key[data-longpress-hint]::after{right:3px;font-size:9px}}
 .row.expanded-latin-row{--row-gap:6px;display:grid;gap:var(--row-gap);width:calc((100% + var(--row-gap)) * var(--row-fraction) - var(--row-gap));max-width:calc(var(--row-units) * 76px + (var(--row-units) - 1) * var(--row-gap));margin-left:auto;margin-right:auto}
@@ -151,7 +150,6 @@
 <div class="editor-head"><div class="editor-label" id="inputLabel">INPUT · ARABIC</div><div class="editor-actions"><label class="space-autocomplete"><input type="checkbox" id="spaceAutocomplete" checked>Space autocomplete</label><button class="clear-all" id="clearAll">Clear all</button></div></div>
 <textarea id="editor" dir="rtl" spellcheck="false" inputmode="none" readonly placeholder="…"></textarea>
 <div class="input-tools"><div class="controls"><button id="backspaceTop">⌦</button><button id="addSpace">Space</button></div><div class="latin-variant-switch" id="cyrillicVariantSwitch" role="group" aria-label="Cyrillic layout variant"><button type="button" data-cyrillic-variant="full" aria-pressed="true" class="active"><span class="variant-label" data-short-label="4 rows">4 rows</span></button><button type="button" data-cyrillic-variant="jcuken" aria-pressed="false"><span class="variant-label" data-short-label="3 rows">3 rows</span></button><button type="button" data-cyrillic-variant="compact31" aria-pressed="false"><span class="variant-label" data-short-label="Compact">Compact</span></button></div><div class="latin-variant-switch" id="latinVariantSwitch" role="group" aria-label="Latin layout variant"><button type="button" data-latin-variant="qwerty4" aria-pressed="true" class="active"><span class="variant-label" data-short-label="Q4">QWERTY4</span></button><button type="button" data-latin-variant="qwerty3" aria-pressed="false"><span class="variant-label" data-short-label="Q3">QWERTY3</span></button><button type="button" data-latin-variant="qwerty27" aria-pressed="false" title="27 letters: w → ü, x → ş; ğ beside g"><span class="variant-label" data-short-label="27">27 letters</span></button><button type="button" data-latin-variant="qwerty29" aria-pressed="false"><span class="variant-label" data-short-label="29">29 letters</span></button><button type="button" data-latin-variant="qwerty30" aria-pressed="false"><span class="variant-label" data-short-label="30">30 letters</span></button><button type="button" data-latin-variant="qwerty31" aria-pressed="false"><span class="variant-label" data-short-label="31">31 letters</span></button></div><div class="info-wrap" id="infoWrap"><button id="infoButton" class="info-button" type="button" aria-label="Dataset information" aria-expanded="false">ⓘ</button><div class="info-popover" id="infoPopover"></div></div></div>
-<p id="cyrillicVariantDescription" class="cyrillic-variant-description" aria-live="polite" hidden></p>
 </div>
 <div class="panel suggestions-panel"><div id="suggestions" class="suggestions" dir="rtl"></div><div id="status" class="status"></div></div>
 <div class="panel keyboard"><div id="keyboard"></div><div id="layoutSource" class="layout-source"></div></div>
@@ -233,12 +231,6 @@ const CYRL_LAYOUTS={
 };
 
 function cyrillicLayout(){return CYRL_LAYOUTS[cyrillicVariant]||CYRL_LAYOUT}
-
-const CYRL_VARIANT_DESCRIPTIONS={
-  full:'4 rows: казахские буквы вынесены в отдельный верхний ряд.',
-  jcuken:'3 rows ЙЦУКЕН: казахские буквы доступны через удержание обычных букв.',
-  compact31:'Compact: 3 ряда, 31 основная буква; ғ и вытесненные буквы доступны через удержание.'
-};
 
 // Kazakh/Turkic casing follows the Turkish-style dotted/dotless I model:
 // i ↔ İ on the standard QWERTY I key, and ı ↔ I on the extra Kazakh key.
@@ -347,7 +339,7 @@ const SCRIPT_INFO={
  'kk-Latn':{name:'Latin',description:'Latin script · kk-Latn',dir:'ltr'}
 };
 
-const editor=document.getElementById('editor'),kb=document.getElementById('keyboard'),suggestionsEl=document.getElementById('suggestions'),statusEl=document.getElementById('status'),lp=document.getElementById('lp'),scriptDescription=document.getElementById('scriptDescription'),inputLabel=document.getElementById('inputLabel'),layoutSource=document.getElementById('layoutSource'),spaceAutocomplete=document.getElementById('spaceAutocomplete'),mobileScriptSelect=document.getElementById('mobileScriptSelect'),infoWrap=document.getElementById('infoWrap'),infoButton=document.getElementById('infoButton'),infoPopover=document.getElementById('infoPopover'),latinVariantSwitch=document.getElementById('latinVariantSwitch'),cyrillicVariantSwitch=document.getElementById('cyrillicVariantSwitch'),cyrillicVariantDescription=document.getElementById('cyrillicVariantDescription');
+const editor=document.getElementById('editor'),kb=document.getElementById('keyboard'),suggestionsEl=document.getElementById('suggestions'),statusEl=document.getElementById('status'),lp=document.getElementById('lp'),scriptDescription=document.getElementById('scriptDescription'),inputLabel=document.getElementById('inputLabel'),layoutSource=document.getElementById('layoutSource'),spaceAutocomplete=document.getElementById('spaceAutocomplete'),mobileScriptSelect=document.getElementById('mobileScriptSelect'),infoWrap=document.getElementById('infoWrap'),infoButton=document.getElementById('infoButton'),infoPopover=document.getElementById('infoPopover'),latinVariantSwitch=document.getElementById('latinVariantSwitch'),cyrillicVariantSwitch=document.getElementById('cyrillicVariantSwitch');
 let currentTag='kk-Arab',DATA=DATASETS[currentTag],layer='default',longPressTimer=null,longPressed=false,longPressPointerId=null,longPressSelection=null,bigramIndex=new Map(),trigramIndex=new Map(),primaryCandidate=null,latinVariant='qwerty4',cyrillicVariant='full';
 
 function rebuildIndexes(){bigramIndex=new Map();for(const[a,b,w]of DATA.bigrams){if(!bigramIndex.has(a))bigramIndex.set(a,[]);bigramIndex.get(a).push([b,w])}for(const a of bigramIndex.values())a.sort((x,y)=>x[1]-y[1]);trigramIndex=new Map();for(const[a,b,c,w]of DATA.trigrams){const k=a+'\t'+b;if(!trigramIndex.has(k))trigramIndex.set(k,[]);trigramIndex.get(k).push([c,w])}for(const a of trigramIndex.values())a.sort((x,y)=>x[1]-y[1])}
@@ -611,8 +603,6 @@ function render(){
   hideLP();
   kb.innerHTML='';
   kb.style.removeProperty('--latin-base-count');
-  cyrillicVariantDescription.hidden=currentTag!=='kk-Cyrl';
-  cyrillicVariantDescription.textContent=currentTag==='kk-Cyrl'?(CYRL_VARIANT_DESCRIPTIONS[cyrillicVariant]||CYRL_VARIANT_DESCRIPTIONS.full):'';
 
   if(isArab()){
     for(const row of(ARAB_LAYOUT.layers[layer]||ARAB_LAYOUT.layers.default))renderRow(rtlEdgeKeys(row))

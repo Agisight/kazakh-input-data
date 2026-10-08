@@ -86,8 +86,6 @@ for variant in ('full','compact31','jcuken'):
     assert f'data-cyrillic-variant="{variant}"' in t
 for label in ('4 rows','3 rows','Compact'):
     assert f'data-short-label="{label}">{label}</span>' in t
-assert 'id="cyrillicVariantDescription"' in t
-assert "CYRL_VARIANT_DESCRIPTIONS[cyrillicVariant]" in t
 assert "cyrillicVariantSwitch.style.display=tag==='kk-Cyrl'?'flex':'none'" in t
 assert "cyrillicVariant=b.dataset.cyrillicVariant" in t
 assert "(currentTag==='kk-Latn'||currentTag==='kk-Cyrl')?longPressOptions(t):[]" in t

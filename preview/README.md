@@ -26,8 +26,7 @@ are also explicitly experimental and are not presented as finalized standards.
 
 Select **Cyrillic**, then one of three clearly labeled variants beside the
 input field: **4 rows**, **3 rows** (ЙЦУКЕН) or **Compact**
-(our compact variant). A short explanation below the selector describes the
-active choice. **4 rows** keeps the existing layout with 40 visible letters
+(our compact variant). **4 rows** keeps the existing layout with 40 visible letters
 and an additional Kazakh letter row. The other two have **11 / 11 / 9** visible-letter rows; Shift and
 Backspace complete the bottom row to 11 equal-width buttons. All 42 Cyrillic
 letters are reachable exactly once per case in both three-row variants.
