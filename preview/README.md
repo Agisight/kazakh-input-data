@@ -170,9 +170,11 @@ use and learning effort on phones before treating Compact as an optimum.
 ⇧ я ч с м и т ь б ю ⌫
 ```
 
-Long-press: **а → ә, г → ғ, к → қ, н → ң, о → ө, у → ұ / ү,
+Long-press: **а → ә, г → ғ, к → қ, н → ң, о → ө, у → ү / ұ,
 х → һ, и → і, е → ё, ь → ъ**. Both alternatives on **у** remain selectable
-with the same hold-slide-release gesture.
+with the same hold-slide-release gesture. Their order follows the supplied
+Apple iOS reference: **ү, then ұ** (uppercase **Ү, then Ұ**). A tap enters the
+primary **у**; the demo popup lists its two alternatives in that order.
 
 This is an iOS-style three-row comparison built from the existing ЙЦУКЕН base,
 not a verified replica of a particular Apple Kazakh keyboard or iOS release.
