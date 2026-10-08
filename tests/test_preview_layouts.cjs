@@ -110,7 +110,7 @@ const cyrlLayouts = JSON.parse(JSON.stringify(cyrlContext.layouts));
 const cyrlAlphabet = [...'аәбвгғдеёжзийкқлмнңоөпрстуұүфхһцчшщъыіьэюя'].sort();
 const cyrlCases = [
   {id:'compact31',rows:['йүукенгшңзқ','өывапролджә','іһсмитьбұ'],hidden:{г:'ғ',ш:'щ',е:'ё',ь:'ъ',ө:'ф',ү:'ц',і:'я',һ:'ч',ә:'э',ұ:'ю',қ:'х'}},
-  {id:'jcuken',rows:['йцукенгшщзх','фывапролджэ','ячсмитьбю'],hidden:{а:'ә',г:'ғ',к:'қ',н:'ң',о:'ө',у:'ұү',х:'һ',и:'і',е:'ё',ь:'ъ'}},
+  {id:'jcuken',rows:['йцукенгшщзх','фывапролджэ','ячсмитьбю'],hidden:{а:'ә',г:'ғ',к:'қ',н:'ң',о:'ө',у:'үұ',х:'һ',и:'і',е:'ё',ь:'ъ'}},
 ];
 for (const expected of cyrlCases) {
   test(`Cyrillic ${expected.id}: exact rows and 42-letter access once in each case`,()=>{
@@ -165,8 +165,8 @@ test('Cyrillic long-press resolves the active variant, including both alternativ
   const optionsEnd=template.indexOf('function showLP(',optionsStart);
   vm.runInNewContext(template.slice(optionsStart,optionsEnd)+';globalThis.options=longPressOptions;',cyrlContext);
   cyrlContext.cyrillicVariant='jcuken';
-  assert.deepEqual(Array.from(cyrlContext.options('у')),['ұ','ү']);
-  assert.deepEqual(Array.from(cyrlContext.options('У')),['Ұ','Ү']);
+  assert.deepEqual(Array.from(cyrlContext.options('у')),['ү','ұ']);
+  assert.deepEqual(Array.from(cyrlContext.options('У')),['Ү','Ұ']);
   cyrlContext.cyrillicVariant='compact31';
   assert.deepEqual(Array.from(cyrlContext.options('у')),[]);
   assert.deepEqual(Array.from(cyrlContext.options('ү')),['ц']);

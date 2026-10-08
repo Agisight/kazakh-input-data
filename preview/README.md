@@ -26,7 +26,12 @@ are also explicitly experimental and are not presented as finalized standards.
 
 Select **Cyrillic**, then one of three clearly labeled variants beside the
 input field: **4 rows**, **3 rows** (ЙЦУКЕН) or **Compact**
-(our compact variant). **4 rows** keeps the existing layout with 40 visible letters
+(our compact variant). The **4 rows** and **3 rows** footers identify them as
+**Apple iOS-style** comparisons. The implementation is adapted from Keyman
+Kazakh Basic; this label describes the comparison context rather than a verified
+replica of a particular Apple keyboard release.
+
+**4 rows** keeps the existing layout with 40 visible letters
 and an additional Kazakh letter row. The other two have **11 / 11 / 9** visible-letter rows; Shift and
 Backspace complete the bottom row to 11 equal-width buttons. All 42 Cyrillic
 letters are reachable exactly once per case in both three-row variants.
@@ -55,13 +60,107 @@ The long-press mappings are:
 | ә | э | ұ | ю |
 | қ | х | | |
 
-These choices combine frequency hypotheses with familiarity and visual
-mnemonics. In the source models **ғ** is slightly more frequent than **г**,
-but keeping **г** primary costs only 2.2 additional holds per 1,000 letters under
-Zipf 1.0 compared with reversing that pair. **һ** is rarer than **ч** in all seven
-models; using **һ** primary is a deliberate mnemonic choice, costing about
-0.3 additional holds per 1,000 letters compared with reversing their pair.
-Neither this reasoning nor the count model establishes optimal key placement.
+#### Placement rationale for every letter
+
+Compact keeps the **31 letter slots of the ЙЦУКЕН comparison**: 23 letters
+stay in their original slots and eight Kazakh letters replace other letters.
+All nine Kazakh-specific letters remain accessible: eight are primary and
+**ғ** is on **г**. The goal is direct access to commonly needed Kazakh letters
+without adding a fourth row, while retaining much of the familiar layout.
+
+The tables follow the displayed row order. Percentages are **modeled shares
+of all letter occurrences under Zipf 1.0**, using the source and assumptions
+below; they are not measured text frequencies. “Keep” means preserving the
+ЙЦУКЕН position, not a claim that it is the fastest position for that letter.
+Long-press keeps the displaced letter on its former physical key wherever
+possible; **щ** moves to **ш**, while **ё**, **ъ** and **ғ** use related letters.
+
+| Top row key | Modeled share | Long-press (share) | Why this position and access level |
+| --- | ---: | --- | --- |
+| й | 2.467% | — | Keep the first ЙЦУКЕН slot and familiar start of the row. |
+| ү | 0.783% | ц (0.060%) | Reuse the ц slot beside у. Ү exceeds ц in all seven models; direct access and the neighboring у provide the rationale. |
+| у | 1.437% | — | Keep its original slot; placing ү immediately before it gives a nearby related-letter reference. |
+| к | 3.051% | — | Keep the familiar к position and direct access; қ gets its own key instead of becoming a hold on к. |
+| е | 9.226% | ё (0.017%) | Keep е in its original slot. Ё is much rarer in every model and retains the recognizable е–ё spelling relationship on hold. |
+| н | 6.759% | — | Keep the familiar н position and direct access; ң has a separate primary key. |
+| г | 0.906% | ғ (1.127%) | Keep г in its original slot and group ғ with its base-shaped letter. This deliberately favors familiarity over the slightly higher modeled share of ғ. |
+| ш | 1.358% | щ (0.028%) | Keep ш and combine the visually related ш–щ pair. Ш exceeds щ in every model, freeing the former щ slot for ң. |
+| ң | 1.705% | — | Reuse the щ slot freed by the ш–щ grouping. This gives ң direct access without moving н or adding a key; proximity to н is sacrificed. |
+| з | 1.569% | — | Keep the familiar з slot between the two repurposed positions. |
+| қ | 3.601% | х (0.394%) | Reuse the х slot while keeping к primary. Қ exceeds х in every model; х remains reachable by holding its former key. |
+
+| Middle row key | Modeled share | Long-press (share) | Why this position and access level |
+| --- | ---: | --- | --- |
+| ө | 0.656% | ф (0.112%) | Reuse the leftmost ф slot to expose ө without moving о. Ө exceeds ф in every model; this is a frequency and space choice rather than a phonetic pairing. |
+| ы | 6.446% | — | Keep its familiar slot and direct access. |
+| в | 0.378% | — | Keep the original slot and direct access to this less common letter. Compact preserves the remaining ЙЦУКЕН keys rather than relocating every rare letter. |
+| а | 13.691% | — | Keep the familiar а slot and direct access to the most common letter in this scenario. |
+| п | 2.215% | — | Keep its original slot and the familiar а–п–р sequence. |
+| р | 4.653% | — | Keep its original slot and direct access. |
+| о | 2.735% | — | Keep о in its original slot; ө uses a separate key to avoid a hold for every ө. |
+| л | 4.245% | — | Keep its original slot and direct access. |
+| д | 3.843% | — | Keep its original slot and direct access. |
+| ж | 2.612% | — | Keep its original slot and direct access. |
+| ә | 0.472% | э (0.032%) | Reuse the э slot to expose ә without moving а. Ә exceeds э in every model; both the replacement and its hidden alternative are explicit in the hint. |
+
+| Bottom row key | Modeled share | Long-press (share) | Why this position and access level |
+| --- | ---: | --- | --- |
+| і | 3.934% | я (0.266%) | Reuse the я slot immediately after Shift. І exceeds я in every model and gains direct access without moving и; the association with я is positional rather than phonetic. |
+| һ | 0.010% | ч (0.040%) | Reuse the ч slot using an approximate rotated-shape mnemonic. Һ is rarer than ч in every model: this is a deliberate visual choice, not a frequency improvement. |
+| с | 5.086% | — | Keep its original slot and direct access. |
+| м | 5.117% | — | Keep its original slot and direct access. |
+| и | 1.148% | — | Keep и in its original slot; і is a separate primary key, preserving access to both. |
+| т | 4.259% | — | Keep its original slot and direct access. |
+| ь | 0.115% | ъ (0.001%) | Keep the ь slot and group the two signs. Ь exceeds ъ in every model; the rarer sign stays on hold. |
+| б | 2.729% | — | Keep its original slot and direct access. |
+| ұ | 0.677% | ю (0.040%) | Reuse the ю slot before Backspace. Ұ exceeds ю in every model; the у association in ю serves as a mnemonic, not a claim that their sounds are identical. |
+
+Uppercase letters use the same positions and long-press pairs. The bottom row
+has nine letter keys plus Shift and Backspace, matching the 11 key units of the
+upper rows. This explains the geometry; it does not establish comfortable
+reach or error rates on a phone.
+
+#### Frequency benefits and deliberate compromises
+
+For a pair sharing a key, making the more common letter primary reduces
+holds. The difference is **10 × (primary share % − alternative share %)**
+holds per 1,000 letters. For example, **қ primary / х on hold** needs about
+3.9 holds per 1,000 letters for х, versus 36.0 for қ with the opposite mapping:
+a saving of **32.1**. Қ is about **9.1 times** as common as х in Zipf 1.0 and
+**7–16 times** as common across the seven hypotheses.
+
+Seven replacements favor the promoted letter in all seven models. Their
+Zipf 1.0 reductions in holds per 1,000 letters are **ү/ц: 7.2**, **ң/щ: 16.8**,
+**қ/х: 32.1**, **ө/ф: 5.4**, **ә/э: 4.4**, **і/я: 36.7** and **ұ/ю: 6.4**.
+These are individual comparisons with the displaced letter primary; for
+ң/щ, щ is reached through ш. Overall layout counts below count each hidden
+letter once, including щ.
+
+There are two explicit exceptions to choosing the more common member:
+
+- **Г stays primary over ғ.** Ғ exceeds г in every model, but reversing their
+  current primary/hold roles would save only **2.2 holds per 1,000 letters**
+  in Zipf 1.0. Keeping г prioritizes familiarity; this is a candidate for user
+  testing, not a frequency-optimal choice.
+- **Һ stays primary over ч.** This visual mnemonic adds about **0.3 holds
+  per 1,000 letters** in Zipf 1.0 compared with ч primary / һ on hold. Keeping
+  ч primary is a reasonable alternative if the mnemonic does not help users.
+
+The allocation **ү at ц, ұ at ю** is a positional/mnemonic choice. The two
+letters have similar modeled shares, and their frequency ordering changes
+across the seven models, so frequency does not establish which should occupy
+which slot. Swapping these two primary keys would leave the hidden-letter
+set and modeled hold count unchanged, but could affect learning and reach.
+
+The қ–х pairing also has a phonetic basis: қ can have a fricative realization
+close to х in connected Kazakh speech. See McCollum and Chen's
+[phonetic description of Kazakh](https://www.cambridge.org/core/journals/journal-of-the-international-phonetic-association/article/kazakh/353A10BD35418B48B5A6370D9F7D8CE0).
+This supports a possible mnemonic, not proof of the best keyboard position.
+
+Frequency supports which letters get direct access. It does **not** determine
+their best coordinates, prove the rotated-shape mnemonic, or measure the cost
+of relearning these eight positions. Compare typing time, errors, long-press
+use and learning effort on phones before treating Compact as an optimum.
 
 ### 3 rows: familiar ЙЦУКЕН base with Kazakh long-press
 
@@ -71,9 +170,11 @@ Neither this reasoning nor the count model establishes optimal key placement.
 ⇧ я ч с м и т ь б ю ⌫
 ```
 
-Long-press: **а → ә, г → ғ, к → қ, н → ң, о → ө, у → ұ / ү,
+Long-press: **а → ә, г → ғ, к → қ, н → ң, о → ө, у → ү / ұ,
 х → һ, и → і, е → ё, ь → ъ**. Both alternatives on **у** remain selectable
-with the same hold-slide-release gesture.
+with the same hold-slide-release gesture. Their order follows the supplied
+Apple iOS reference: **ү, then ұ** (uppercase **Ү, then Ұ**). A tap enters the
+primary **у**; the demo popup lists its two alternatives in that order.
 
 This is an iOS-style three-row comparison built from the existing ЙЦУКЕН base,
 not a verified replica of a particular Apple Kazakh keyboard or iOS release.
@@ -112,6 +213,20 @@ Reproduce the Cyrillic estimates with Python's standard library:
 
 ```bash
 python3 tools/compare_cyrillic_layouts.py
+```
+
+Reproduce the letter shares used in the Compact rationale with the same
+calculation, treating each letter as a separate one-letter hold set:
+
+```bash
+python3 - <<'PY'
+from tools import compare_cyrillic_layouts as comparison
+
+comparison.HIDDEN = {letter: letter for letter in sorted(comparison.ALPHABET)}
+_, _, _, estimates = comparison.estimate()
+for letter, models in estimates.items():
+    print(f"{letter}: {models['Zipf 1.0'] / 10:.3f}%")
+PY
 ```
 
 ## Experimental Latin touch variants
