@@ -12,9 +12,9 @@ ROOT = Path(__file__).resolve().parents[1]
 LEXICON = ROOT / "data/kk-Cyrl/lexicon/lexicon.tsv"
 ALPHABET = set("аәбвгғдеёжзийкқлмнңоөпрстуұүфхһцчшщъыіьэюя")
 HIDDEN = {
-    "4 ряда (40 letters)": "ёъ",
-    "3 ряда (ЙЦУКЕН)": "әғқңөұүһіёъ",
-    "Наш вариант (31 letters)": "ғёфхцчщъэюя",
+    "4 rows (40 letters)": "ёъ",
+    "3 rows (ЙЦУКЕН)": "әғқңөұүһіёъ",
+    "Compact (31 letters)": "ғёфхцчщъэюя",
 }
 MODELS = ("Uniform", "Zipf 0.8", "Zipf 1.0", "Zipf 1.2", "Exp 10", "Exp 20", "Exp 40")
 
