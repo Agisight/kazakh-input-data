@@ -31,7 +31,7 @@ jobs:
         with:
           node-version: "20"
 
-      - name: Test Latin preview layouts
+      - name: Test Latin and Cyrillic preview layouts
         run: node --test tests/test_preview_layouts.cjs
 
       - name: Validate datasets

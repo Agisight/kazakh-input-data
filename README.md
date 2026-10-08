@@ -128,7 +128,10 @@ be selected explicitly.
 - **Arabic (`kk-Arab`)** — uses the Kazakh Arabic / Töte jazu layout from
   [`Agisight/ios-system-keyboard`](https://github.com/Agisight/ios-system-keyboard).
 - **Cyrillic (`kk-Cyrl`)** — the preview keyboard is adapted from the Keyman
-  **Kazakh Basic** touch layout.
+  **Kazakh Basic** touch layout, with **40 letters**, an experimental compact
+  **31 letters** variant, and **ЙЦУКЕН** with Kazakh letters on long-press.
+  [Cyrillic variant details](preview/README.md#experimental-cyrillic-touch-variants)
+  explain their mappings and hypothetical hold counts.
 - **Latin (`kk-Latn`)** — offers QWERTY4 (an additional Kazakh-letter row),
   QWERTY3 (26 visible letters with long-press alternatives), and experimental
   three-row variants with **29, 30 or 31 visible letters**. These preserve all
