@@ -24,16 +24,18 @@ are also explicitly experimental and are not presented as finalized standards.
 
 ## Experimental Cyrillic touch variants
 
-Select **Cyrillic**, then **40 letters**, **31 letters** or **ЙЦУКЕН** beside the
-input field. **40 letters** keeps the existing layout and additional Kazakh
-letter row. The other two have **11 / 11 / 9** visible-letter rows; Shift and
+Select **Cyrillic**, then one of three clearly labeled variants beside the
+input field: **4 ряда** (4 rows), **3 ряда** (3 rows, ЙЦУКЕН) or **Наш вариант**
+(our compact variant). A short explanation below the selector describes the
+active choice. **4 ряда** keeps the existing layout with 40 visible letters
+and an additional Kazakh letter row. The other two have **11 / 11 / 9** visible-letter rows; Shift and
 Backspace complete the bottom row to 11 equal-width buttons. All 42 Cyrillic
 letters are reachable exactly once per case in both three-row variants.
 Small gray hints show long-press alternatives, including uppercase equivalents.
 Hold, slide to the alternative and release to enter it; releasing outside
 the popup cancels. Physical input inside the demo follows displayed positions.
 
-### 31 letters: expose eight Kazakh letters in familiar positions
+### Наш вариант: 31 letters, eight Kazakh letters in familiar positions
 
 ```text
 й ү у к е н г ш ң з қ
@@ -62,7 +64,7 @@ models; using **һ** primary is a deliberate mnemonic choice, costing about
 0.3 additional holds per 1,000 letters compared with reversing their pair.
 Neither this reasoning nor the count model establishes optimal key placement.
 
-### ЙЦУКЕН: familiar base with Kazakh long-press
+### 3 ряда: familiar ЙЦУКЕН base with Kazakh long-press
 
 ```text
 й ц у к е н г ш щ з х
@@ -95,9 +97,9 @@ inputs, not measured corpus frequencies.
 
 | Variant | Hidden letters | Holds / 1,000 letters, Zipf 1.0 | Range across 7 models |
 | --- | --- | ---: | ---: |
-| 40 letters | ё, ъ | 0.2 | 0.1–0.3 |
-| 31 letters | ғ, ё, ф, х, ц, ч, щ, ъ, э, ю, я | 21.2 | 16.8–26.2 |
-| ЙЦУКЕН | ә, ғ, қ, ң, ө, ұ, ү, һ, і, ё, ъ | 129.8 | 121.2–143.0 |
+| 4 ряда (40 visible letters) | ё, ъ | 0.2 | 0.1–0.3 |
+| Наш вариант (31 visible letters) | ғ, ё, ф, х, ц, ч, щ, ъ, э, ю, я | 21.2 | 16.8–26.2 |
+| 3 ряда (ЙЦУКЕН, 31 visible letters) | ә, ғ, қ, ң, ө, ұ, ү, һ, і, ё, ъ | 129.8 | 121.2–143.0 |
 
 The compact variant saves about **108.7 holds per 1,000 letters** versus the
 ЙЦУКЕН comparison under Zipf 1.0. The 40-letter layout needs fewer holds but
