@@ -131,6 +131,8 @@ be selected explicitly.
   **Kazakh Basic** touch layout. The selector offers **4 rows** (four rows,
   40 visible letters), **3 rows** (ЙЦУКЕН with Kazakh long-press) and
   **Compact** (our experimental compact layout with 31 visible letters).
+  The first two variants are labeled **Apple iOS-style** in the demo;
+  implementation provenance and comparison limits are documented below.
   [Cyrillic variant details](preview/README.md#experimental-cyrillic-touch-variants)
   explain their mappings and hypothetical hold counts. The
   [Compact placement rationale](preview/README.md#placement-rationale-for-every-letter)

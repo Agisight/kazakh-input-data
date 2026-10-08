@@ -26,7 +26,12 @@ are also explicitly experimental and are not presented as finalized standards.
 
 Select **Cyrillic**, then one of three clearly labeled variants beside the
 input field: **4 rows**, **3 rows** (ЙЦУКЕН) or **Compact**
-(our compact variant). **4 rows** keeps the existing layout with 40 visible letters
+(our compact variant). The **4 rows** and **3 rows** footers identify them as
+**Apple iOS-style** comparisons. The implementation is adapted from Keyman
+Kazakh Basic; this label describes the comparison context rather than a verified
+replica of a particular Apple keyboard release.
+
+**4 rows** keeps the existing layout with 40 visible letters
 and an additional Kazakh letter row. The other two have **11 / 11 / 9** visible-letter rows; Shift and
 Backspace complete the bottom row to 11 equal-width buttons. All 42 Cyrillic
 letters are reachable exactly once per case in both three-row variants.
