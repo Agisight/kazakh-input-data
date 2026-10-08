@@ -17,9 +17,102 @@ CI builds and publishes both generated `.keylayout` files with the GitHub Pages 
 - `kaz-latn-iso-experimental.keylayout`
 - `kaz-latn-ansi-experimental.keylayout`
 
-The Cyrillic on-screen keyboard remains an adaptation of Keyman Kazakh Basic;
-the Latin on-screen keyboard remains experimental. The macOS desktop layouts
+The default Cyrillic on-screen keyboard remains an adaptation of Keyman Kazakh
+Basic; two experimental three-row comparisons are also available. The Latin
+on-screen keyboard remains experimental. The macOS desktop layouts
 are also explicitly experimental and are not presented as finalized standards.
+
+## Experimental Cyrillic touch variants
+
+Select **Cyrillic**, then one of three clearly labeled variants beside the
+input field: **4 rows**, **3 rows** (ЙЦУКЕН) or **Compact**
+(our compact variant). **4 rows** keeps the existing layout with 40 visible letters
+and an additional Kazakh letter row. The other two have **11 / 11 / 9** visible-letter rows; Shift and
+Backspace complete the bottom row to 11 equal-width buttons. All 42 Cyrillic
+letters are reachable exactly once per case in both three-row variants.
+Small gray hints show long-press alternatives, including uppercase equivalents.
+Hold, slide to the alternative and release to enter it; releasing outside
+the popup cancels. Physical input inside the demo follows displayed positions.
+
+### Compact: 31 letters, eight Kazakh letters in familiar positions
+
+```text
+й ү у к е н г ш ң з қ
+ө ы в а п р о л д ж ә
+⇧ і һ с м и т ь б ұ ⌫
+```
+
+Relative to the ЙЦУКЕН base, replace **ц → ү, щ → ң, х → қ, ф → ө,
+э → ә, я → і, ч → һ, ю → ұ**. Keep **к** and **г** in their familiar positions.
+The long-press mappings are:
+
+| Visible | Long-press | Visible | Long-press |
+| --- | --- | --- | --- |
+| г | ғ | ш | щ |
+| е | ё | ь | ъ |
+| ө | ф | ү | ц |
+| і | я | һ | ч |
+| ә | э | ұ | ю |
+| қ | х | | |
+
+These choices combine frequency hypotheses with familiarity and visual
+mnemonics. In the source models **ғ** is slightly more frequent than **г**,
+but keeping **г** primary costs only 2.2 additional holds per 1,000 letters under
+Zipf 1.0 compared with reversing that pair. **һ** is rarer than **ч** in all seven
+models; using **һ** primary is a deliberate mnemonic choice, costing about
+0.3 additional holds per 1,000 letters compared with reversing their pair.
+Neither this reasoning nor the count model establishes optimal key placement.
+
+### 3 rows: familiar ЙЦУКЕН base with Kazakh long-press
+
+```text
+й ц у к е н г ш щ з х
+ф ы в а п р о л д ж э
+⇧ я ч с м и т ь б ю ⌫
+```
+
+Long-press: **а → ә, г → ғ, к → қ, н → ң, о → ө, у → ұ / ү,
+х → һ, и → і, е → ё, ь → ъ**. Both alternatives on **у** remain selectable
+with the same hold-slide-release gesture.
+
+This is an iOS-style three-row comparison built from the existing ЙЦУКЕН base,
+not a verified replica of a particular Apple Kazakh keyboard or iOS release.
+
+### Cyrillic frequency assumptions
+
+Source: [`data/kk-Cyrl/lexicon/lexicon.tsv`](../data/kk-Cyrl/lexicon/lexicon.tsv),
+SHA-256 `534fb2c24b3e747aceaad35d61205089a963833363043fc574eebe47bd2be331`.
+Of 90,052 source entries, three entries without letters (`!`, `)`, `?`) are
+excluded before assigning ranks. The retained 90,049 entries contain 710,258
+letter occurrences. NFC normalization and case folding pool letter counts;
+case-equivalent source entries retain their own weights and rank contributions.
+Only the 42 supported letters are counted; punctuation and digits are ignored.
+There is no language or spelling filtering.
+
+We use the same seven hypotheses described for Latin below: uniform weight,
+Zipf 0.8 / 1.0 / 1.2 with averaged tied ranks, and Exp H=10 / 20 / 40.
+The minimum retained Cyrillic cost is **28**. These cost values are ranking
+inputs, not measured corpus frequencies.
+
+| Variant | Hidden letters | Holds / 1,000 letters, Zipf 1.0 | Range across 7 models |
+| --- | --- | ---: | ---: |
+| 4 rows (40 visible letters) | ё, ъ | 0.2 | 0.1–0.3 |
+| Compact (31 visible letters) | ғ, ё, ф, х, ц, ч, щ, ъ, э, ю, я | 21.2 | 16.8–26.2 |
+| 3 rows (ЙЦУКЕН, 31 visible letters) | ә, ғ, қ, ң, ө, ұ, ү, һ, і, ё, ъ | 129.8 | 121.2–143.0 |
+
+The compact variant saves about **108.7 holds per 1,000 letters** versus the
+ЙЦУКЕН comparison under Zipf 1.0. The 40-letter layout needs fewer holds but
+uses an additional letter row. The event count assumes one hold for each
+hidden-letter occurrence; it excludes typing time, key travel, errors,
+spaces, Shift and autocomplete. Compare these tradeoffs on phones before
+selecting a layout. The seven models are sensitivity scenarios, not independent
+measurements of real-world usage.
+
+Reproduce the Cyrillic estimates with Python's standard library:
+
+```bash
+python3 tools/compare_cyrillic_layouts.py
+```
 
 ## Experimental Latin touch variants
 

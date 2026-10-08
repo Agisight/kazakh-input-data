@@ -101,3 +101,77 @@ test('The selector resolves all variants and falls back to QWERTY4', () => {
   assert.equal(layouts.qwerty3.default.flatMap(letters).length, 26);
   assert.equal(layouts.qwerty4.extraDefault.length, 8);
 });
+
+const cyrlStart = template.indexOf('const CYRL_LAYOUT=');
+const cyrlEnd = template.indexOf('// Kazakh/Turkic casing', cyrlStart);
+const cyrlContext = {currentTag:'kk-Cyrl',isArab:()=>false};
+vm.runInNewContext(template.slice(cyrlStart,cyrlEnd)+';globalThis.layouts=CYRL_LAYOUTS;globalThis.select=cyrillicLayout;',cyrlContext);
+const cyrlLayouts = JSON.parse(JSON.stringify(cyrlContext.layouts));
+const cyrlAlphabet = [...'аәбвгғдеёжзийкқлмнңоөпрстуұүфхһцчшщъыіьэюя'].sort();
+const cyrlCases = [
+  {id:'compact31',rows:['йүукенгшңзқ','өывапролджә','іһсмитьбұ'],hidden:{г:'ғ',ш:'щ',е:'ё',ь:'ъ',ө:'ф',ү:'ц',і:'я',һ:'ч',ә:'э',ұ:'ю',қ:'х'}},
+  {id:'jcuken',rows:['йцукенгшщзх','фывапролджэ','ячсмитьбю'],hidden:{а:'ә',г:'ғ',к:'қ',н:'ң',о:'ө',у:'ұү',х:'һ',и:'і',е:'ё',ь:'ъ'}},
+];
+for (const expected of cyrlCases) {
+  test(`Cyrillic ${expected.id}: exact rows and 42-letter access once in each case`,()=>{
+    const layout=cyrlLayouts[expected.id];
+    assert.deepEqual(layout.default.map(row=>letters(row).join('')),expected.rows);
+    assert.deepEqual(layout.default.map(row=>letters(row).length),[11,11,9]);
+    assert.equal(layout.default[2][0],'\\s{shift}');
+    assert.equal(layout.default[2].at(-1),'\\s{backspace}');
+    const mappings={};
+    for(const [base,alts] of Object.entries(expected.hidden)) {
+      mappings[base]=[...alts];mappings[base.toUpperCase()]=[...alts.toUpperCase()];
+    }
+    assert.deepEqual(layout.longpress,mappings);
+    assert.deepEqual(layout.shift,layout.default.map(row=>row.map(t=>t.startsWith('\\s{')?t:t.toUpperCase())));
+    for(const [layer,capital] of [['default',false],['shift',true]]) {
+      const visible=layout[layer].flatMap(letters);
+      const reached=[...visible,...visible.flatMap(base=>layout.longpress[base]||[])];
+      assert.equal(visible.length,31);
+      assert.deepEqual(reached.sort(),capital?cyrlAlphabet.map(c=>c.toUpperCase()).sort():cyrlAlphabet);
+    }
+    assert.deepEqual(layout.geometry,{baseCount:11,edgeWeight:1});
+    assert.deepEqual(layout.default.map(row=>row.length),[11,11,11]);
+  });
+}
+
+test('Cyrillic selector preserves the existing full layout and resolves every variant',()=>{
+  for(const id of Object.keys(cyrlLayouts)) {
+    cyrlContext.cyrillicVariant=id;
+    assert.strictEqual(cyrlContext.select(),cyrlContext.layouts[id]);
+    assert(template.includes(`data-cyrillic-variant="${id}"`));
+  }
+  cyrlContext.cyrillicVariant='unknown';
+  assert.strictEqual(cyrlContext.select(),cyrlContext.layouts.full);
+  assert.equal(cyrlLayouts.full.default.flatMap(letters).length+cyrlLayouts.full.extraDefault.length,40);
+});
+
+test('Cyrillic hardware mapping follows the selected rows and Shift',()=>{
+  const physicalStart=template.indexOf('const PHYSICAL_ROWS=');
+  const physicalEnd=template.indexOf('function handlePhysicalKeyboard(',physicalStart);
+  vm.runInNewContext(template.slice(physicalStart,physicalEnd)+';globalThis.character=physicalCharacter;',cyrlContext);
+  for(const [variant,expected] of [['compact31',['ү','ө','і','ұ','қ']],['jcuken',['ц','ф','я','ю','х']]]) {
+    cyrlContext.cyrillicVariant=variant;
+    ['KeyW','KeyA','KeyZ','Period','BracketLeft'].forEach((code,i)=>{
+      assert.equal(cyrlContext.character(code,false),expected[i]);
+      assert.equal(cyrlContext.character(code,true),expected[i].toUpperCase());
+    });
+  }
+});
+
+test('Cyrillic long-press resolves the active variant, including both alternatives on у',()=>{
+  const optionsStart=template.indexOf('function longPressOptions(t)');
+  const optionsEnd=template.indexOf('function showLP(',optionsStart);
+  vm.runInNewContext(template.slice(optionsStart,optionsEnd)+';globalThis.options=longPressOptions;',cyrlContext);
+  cyrlContext.cyrillicVariant='jcuken';
+  assert.deepEqual(Array.from(cyrlContext.options('у')),['ұ','ү']);
+  assert.deepEqual(Array.from(cyrlContext.options('У')),['Ұ','Ү']);
+  cyrlContext.cyrillicVariant='compact31';
+  assert.deepEqual(Array.from(cyrlContext.options('у')),[]);
+  assert.deepEqual(Array.from(cyrlContext.options('ү')),['ц']);
+  assert.deepEqual(Array.from(cyrlContext.options('Қ')),['Х']);
+  cyrlContext.cyrillicVariant='full';
+  assert.deepEqual(Array.from(cyrlContext.options('г')),[]);
+  assert.deepEqual(Array.from(cyrlContext.options('Е')),['Ё']);
+});
