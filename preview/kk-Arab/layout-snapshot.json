@@ -1,6 +1,6 @@
 {
   "source_repository": "Agisight/ios-system-keyboard",
-  "source_commit": "65e89ec9ad6669e7cd4c794d80ef291fea58ecff",
+  "source_commit": "78bc0689be378345efa2b241ed999b272bcf1aae",
   "source_path": "layout/kaz/kaz-arab-3-rows.yaml",
   "longpress_path": "layout/kaz/kaz-arab-longpress.yaml",
   "display_name": "Kazakh (Arabic)",
@@ -208,7 +208,7 @@
       "§"
     ],
     "/": [
-      "\\\\"
+      "\\"
     ]
   },
   "variants": {
@@ -410,7 +410,7 @@
           "§"
         ],
         "/": [
-          "\\\\"
+          "\\"
         ]
       }
     },
@@ -578,7 +578,7 @@
           "§"
         ],
         "/": [
-          "\\\\"
+          "\\"
         ]
       }
     },
@@ -789,7 +789,7 @@
           "§"
         ],
         "/": [
-          "\\\\"
+          "\\"
         ]
       }
     },
@@ -957,7 +957,7 @@
           "§"
         ],
         "/": [
-          "\\\\"
+          "\\"
         ]
       }
     }
