@@ -125,8 +125,11 @@ be selected explicitly.
 
 ### Keyboard layouts used by the demo
 
-- **Arabic (`kk-Arab`)** — uses the Kazakh Arabic / Töte jazu layout from
+- **Arabic (`kk-Arab`)** — Kazakh Arabic / Töte jazu layouts from
   [`Agisight/ios-system-keyboard`](https://github.com/Agisight/ios-system-keyboard).
+  The selector offers four variants: **Default**, **Default Touch**,
+  **International** (the original layout) and **International Touch**.
+  [Arabic variant details](https://github.com/Agisight/kazakh-input-data/blob/main/preview/README.md#kazakh-arabic-layout-variants).
 - **Cyrillic (`kk-Cyrl`)** — the preview keyboard is adapted from the Keyman
   **Kazakh Basic** touch layout. The selector offers **4 rows** (four rows,
   40 visible letters), **3 rows** (ЙЦУКЕН with Kazakh long-press) and

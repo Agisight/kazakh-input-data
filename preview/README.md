@@ -4,7 +4,7 @@
 Cyrillic and Latin datasets.
 
 Keyboard layout sources stay in the separate `Agisight/ios-system-keyboard`
-repository. The preview reads the Arabic mobile layout plus the experimental
+repository. The preview reads the Arabic mobile layouts plus the experimental
 Kazakh Latin macOS desktop layouts from that repository at build time.
 
 The macOS desktop preview exposes two physical geometries:
@@ -21,6 +21,35 @@ The default Cyrillic on-screen keyboard remains an adaptation of Keyman Kazakh
 Basic; two experimental three-row comparisons are also available. The Latin
 on-screen keyboard remains experimental. The macOS desktop layouts
 are also explicitly experimental and are not presented as finalized standards.
+
+## Kazakh Arabic layout variants
+
+Select **Arabic** to switch between four 3-row layouts that share the same
+letters and differ in key placement:
+
+| Variant | Source file | Notes |
+| --- | --- | --- |
+| Default | `kaz-arab-3-rows-default.yaml` | Shift key; `ف گ ح` on the Shift layer |
+| Default Touch | `kaz-arab-3-rows-default-touch.yaml` | No Shift key; `گ ح` on the main layer, `ا → ف` by long-press |
+| International | `kaz-arab-3-rows.yaml` | Original layout; four extra letters via Shift and long-press |
+| International Touch | `kaz-arab-3-rows-international-touch.yaml` | No Shift key; `ح → ھ` by long-press |
+
+The selector reads each variant's long-press file from
+`Agisight/ios-system-keyboard`; the caption under the keyboard names the
+source layout file. The variants were contributed by Murat Karibay (see the
+keyboard repository's `layout/kaz/README.md`).
+
+`layout-snapshot.json` records all four variants for the pinned
+`ios-system-keyboard` commit and can be regenerated with:
+
+```bash
+python3 preview/kk-Arab/build_preview.py --keyboard-repo ../ios-system-keyboard \
+  --write-snapshot preview/kk-Arab/layout-snapshot.json --source-commit <commit>
+```
+
+`python3 -m unittest tests/test_arab_variants.py` checks the snapshot: all four
+variants exist, every extra letter is reachable on screen or by long-press, and
+the touch variants have no Shift key.
 
 ## Experimental Cyrillic touch variants
 

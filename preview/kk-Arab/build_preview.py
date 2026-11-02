@@ -4,6 +4,7 @@ import argparse
 import csv
 import json
 import re
+from collections import OrderedDict
 
 try:
     import yaml
@@ -55,6 +56,91 @@ def read_layout(keyboard_repo):
             for key, value in longpress.items()
         },
     }
+
+
+# key, layout file (None = the International layout read by read_layout), button label,
+# short label for narrow screens
+ARAB_VARIANT_SPECS = (
+    ("default", "kaz-arab-3-rows-default.yaml", "Default", "Default"),
+    ("default-touch", "kaz-arab-3-rows-default-touch.yaml", "Default Touch", "Def Touch"),
+    ("international", None, "International", "Intl"),
+    ("international-touch", "kaz-arab-3-rows-international-touch.yaml", "International Touch", "Intl Touch"),
+)
+
+
+def swap_edge_keys(row):
+    """The template swaps shift and backspace for RTL, so keep shift first and backspace last."""
+    if len(row) > 1 and "backspace" in row[0] and row[-1] == "\\s{shift}":
+        return [row[-1], *row[1:-1], row[0]]
+    return row
+
+
+def read_arab_variant_file(keyboard_repo, filename):
+    path = keyboard_repo / "layout" / "kaz" / filename
+    data = load_yaml(path)
+    raw_layers = data["iOS"]["primary"]["layers"]
+    layers = {
+        key: [swap_edge_keys(row) for row in rows(value)]
+        for key, value in raw_layers.items()
+        if key != "longpress"
+    }
+    longpress = {
+        str(key): value if isinstance(value, list) else [str(value)]
+        for key, value in (data.get("longpress") or {}).items()
+    }
+    # a file's own `longpress` layer ("key : alternative ...") comes first for matching keys
+    for line in (raw_layers.get("longpress") or "").splitlines():
+        base, separator, alternatives = line.strip().partition(":")
+        own = alternatives.split()
+        if separator and base.strip() and own:
+            base = base.strip()
+            longpress[base] = own + [a for a in longpress.get(base, []) if a not in own]
+    include = re.search(r"^longpress:\s*!include\s+(\S+)", path.read_text(encoding="utf-8"), re.M)
+    return {
+        "source_path": f"layout/kaz/{filename}",
+        "longpress_path": f"layout/kaz/{include.group(1)}" if include else None,
+        "display_name": (data.get("displayNames") or {}).get("en", "Kazakh (Arabic)"),
+        "abc": data.get("ABC", "ABC"),
+        "layers": layers,
+        "longpress": longpress,
+    }
+
+
+def read_arab_variants(keyboard_repo):
+    variants = OrderedDict()
+    for key, filename, label, short in ARAB_VARIANT_SPECS:
+        if filename is None:
+            variant = read_layout(keyboard_repo)
+            variant.pop("source_repository", None)
+        else:
+            variant = read_arab_variant_file(keyboard_repo, filename)
+        variant.update({
+            "key": key,
+            "label": label,
+            "short": short,
+            "source": f"Arabic \u00b7 {label} \u00b7 Agisight/ios-system-keyboard \u00b7 {variant['source_path']}",
+        })
+        variants[key] = variant
+    return variants
+
+
+def write_snapshot(keyboard_repo, output, source_commit):
+    base = read_layout(keyboard_repo)
+    snapshot = OrderedDict()
+    snapshot["source_repository"] = base.pop("source_repository")
+    snapshot["source_commit"] = source_commit
+    snapshot.update(base)
+    snapshot["variants"] = OrderedDict(
+        (key, {
+            "label": value["label"],
+            "source_path": value["source_path"],
+            "longpress_path": value["longpress_path"],
+            "layers": value["layers"],
+            "longpress": value["longpress"],
+        })
+        for key, value in read_arab_variants(keyboard_repo).items()
+    )
+    output.write_text(json.dumps(snapshot, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 
 def read_macos_layout_file(keyboard_repo, filename, keylayout_file):
@@ -157,7 +243,17 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--keyboard-repo", required=True, type=Path)
     parser.add_argument("--output", type=Path, default=HERE / "dist" / "index.html")
+    parser.add_argument("--write-snapshot", type=Path,
+                        help="write layout-snapshot.json for the pinned --source-commit and exit")
+    parser.add_argument("--source-commit", help="ios-system-keyboard commit the snapshot is taken from")
     args = parser.parse_args()
+
+    if args.write_snapshot:
+        if not args.source_commit:
+            raise SystemExit("--write-snapshot needs --source-commit")
+        write_snapshot(args.keyboard_repo, args.write_snapshot, args.source_commit)
+        print(args.write_snapshot)
+        return
 
     datasets = {tag: read_script_data(tag) for tag in SCRIPT_TAGS}
 
@@ -165,6 +261,10 @@ def main():
     html = html.replace(
         "__LAYOUT__",
         json.dumps(read_layout(args.keyboard_repo), ensure_ascii=False, separators=(",", ":")),
+    )
+    html = html.replace(
+        "__ARAB_VARIANTS__",
+        json.dumps(read_arab_variants(args.keyboard_repo), ensure_ascii=False, separators=(",", ":")),
     )
     macos_layouts = read_macos_layouts(args.keyboard_repo)
     html = html.replace(
