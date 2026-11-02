@@ -40,6 +40,9 @@ jobs:
       - name: Test prediction engine
         run: python -m unittest -v tests/test_predictions.py
 
+      - name: Test Arabic layout variants
+        run: python -m unittest -v tests/test_arab_variants.py
+
   keyboard-preview:
     name: Build kk-Arab keyboard preview
     runs-on: ubuntu-latest

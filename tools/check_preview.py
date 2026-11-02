@@ -6,6 +6,7 @@ p=Path(sys.argv[1])
 t=p.read_text(encoding="utf-8")
 
 assert "<!doctype html>" in t.lower()
+assert "__ARAB_VARIANTS__" not in t
 assert "__LAYOUT__" not in t and "__MACOS_LAYOUT__" not in t and "__MACOS_LAYOUTS__" not in t and "__DATASETS__" not in t
 assert "Kazakh input preview" in t
 assert "const MACOS_LAYOUT=" in t
@@ -196,3 +197,27 @@ assert "mode.onclick=()=>setLayer('default')" in t
 
 assert p.stat().st_size > 5_000_000
 print(f"✓ Preview v8 smoke test passed: {p} ({p.stat().st_size:,} bytes)")
+
+# Kazakh Arabic layout variants: switch is present and every extra letter is reachable
+# on screen or by long-press in each variant.
+import json
+import re
+
+assert 'id="arabicVariantSwitch"' in t
+assert "function arabLayout()" in t
+match = re.search(r"const ARAB_VARIANTS=(\{.*?\});\nlet arabVariant=", t, re.S)
+assert match, "ARAB_VARIANTS must be embedded"
+variants = json.loads(match.group(1))
+assert list(variants) == ["default", "default-touch", "international", "international-touch"], list(variants)
+extra_letters = set("\u0621\u0641\u062d\u06be\u0639\u0686\u06ad\u06c6\u06af")
+for key, variant in variants.items():
+    on_screen = {
+        token
+        for layer in ("default", "shift")
+        for row in variant["layers"].get(layer, [])
+        for token in row
+        if not token.startswith("\\s{")
+    }
+    long_pressed = {alt for alts in variant["longpress"].values() for alt in alts}
+    missing = extra_letters - on_screen - long_pressed
+    assert not missing, (key, sorted(missing))

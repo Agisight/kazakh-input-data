@@ -124,6 +124,9 @@
   .keyboard{margin-top:0}
 }
 
+
+.input-tools.arabic-mode{display:grid;grid-template-columns:1fr auto 1fr;align-items:end}.input-tools.arabic-mode .controls{justify-self:start;flex:none}.input-tools.arabic-mode .info-wrap{justify-self:end;margin-left:0}.input-tools.arabic-mode #arabicVariantSwitch{margin:0;justify-self:center}
+@media(max-width:700px){.input-tools.arabic-mode{display:flex;flex-wrap:wrap}.input-tools.arabic-mode .controls{flex:1}.input-tools.arabic-mode #arabicVariantSwitch{order:3;flex:1 0 100%;justify-content:center}}
 </style>
 </head>
 <body>
@@ -149,7 +152,7 @@
 <div class="panel">
 <div class="editor-head"><div class="editor-label" id="inputLabel">INPUT · ARABIC</div><div class="editor-actions"><label class="space-autocomplete"><input type="checkbox" id="spaceAutocomplete" checked>Space autocomplete</label><button class="clear-all" id="clearAll">Clear all</button></div></div>
 <textarea id="editor" dir="rtl" spellcheck="false" inputmode="none" readonly placeholder="…"></textarea>
-<div class="input-tools"><div class="controls"><button id="backspaceTop">⌦</button><button id="addSpace">Space</button></div><div class="latin-variant-switch" id="cyrillicVariantSwitch" role="group" aria-label="Cyrillic layout variant"><button type="button" data-cyrillic-variant="full" aria-pressed="true" class="active"><span class="variant-label" data-short-label="4 rows">4 rows</span></button><button type="button" data-cyrillic-variant="jcuken" aria-pressed="false"><span class="variant-label" data-short-label="3 rows">3 rows</span></button><button type="button" data-cyrillic-variant="compact31" aria-pressed="false"><span class="variant-label" data-short-label="Compact">Compact</span></button></div><div class="latin-variant-switch" id="latinVariantSwitch" role="group" aria-label="Latin layout variant"><button type="button" data-latin-variant="qwerty4" aria-pressed="true" class="active"><span class="variant-label" data-short-label="Q4">QWERTY4</span></button><button type="button" data-latin-variant="qwerty3" aria-pressed="false"><span class="variant-label" data-short-label="Q3">QWERTY3</span></button><button type="button" data-latin-variant="qwerty27" aria-pressed="false" title="27 letters: w → ü, x → ş; ğ beside g"><span class="variant-label" data-short-label="27">27 letters</span></button><button type="button" data-latin-variant="qwerty29" aria-pressed="false"><span class="variant-label" data-short-label="29">29 letters</span></button><button type="button" data-latin-variant="qwerty30" aria-pressed="false"><span class="variant-label" data-short-label="30">30 letters</span></button><button type="button" data-latin-variant="qwerty31" aria-pressed="false"><span class="variant-label" data-short-label="31">31 letters</span></button></div><div class="info-wrap" id="infoWrap"><button id="infoButton" class="info-button" type="button" aria-label="Dataset information" aria-expanded="false">ⓘ</button><div class="info-popover" id="infoPopover"></div></div></div>
+<div class="input-tools arabic-mode"><div class="controls"><button id="backspaceTop">⌦</button><button id="addSpace">Space</button></div><div class="latin-variant-switch" id="arabicVariantSwitch" role="group" aria-label="Arabic layout variant" style="display:flex"></div><div class="latin-variant-switch" id="cyrillicVariantSwitch" role="group" aria-label="Cyrillic layout variant"><button type="button" data-cyrillic-variant="full" aria-pressed="true" class="active"><span class="variant-label" data-short-label="4 rows">4 rows</span></button><button type="button" data-cyrillic-variant="jcuken" aria-pressed="false"><span class="variant-label" data-short-label="3 rows">3 rows</span></button><button type="button" data-cyrillic-variant="compact31" aria-pressed="false"><span class="variant-label" data-short-label="Compact">Compact</span></button></div><div class="latin-variant-switch" id="latinVariantSwitch" role="group" aria-label="Latin layout variant"><button type="button" data-latin-variant="qwerty4" aria-pressed="true" class="active"><span class="variant-label" data-short-label="Q4">QWERTY4</span></button><button type="button" data-latin-variant="qwerty3" aria-pressed="false"><span class="variant-label" data-short-label="Q3">QWERTY3</span></button><button type="button" data-latin-variant="qwerty27" aria-pressed="false" title="27 letters: w → ü, x → ş; ğ beside g"><span class="variant-label" data-short-label="27">27 letters</span></button><button type="button" data-latin-variant="qwerty29" aria-pressed="false"><span class="variant-label" data-short-label="29">29 letters</span></button><button type="button" data-latin-variant="qwerty30" aria-pressed="false"><span class="variant-label" data-short-label="30">30 letters</span></button><button type="button" data-latin-variant="qwerty31" aria-pressed="false"><span class="variant-label" data-short-label="31">31 letters</span></button></div><div class="info-wrap" id="infoWrap"><button id="infoButton" class="info-button" type="button" aria-label="Dataset information" aria-expanded="false">ⓘ</button><div class="info-popover" id="infoPopover"></div></div></div>
 </div>
 <div class="panel suggestions-panel"><div id="suggestions" class="suggestions" dir="rtl"></div><div id="status" class="status"></div></div>
 <div class="panel keyboard"><div id="keyboard"></div><div id="layoutSource" class="layout-source"></div></div>
@@ -157,6 +160,9 @@
 <div class="lp" id="lp"></div>
 <script>
 const ARAB_LAYOUT=__LAYOUT__;
+const ARAB_VARIANTS=__ARAB_VARIANTS__;
+let arabVariant='international';
+function arabLayout(){return ARAB_VARIANTS[arabVariant]||ARAB_LAYOUT}
 const MACOS_LAYOUT=__MACOS_LAYOUT__;
 const MACOS_LAYOUTS=__MACOS_LAYOUTS__;
 const DATASETS=__DATASETS__;
@@ -413,7 +419,7 @@ function token(t){
 }
 
 function longPressOptions(t){
-  if(isArab())return ARAB_LAYOUT.longpress[t]||[];
+  if(isArab())return arabLayout().longpress[t]||[];
   if(currentTag==='kk-Cyrl')return cyrillicLayout().longpress?.[t]||[];
   if(currentTag==='kk-Latn')return latinLayout().longpress?.[t]||[];
   return[];
@@ -574,7 +580,7 @@ function appendBottom(){
   const b=document.createElement('div');b.className='bottom';
   const mode=document.createElement('button');mode.className='wide mode-bottom';mode.dataset.role='layer-mode';
   if(layer.startsWith('symbols')){
-    mode.textContent=isArab()?(ARAB_LAYOUT.abc||'ABC'):'ABC';
+    mode.textContent=isArab()?(arabLayout().abc||'ABC'):'ABC';
     mode.onclick=()=>setLayer('default')
   }else{
     mode.textContent='123';
@@ -605,9 +611,9 @@ function render(){
   kb.style.removeProperty('--latin-base-count');
 
   if(isArab()){
-    for(const row of(ARAB_LAYOUT.layers[layer]||ARAB_LAYOUT.layers.default))renderRow(rtlEdgeKeys(row))
+    for(const row of(arabLayout().layers[layer]||arabLayout().layers.default))renderRow(rtlEdgeKeys(row))
     appendBottom();
-    layoutSource.textContent='Layout source · Agisight/ios-system-keyboard';
+    layoutSource.textContent=arabLayout().source||'Layout source · Agisight/ios-system-keyboard';
     return
   }
 
@@ -660,7 +666,7 @@ const PHYSICAL_ROWS=[
 function previewRowsForPhysicalKeyboard(useShift){
   if(currentTag==='kk-Arab'){
     const name=useShift?'shift':'default';
-    return ARAB_LAYOUT.layers[name]||ARAB_LAYOUT.layers.default||[];
+    return arabLayout().layers[name]||arabLayout().layers.default||[];
   }
 
   const L=currentTag==='kk-Cyrl'?cyrillicLayout():latinLayout();
@@ -714,7 +720,7 @@ function handlePhysicalKeyboard(e){
   insert(ch);
 }
 
-function switchScript(tag){if(!DATASETS[tag])return;if(mobileScriptSelect)mobileScriptSelect.value=tag;currentTag=tag;latinVariantSwitch.style.display=tag==='kk-Latn'?'flex':'none';cyrillicVariantSwitch.style.display=tag==='kk-Cyrl'?'flex':'none';DATA=DATASETS[tag];const info=SCRIPT_INFO[tag];document.querySelectorAll('.script-tab').forEach(b=>{const active=b.dataset.script===tag;b.classList.toggle('active',active);b.setAttribute('aria-selected',active?'true':'false')});scriptDescription.textContent=info.description;inputLabel.textContent=`INPUT · ${info.name.toUpperCase()}`;editor.dir=info.dir;editor.style.textAlign=info.dir==='rtl'?'right':'left';document.querySelector('.controls').style.display=tag==='kk-Arab'?'flex':'none';suggestionsEl.dir=info.dir;editor.value='';layer='default';rebuildIndexes();render();refresh();editor.focus()}
+function switchScript(tag){if(!DATASETS[tag])return;if(mobileScriptSelect)mobileScriptSelect.value=tag;currentTag=tag;latinVariantSwitch.style.display=tag==='kk-Latn'?'flex':'none';cyrillicVariantSwitch.style.display=tag==='kk-Cyrl'?'flex':'none';document.getElementById('arabicVariantSwitch').style.display=tag==='kk-Arab'?'flex':'none';document.querySelector('.input-tools').classList.toggle('arabic-mode',tag==='kk-Arab');DATA=DATASETS[tag];const info=SCRIPT_INFO[tag];document.querySelectorAll('.script-tab').forEach(b=>{const active=b.dataset.script===tag;b.classList.toggle('active',active);b.setAttribute('aria-selected',active?'true':'false')});scriptDescription.textContent=info.description;inputLabel.textContent=`INPUT · ${info.name.toUpperCase()}`;editor.dir=info.dir;editor.style.textAlign=info.dir==='rtl'?'right':'left';document.querySelector('.controls').style.display=tag==='kk-Arab'?'flex':'none';suggestionsEl.dir=info.dir;editor.value='';layer='default';rebuildIndexes();render();refresh();editor.focus()}
 
 function installMacPreviewV2(){
   const style=document.createElement('style');
@@ -940,6 +946,26 @@ cyrillicVariantSwitch.querySelectorAll('button').forEach(b=>b.onclick=()=>{
   layer='default';
   render()
 });
+const arabicVariantSwitch=document.getElementById('arabicVariantSwitch');
+for(const[key,v]of Object.entries(ARAB_VARIANTS)){
+  const b=document.createElement('button');
+  b.type='button';
+  b.dataset.arabicVariant=key;
+  b.className=key===arabVariant?'active':'';
+  b.setAttribute('aria-pressed',String(key===arabVariant));
+  b.innerHTML='<span class="variant-label" data-short-label="'+esc(v.short)+'">'+esc(v.label)+'</span>';
+  b.onclick=()=>{
+    arabVariant=key;
+    arabicVariantSwitch.querySelectorAll('button').forEach(x=>{
+      const active=x===b;
+      x.classList.toggle('active',active);
+      x.setAttribute('aria-pressed',String(active))
+    });
+    layer='default';
+    render()
+  };
+  arabicVariantSwitch.appendChild(b)
+}
 document.getElementById('backspaceTop').onclick=backspace;document.querySelectorAll('.script-tab').forEach(b=>b.onclick=()=>switchScript(b.dataset.script));mobileScriptSelect.onchange=()=>{const tab=document.querySelector(`.script-tab[data-script="${mobileScriptSelect.value}"]`);tab?.click()};infoButton.onclick=e=>{e.stopPropagation();const open=infoWrap.classList.toggle('open');infoButton.setAttribute('aria-expanded',open?'true':'false')};document.addEventListener('click',e=>{if(!infoWrap.contains(e.target)){infoWrap.classList.remove('open');infoButton.setAttribute('aria-expanded','false')}});rebuildIndexes();render();refresh();
 </script>
 </body>
