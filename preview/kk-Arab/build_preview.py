@@ -59,12 +59,17 @@ def read_layout(keyboard_repo):
 
 
 # key, layout file (None = the International layout read by read_layout), button label,
-# short label for narrow screens
+# short label for narrow screens, one-line note shown under the keyboard
 ARAB_VARIANT_SPECS = (
-    ("default", "kaz-arab-3-rows-default.yaml", "Default", "Default"),
-    ("default-touch", "kaz-arab-3-rows-default-touch.yaml", "Default Touch", "Def Touch"),
-    ("international", None, "International", "Intl"),
-    ("international-touch", "kaz-arab-3-rows-international-touch.yaml", "International Touch", "Intl Touch"),
+    ("default", "kaz-arab-3-rows-default.yaml", "Default", "Default",
+     "Recommended \u00b7 the layout most widely used by Kazakhs in Xinjiang, China"),
+    ("default-touch", "kaz-arab-3-rows-default-touch.yaml", "Default Touch", "Def Touch",
+     "Touchscreen version of Default for phones and tablets"),
+    ("international", None, "International", "Intl",
+     "QWERTY-based \u00b7 type by the Latin letters on a standard keyboard"
+     " \u00b7 for Kazakhs in Iran, the Middle East and beyond"),
+    ("international-touch", "kaz-arab-3-rows-international-touch.yaml", "International Touch", "Intl Touch",
+     "Touchscreen version of International, same character mapping"),
 )
 
 
@@ -108,7 +113,7 @@ def read_arab_variant_file(keyboard_repo, filename):
 
 def read_arab_variants(keyboard_repo):
     variants = OrderedDict()
-    for key, filename, label, short in ARAB_VARIANT_SPECS:
+    for key, filename, label, short, note in ARAB_VARIANT_SPECS:
         if filename is None:
             variant = read_layout(keyboard_repo)
             variant.pop("source_repository", None)
@@ -118,6 +123,7 @@ def read_arab_variants(keyboard_repo):
             "key": key,
             "label": label,
             "short": short,
+            "note": note,
             "source": f"Arabic \u00b7 {label} \u00b7 Agisight/ios-system-keyboard \u00b7 {variant['source_path']}",
         })
         variants[key] = variant

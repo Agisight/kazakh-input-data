@@ -34,6 +34,22 @@ letters and differ in key placement:
 | International | `kaz-arab-3-rows.yaml` | Original layout; four extra letters via Shift and long-press |
 | International Touch | `kaz-arab-3-rows-international-touch.yaml` | No Shift key; `ح → ھ` by long-press |
 
+### Order and use cases
+
+The selector lists the variants in recommended order. **Default** and
+**International** are two layout families; each has a physical-keyboard layout
+and a touch adaptation for phones and tablets.
+
+| # | Variant | Proposed platforms | Who it is for |
+| --- | --- | --- | --- |
+| 1 | **Default** — recommended | Physical keyboard: macOS, ChromeOS | The layout most widely used, unofficially, by ethnic Kazakhs in Xinjiang, China. People already install it by hand through third-party `.exe` / `.dmg` packages for Windows and macOS, so it is proposed as the default when Kazakh Arabic is added as an input language. |
+| 2 | **Default Touch** | Touch: iOS, iPadOS, Gboard (Android) | A complete touchscreen adaptation of Default for smartphones and tablets that keeps its characters and functions. |
+| 3 | **International** — alternative | Physical keyboard: macOS, ChromeOS | QWERTY-based: letters follow the Latin letters printed on an ordinary keyboard, so no special keyboard or stickers are needed. Intended for Kazakh speakers in Iran, the Middle East and other regions where standard QWERTY keyboards are common. |
+| 4 | **International Touch** | Touch: iOS, iPadOS, Gboard (Android) | A complete touchscreen adaptation of International that keeps the same character mapping. |
+
+Offering both families supports both regional typing traditions instead of
+moving every Kazakh Arabic user to a single layout.
+
 The selector reads each variant's long-press file from
 `Agisight/ios-system-keyboard`; the caption under the keyboard names the
 source layout file. The variants were contributed by Murat Karibay (see the
