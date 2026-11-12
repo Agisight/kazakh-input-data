@@ -17,6 +17,11 @@ for filename in ("kaz-latn-iso-experimental.keylayout", "kaz-latn-ansi-experimen
     assert filename in t
     assert (p.parent / "keylayout" / filename).is_file()
 
+# Each Arabic variant carries a one-line use-case note shown under the keyboard.
+assert 'id="layoutNote"' in t
+assert "arabLayout().note" in t
+assert t.count('"note":"') >= 4
+
 for tag in ('"kk-Arab":','"kk-Cyrl":','"kk-Latn":'):
     assert tag in t
 

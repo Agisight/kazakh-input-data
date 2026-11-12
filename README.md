@@ -127,8 +127,18 @@ be selected explicitly.
 
 - **Arabic (`kk-Arab`)** — Kazakh Arabic / Töte jazu layouts from
   [`Agisight/ios-system-keyboard`](https://github.com/Agisight/ios-system-keyboard).
-  The selector offers four variants: **Default**, **Default Touch**,
-  **International** (the original layout) and **International Touch**.
+  The selector offers four variants, in recommended order:
+  1. **Default** — the recommended default; the layout most widely used,
+     unofficially, by Kazakhs in Xinjiang, China (today installed by hand
+     through third-party `.exe` / `.dmg` packages). Physical keyboard.
+  2. **Default Touch** — a complete touchscreen adaptation of Default for
+     phones and tablets.
+  3. **International** (the original layout) — QWERTY-based: type by the Latin
+     letters printed on an ordinary keyboard. Intended for Kazakh speakers in
+     Iran, the Middle East and other regions where QWERTY keyboards are common.
+  4. **International Touch** — a complete touchscreen adaptation of
+     International with the same character mapping.
+
   [Arabic variant details](https://github.com/Agisight/kazakh-input-data/blob/main/preview/README.md#kazakh-arabic-layout-variants).
 - **Cyrillic (`kk-Cyrl`)** — the preview keyboard is adapted from the Keyman
   **Kazakh Basic** touch layout. The selector offers **4 rows** (four rows,
