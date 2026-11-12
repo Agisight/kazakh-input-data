@@ -58,6 +58,10 @@ class ArabVariantsTest(unittest.TestCase):
             with self.subTest(key):
                 self.assertTrue(variant["longpress_path"].startswith("layout/kaz/"))
 
+    def test_preview_opens_on_default(self):
+        template = (SNAPSHOT.parent / "template.html").read_text(encoding="utf-8")
+        self.assertIn("let arabVariant='default';", template)
+
 
 if __name__ == "__main__":
     unittest.main()

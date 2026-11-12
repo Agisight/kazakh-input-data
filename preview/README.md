@@ -24,7 +24,7 @@ are also explicitly experimental and are not presented as finalized standards.
 
 ## Kazakh Arabic layout variants
 
-Select **Arabic** to switch between four 3-row layouts that share the same
+The preview opens on **Default**. Select **Arabic** to switch between four 3-row layouts that share the same
 letters and differ in key placement:
 
 | Variant | Source file | Notes |
