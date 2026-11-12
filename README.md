@@ -119,7 +119,8 @@ It currently demonstrates:
 - long-press alternatives where the source keyboard layout defines them.
 
 The highest-ranked suggestion is shown in the center. While an unfinished word
-is being typed, pressing Space accepts the highlighted completion and inserts a
+is being typed and **Space autocomplete** is turned on (it is off by default),
+pressing Space accepts the highlighted completion and inserts a
 space. Next-word predictions are not accepted automatically by Space; they must
 be selected explicitly.
 
