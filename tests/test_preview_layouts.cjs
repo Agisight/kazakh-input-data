@@ -175,3 +175,15 @@ test('Cyrillic long-press resolves the active variant, including both alternativ
   assert.deepEqual(Array.from(cyrlContext.options('г')),[]);
   assert.deepEqual(Array.from(cyrlContext.options('Е')),['Ё']);
 });
+
+test('Arabic physical punctuation follows the Töte mapping', () => {
+  const s = template.indexOf('const ARAB_PHYSICAL_PUNCTUATION=');
+  const e = template.indexOf('function physicalCharacter', s);
+  assert(s >= 0 && e > s, 'Arabic punctuation map must exist');
+  const ctx = {};
+  vm.runInNewContext(template.slice(s, e) + ';globalThis.map=ARAB_PHYSICAL_PUNCTUATION;', ctx);
+  assert.deepEqual(JSON.parse(JSON.stringify(ctx.map)), {
+    Comma: ['،', '>'], Period: ['.', '<'], Slash: ['/', '؟'], Semicolon: ['؛', ':'],
+    Quote: ["'", '"'], BracketLeft: [']', '»'], BracketRight: ['[', '«'], Backslash: ['\\', '|'],
+  });
+});

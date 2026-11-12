@@ -151,7 +151,7 @@
 </div>
 
 <div class="panel">
-<div class="editor-head"><div class="editor-label" id="inputLabel">INPUT · ARABIC</div><div class="editor-actions"><label class="space-autocomplete"><input type="checkbox" id="spaceAutocomplete" checked>Space autocomplete</label><button class="clear-all" id="clearAll">Clear all</button></div></div>
+<div class="editor-head"><div class="editor-label" id="inputLabel">INPUT · ARABIC</div><div class="editor-actions"><label class="space-autocomplete"><input type="checkbox" id="spaceAutocomplete">Space autocomplete</label><button class="clear-all" id="clearAll">Clear all</button></div></div>
 <textarea id="editor" dir="rtl" spellcheck="false" inputmode="none" readonly placeholder="…"></textarea>
 <div class="input-tools arabic-mode"><div class="controls"><button id="backspaceTop">⌦</button><button id="addSpace">Space</button></div><div class="latin-variant-switch" id="arabicVariantSwitch" role="group" aria-label="Arabic layout variant" style="display:flex"></div><div class="latin-variant-switch" id="cyrillicVariantSwitch" role="group" aria-label="Cyrillic layout variant"><button type="button" data-cyrillic-variant="full" aria-pressed="true" class="active"><span class="variant-label" data-short-label="4 rows">4 rows</span></button><button type="button" data-cyrillic-variant="jcuken" aria-pressed="false"><span class="variant-label" data-short-label="3 rows">3 rows</span></button><button type="button" data-cyrillic-variant="compact31" aria-pressed="false"><span class="variant-label" data-short-label="Compact">Compact</span></button></div><div class="latin-variant-switch" id="latinVariantSwitch" role="group" aria-label="Latin layout variant"><button type="button" data-latin-variant="qwerty4" aria-pressed="true" class="active"><span class="variant-label" data-short-label="Q4">QWERTY4</span></button><button type="button" data-latin-variant="qwerty3" aria-pressed="false"><span class="variant-label" data-short-label="Q3">QWERTY3</span></button><button type="button" data-latin-variant="qwerty27" aria-pressed="false" title="27 letters: w → ü, x → ş; ğ beside g"><span class="variant-label" data-short-label="27">27 letters</span></button><button type="button" data-latin-variant="qwerty29" aria-pressed="false"><span class="variant-label" data-short-label="29">29 letters</span></button><button type="button" data-latin-variant="qwerty30" aria-pressed="false"><span class="variant-label" data-short-label="30">30 letters</span></button><button type="button" data-latin-variant="qwerty31" aria-pressed="false"><span class="variant-label" data-short-label="31">31 letters</span></button></div><div class="info-wrap" id="infoWrap"><button id="infoButton" class="info-button" type="button" aria-label="Dataset information" aria-expanded="false">ⓘ</button><div class="info-popover" id="infoPopover"></div></div></div>
 </div>
@@ -162,7 +162,7 @@
 <script>
 const ARAB_LAYOUT=__LAYOUT__;
 const ARAB_VARIANTS=__ARAB_VARIANTS__;
-let arabVariant='international';
+let arabVariant='default';
 function arabLayout(){return ARAB_VARIANTS[arabVariant]||ARAB_LAYOUT}
 const MACOS_LAYOUT=__MACOS_LAYOUT__;
 const MACOS_LAYOUTS=__MACOS_LAYOUTS__;
@@ -679,6 +679,19 @@ function printableRow(row){
   return (row||[]).filter(t=>!t.startsWith('\\s{'));
 }
 
+// Physical punctuation keys for Arabic (Töte), by key position: [plain, Shift].
+// Brackets and angle brackets are mirrored for right-to-left text.
+const ARAB_PHYSICAL_PUNCTUATION={
+  Comma:['\u060C','>'],
+  Period:['.','<'],
+  Slash:['/','\u061F'],
+  Semicolon:['\u061B',':'],
+  Quote:["'",'"'],
+  BracketLeft:[']','\u00BB'],
+  BracketRight:['[','\u00AB'],
+  Backslash:['\\','|']
+};
+
 function physicalCharacter(code,useShift){
   const rows=previewRowsForPhysicalKeyboard(useShift);
 
@@ -686,10 +699,12 @@ function physicalCharacter(code,useShift){
     const index=PHYSICAL_ROWS[r].indexOf(code);
     if(index<0)continue;
 
-    const chars=printableRow(rows[r]);
-    return chars[index]??null;
+    const ch=printableRow(rows[r])[index];
+    if(ch!==undefined)return ch;
+    break;
   }
 
+  if(currentTag==='kk-Arab'&&ARAB_PHYSICAL_PUNCTUATION[code])return ARAB_PHYSICAL_PUNCTUATION[code][useShift?1:0];
   return null;
 }
 
